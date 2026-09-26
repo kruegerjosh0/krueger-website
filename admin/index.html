@@ -331,7 +331,7 @@
 </head>
 <body class="admin-body">
 
-    <!-- Netlify Identity Login Screen -->
+    <!-- Password Protected Login Screen -->
     <div id="login-container" class="login-wrap">
         <div class="logo-circle" style="margin: 0 auto 16px auto; width: 64px; height: 64px;">
             <div class="logo-fallback">
@@ -339,8 +339,20 @@
             </div>
         </div>
         <h2 style="color: var(--primary); margin: 0 0 10px 0;">Krueger Painting</h2>
-        <p style="color: #aaa; font-size: 0.95rem; margin-bottom: 24px;">Please log in with your editor credentials to manage your site photos, logo, and business info.</p>
-        <button type="button" class="btn-upload-action" id="btn-login-trigger" style="width: 100%; justify-content: center;">Log In to Content Manager</button>
+        <p style="color: #aaa; font-size: 0.95rem; margin-bottom: 20px;">Developer &amp; Content Manager Login</p>
+
+        <form id="admin-login-form" style="text-align: left;">
+            <div style="margin-bottom: 16px;">
+                <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <input type="password" id="admin-password-input" class="form-control" placeholder="Enter admin password" required style="padding-right: 42px;" autocomplete="current-password">
+                    <button type="button" id="toggle-pw-visibility" style="position: absolute; right: 10px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 4px;" title="Show/Hide Password">👁</button>
+                </div>
+            </div>
+            <div id="login-error-msg" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+            <button type="submit" class="btn-upload-action" id="btn-login-submit" style="width: 100%; justify-content: center;">Sign In to Dashboard</button>
+            <p style="margin-top: 14px; font-size: 0.8rem; color: #778; text-align: center;">Default password: <strong style="color: var(--primary);">krueger2026</strong><br><span style="font-size: 0.75rem; color: #667;">(You can change this anytime inside the Security tab)</span></p>
+        </form>
     </div>
 
     <!-- Logged In Admin Panel -->
@@ -365,6 +377,7 @@
             <button type="button" class="tab-btn active" data-tab="logo-tab">Website Logo</button>
             <button type="button" class="tab-btn" data-tab="photos-tab">Project Photos</button>
             <button type="button" class="tab-btn" data-tab="info-tab">Business &amp; Contact</button>
+            <button type="button" class="tab-btn" data-tab="security-tab">Security &amp; Password</button>
             <button type="button" class="tab-btn" data-tab="decap-tab">Advanced CMS</button>
         </div>
 
@@ -511,7 +524,44 @@
                 </div>
             </section>
 
-            <!-- TAB 4: ADVANCED DECAP CMS -->
+            <!-- TAB 4: SECURITY & PASSWORD -->
+            <section id="security-tab" class="tab-content" style="display: none;">
+                <div class="admin-card">
+                    <h2 class="card-title">Admin Password &amp; Security</h2>
+                    <p class="card-desc">
+                        Manage your password for accessing this developer dashboard and content manager.
+                    </p>
+
+                    <div style="background: #151a20; border: 1px solid #2a3440; border-radius: 6px; padding: 16px; margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="color: #22c55e; font-size: 1.2rem;">🔒</span>
+                            <div>
+                                <strong style="color: #fff;">Password Protection Active</strong>
+                                <p style="margin: 4px 0 0 0; color: #889; font-size: 0.85rem;">All site settings, logo uploads, and photo additions require this password to edit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="change-password-form" style="max-width: 480px;">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" id="input-curr-pw" class="form-control" required placeholder="Enter current password" autocomplete="current-password">
+                        </div>
+                        <div class="form-group">
+                            <label>New Password (minimum 6 characters)</label>
+                            <input type="password" id="input-new-pw" class="form-control" required minlength="6" placeholder="Enter new password" autocomplete="new-password">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" id="input-confirm-pw" class="form-control" required minlength="6" placeholder="Repeat new password" autocomplete="new-password">
+                        </div>
+                        <div id="pw-change-msg" style="display: none; padding: 10px 12px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                        <button type="submit" class="btn-upload-action" id="btn-update-password">Update Admin Password</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- TAB 5: ADVANCED DECAP CMS -->
             <section id="decap-tab" class="tab-content" style="display: none;">
                 <div class="admin-card">
                     <h2 class="card-title">Decap CMS (Git-based File Editor)</h2>
@@ -546,10 +596,24 @@
                 setTimeout(() => { alertBox.style.display = "none"; }, 5000);
             }
 
+            // SHA-256 helper
+            async function sha256(message) {
+                const msgBuffer = new TextEncoder().encode(message);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+
+            // Default password is 'krueger2026'
+            const DEFAULT_PASSWORD_HASH = "9bd1546c479074aeae9bcf8ee5b1da7a108828cbfa1f32aef9281667471f419a";
+
+            function getAdminPasswordHash() {
+                return localStorage.getItem("kp_admin_hash") || DEFAULT_PASSWORD_HASH;
+            }
+
             // Auth Handling
             function checkAuth() {
-                const isAuthed = (window.netlifyIdentity && window.netlifyIdentity.currentUser()) ||
-                    sessionStorage.getItem("krueger_admin_auth") === "true";
+                const isAuthed = sessionStorage.getItem("krueger_admin_auth") === "true";
                 if (isAuthed) {
                     loginContainer.style.display = "none";
                     adminPanel.style.display = "flex";
@@ -560,23 +624,48 @@
                 }
             }
 
-            if (window.netlifyIdentity) {
-                window.netlifyIdentity.on("init", checkAuth);
-                window.netlifyIdentity.on("login", checkAuth);
-                window.netlifyIdentity.on("logout", checkAuth);
+            // Password Toggle Visibility
+            const togglePwBtn = document.getElementById("toggle-pw-visibility");
+            const pwInput = document.getElementById("admin-password-input");
+            if (togglePwBtn && pwInput) {
+                togglePwBtn.addEventListener("click", () => {
+                    const isPass = pwInput.type === "password";
+                    pwInput.type = isPass ? "text" : "password";
+                    togglePwBtn.textContent = isPass ? "🙈" : "👁";
+                });
             }
-            // Initial check
-            checkAuth();
 
-            document.getElementById("btn-login-trigger").addEventListener("click", () => {
-                sessionStorage.setItem("krueger_admin_auth", "true");
-                checkAuth();
-            });
+            // Password Login Form
+            const loginForm = document.getElementById("admin-login-form");
+            const loginErrorMsg = document.getElementById("login-error-msg");
+            if (loginForm) {
+                loginForm.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const entered = pwInput.value;
+                    const enteredHash = await sha256(entered);
+                    const targetHash = getAdminPasswordHash();
+
+                    if (enteredHash === targetHash) {
+                        loginErrorMsg.style.display = "none";
+                        pwInput.value = "";
+                        sessionStorage.setItem("krueger_admin_auth", "true");
+                        checkAuth();
+                    } else {
+                        loginErrorMsg.textContent = "Incorrect password. Please try again.";
+                        loginErrorMsg.style.display = "block";
+                        pwInput.focus();
+                    }
+                });
+            }
+
+            // Logout
             document.getElementById("btn-logout-trigger").addEventListener("click", () => {
                 sessionStorage.removeItem("krueger_admin_auth");
-                if (window.netlifyIdentity) window.netlifyIdentity.logout();
                 checkAuth();
             });
+
+            // Initial check
+            checkAuth();
 
             // Tabs switching
             document.querySelectorAll(".tab-btn").forEach(btn => {
@@ -938,6 +1027,58 @@
                     btn.textContent = "Save Business Info";
                 }
             });
+
+            // Change Password Form
+            const changePwForm = document.getElementById("change-password-form");
+            const changePwMsg = document.getElementById("pw-change-msg");
+            if (changePwForm) {
+                changePwForm.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const curr = document.getElementById("input-curr-pw").value;
+                    const next = document.getElementById("input-new-pw").value;
+                    const confirm = document.getElementById("input-confirm-pw").value;
+
+                    const currHash = await sha256(curr);
+                    if (currHash !== getAdminPasswordHash()) {
+                        changePwMsg.textContent = "Current password does not match.";
+                        changePwMsg.style.background = "rgba(255, 107, 107, 0.12)";
+                        changePwMsg.style.color = "#ff6b6b";
+                        changePwMsg.style.border = "1px solid #ff6b6b";
+                        changePwMsg.style.display = "block";
+                        return;
+                    }
+
+                    if (next.length < 6) {
+                        changePwMsg.textContent = "New password must be at least 6 characters.";
+                        changePwMsg.style.background = "rgba(255, 107, 107, 0.12)";
+                        changePwMsg.style.color = "#ff6b6b";
+                        changePwMsg.style.border = "1px solid #ff6b6b";
+                        changePwMsg.style.display = "block";
+                        return;
+                    }
+
+                    if (next !== confirm) {
+                        changePwMsg.textContent = "New passwords do not match.";
+                        changePwMsg.style.background = "rgba(255, 107, 107, 0.12)";
+                        changePwMsg.style.color = "#ff6b6b";
+                        changePwMsg.style.border = "1px solid #ff6b6b";
+                        changePwMsg.style.display = "block";
+                        return;
+                    }
+
+                    const newHash = await sha256(next);
+                    localStorage.setItem("kp_admin_hash", newHash);
+
+                    changePwMsg.textContent = "✓ Password updated successfully! Please keep your new password safe.";
+                    changePwMsg.style.background = "rgba(34, 197, 94, 0.12)";
+                    changePwMsg.style.color = "#22c55e";
+                    changePwMsg.style.border = "1px solid #22c55e";
+                    changePwMsg.style.display = "block";
+
+                    changePwForm.reset();
+                    showAlert("✓ Admin password has been updated.");
+                });
+            }
 
             // Decap CMS launcher
             document.getElementById("btn-launch-decap").addEventListener("click", () => {

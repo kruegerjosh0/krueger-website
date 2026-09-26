@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // Body parsing with 50mb limit for image uploads
 app.use(express.json({ limit: "50mb" }));
@@ -394,5 +394,7 @@ app.use(express.static(__dirname));
 
 // Start server on port 3000 and host 0.0.0.0
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Krueger Painting server running on http://0.0.0.0:${PORT}`);
+  console.log(`> Ready on http://localhost:${PORT}`);
+  console.log(`> Local: http://localhost:${PORT}`);
+  console.log(`> Network: http://0.0.0.0:${PORT}`);
 });

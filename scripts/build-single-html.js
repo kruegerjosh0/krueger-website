@@ -1,252 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krueger Painting | Professional Painting</title>
-    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with photo gallery and content manager.">
-    <meta property="og:title" content="Krueger Painting | Professional Painting">
-    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with photo gallery and content manager.">
+import fs from "node:fs";
+import path from "node:path";
 
-    <style>
-:root {
-    --primary: #ffcc00;
-    --bg: #111111;
-    --text: #ffffff;
-    --card-bg: #1a1a1a;
-}
+const root = process.cwd();
 
-body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+const cssContent = fs.readFileSync(path.join(root, "css/styles.css"), "utf8");
 
-/* HEADER - LOGO IN TOP-LEFT CORNER */
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 28px;
-    border-bottom: 1px solid #282828;
-    background: #111111;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    gap: 16px;
-}
-.logo-row {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-.logo-row a {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-}
-.logo-circle {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    border: 2px solid var(--primary);
-    background: #1c1c1c;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 0 8px rgba(255, 204, 0, 0.25);
-}
-.logo-circle img.logo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    display: block;
-}
-.logo-circle img[hidden] {
-    display: none;
-}
-.logo-fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle at 30% 30%, #2a2a2a, #141414);
-}
-.logo-fallback[hidden] {
-    display: none;
-}
-.logo-monogram {
-    font-size: 0.95rem;
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    color: var(--primary);
-    line-height: 1;
-}
-.logo-row h1 {
-    font-size: 1.15rem;
-    color: var(--primary);
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 800;
-}
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    font-size: 0.9rem;
-    font-weight: 700;
-}
-.nav-links a {
-    color: var(--text);
-    text-decoration: none;
-    text-transform: capitalize;
-    transition: color 0.15s;
-}
-.nav-links a:hover {
-    color: var(--primary);
-}
+const kitchenSvg = "data:image/svg+xml;base64," + fs.readFileSync(path.join(root, "images/kitchen-cabinets.svg")).toString("base64");
+const drywallSvg = "data:image/svg+xml;base64," + fs.readFileSync(path.join(root, "images/drywall-repair.svg")).toString("base64");
+const deckSvg = "data:image/svg+xml;base64," + fs.readFileSync(path.join(root, "images/deck-stain.svg")).toString("base64");
 
-/* ACTION BUTTONS (CALL NOW & FACEBOOK) */
-.action-buttons {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-.btn-call, .btn-fb {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 18px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 0.9rem;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-}
-.btn-call {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #ffffff;
-}
-.btn-call:hover {
-    background: linear-gradient(135deg, #2ecc71, #1fb355);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.45);
-}
-.btn-fb {
-    background: linear-gradient(135deg, #1877f2, #0d65d9);
-    color: #ffffff;
-}
-.btn-fb:hover {
-    background: linear-gradient(135deg, #2b84f7, #136fe6);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.45);
-}
-.btn-icon {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-}
+const settings = JSON.parse(fs.readFileSync(path.join(root, "data/settings.json"), "utf8"));
+const hero = JSON.parse(fs.readFileSync(path.join(root, "data/hero.json"), "utf8"));
+const services = JSON.parse(fs.readFileSync(path.join(root, "data/services.json"), "utf8"));
+const estimate = JSON.parse(fs.readFileSync(path.join(root, "data/estimate.json"), "utf8"));
+const gallery = JSON.parse(fs.readFileSync(path.join(root, "data/gallery.json"), "utf8"));
 
-@media (max-width: 768px) {
-    header {
-        flex-wrap: wrap;
-        padding: 12px 16px;
-        gap: 12px;
-    }
-    .logo-row {
-        flex: 1 1 auto;
-    }
-    .action-buttons {
-        gap: 10px;
-        margin-left: auto;
-    }
-    .btn-call, .btn-fb {
-        padding: 8px 14px;
-        font-size: 0.82rem;
-        gap: 6px;
-    }
-    .btn-icon {
-        width: 14px;
-        height: 14px;
-    }
-    .nav-links {
-        width: 100%;
-        justify-content: center;
-        gap: 20px;
-        padding-top: 10px;
-        border-top: 1px solid #222;
-        margin-top: 4px;
-        order: 3;
-    }
-}
+// Update gallery photos to use embedded SVG data URLs
+gallery.categories[0].photos[0].image = kitchenSvg;
+gallery.categories[1].photos[0].image = drywallSvg;
+gallery.categories[2].photos[0].image = deckSvg;
 
-/* HERO */
-.hero { text-align: center; padding: 50px 20px; border-bottom: 1px solid #222;}
-.hero h2 { font-size: 1.8rem; margin: 0 0 15px 0; font-weight: 900; line-height: 1.3; }
-.hero h2 span { color: var(--primary); display: block; }
-.hero h2 span.hero-white { color: inherit; display: inline; }
-.hero p { color: #aaaaaa; font-size: 0.95rem; max-width: 540px; margin: 0 auto 30px auto; }
-.hero-btns { display: flex; flex-direction: column; gap: 15px; align-items: center; }
-.btn-primary { background: var(--primary); color: #000; padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
-.btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
+const defaultSiteData = {
+  settings,
+  hero,
+  services,
+  estimate,
+  gallery,
+};
 
-/* SECTIONS */
-.container { padding: 0 20px 40px 20px; max-width: 800px; margin: 0 auto; }
-.section-title { text-align: center; margin: 50px 0 30px 0; }
-.section-title h3 { font-size: 1.4rem; text-transform: uppercase; margin: 0; font-weight: 900; letter-spacing: 0.5px;}
-.section-title .underline { width: 50px; height: 3px; background: var(--primary); margin: 10px auto 0 auto; }
-
-/* SERVICES */
-.service-card { border: 2px solid var(--primary); background: var(--card-bg); padding: 20px; margin-bottom: 20px; border-radius: 6px;}
-.service-card h4 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; font-weight: 800;}
-.service-card p { margin: 0; color: #aaaaaa; font-size: 0.9rem; }
-
-/* GALLERY */
-.project-category { margin-bottom: 40px; }
-.category-header { border-left: 4px solid var(--primary); padding-left: 10px; color: var(--primary); font-weight: 900; margin-bottom: 20px; text-transform: uppercase; font-size: 1rem; letter-spacing: 0.5px;}
-.gallery-img { width: 100%; height: auto; display: block; margin-bottom: 10px; border: 1px solid #333; background-color: #222; border-radius: 4px; }
-.tag { background: var(--primary); color: #000; text-align: center; font-weight: 900; padding: 6px 12px; margin: 15px auto; width: max-content; font-size: 0.8rem; border-radius: 3px; }
-
-/* ESTIMATE FORM */
-.estimate-section { background-color: #151515; padding: 1px 0 40px 0; border-top: 1px solid #333;}
-.form-group { margin-bottom: 20px; }
-.form-group label { color: var(--primary); display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; }
-.form-control { width: 100%; box-sizing: border-box; padding: 12px; background: #202020; border: 1px solid #444; color: #fff; font-size: 1rem; border-radius: 4px;}
-textarea.form-control { height: 120px; resize: vertical; }
-
-/* FOOTER */
-footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888; border-top: 1px solid #282828; background: var(--bg);}
-.footer-address { color: #ddd; margin: 0 0 6px 0; font-size: 0.95rem; }
-.footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #aaa; }
-.footer-phone a { color: var(--primary); text-decoration: none; font-weight: 700; }
-.footer-phone a:hover { text-decoration: underline; }
-.admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s;}
-.admin-link:hover { color: var(--primary); }
-
-.empty-note { text-align: center; color: #888; border: 1px dashed #444; padding: 30px 20px; border-radius: 6px; }
-
-/* PHOTO GALLERY PAGE */
-.page-intro { text-align: center; color: #aaaaaa; max-width: 560px; margin: -10px auto 30px auto; font-size: 0.95rem; }
-.filter-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 30px; }
-.filter-btn { background: transparent; color: var(--text); border: 2px solid #444; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; }
-.filter-btn.active { border-color: var(--primary); color: #000; background: var(--primary); }
-.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-.photo-tile { position: relative; margin: 0; cursor: zoom-in; border: 1px solid #333; background: #222; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 4px; }
-.photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo-tile .tag-badge { position: absolute; top: 8px; left: 8px; background: var(--primary); color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-.lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; z-index: 100; }
-.lightbox[hidden] { display: none; }
-.lightbox img { max-width: 100%; max-height: 80vh; object-fit: contain; }
-.lightbox p { color: #ccc; margin: 12px 0 0 0; text-align: center; }
-.lightbox button { position: absolute; top: 12px; right: 16px; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
-.photo-grid .empty-note { grid-column: 1 / -1; }
-
-
+const adminStyles = `
 /* ADMIN PANEL & MODAL STYLES */
 .admin-modal-backdrop {
     display: none;
@@ -486,7 +268,21 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 .admin-tab-section.active {
     display: block;
 }
+`;
 
+const singleHtmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krueger Painting | Professional Painting</title>
+    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with photo gallery and content manager.">
+    <meta property="og:title" content="Krueger Painting | Professional Painting">
+    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with photo gallery and content manager.">
+
+    <style>
+${cssContent}
+${adminStyles}
     </style>
 </head>
 <body>
@@ -859,7 +655,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <script>
     (function () {
         // EMBEDDED DEFAULT STATE
-        const INITIAL_SITE_DATA = {"settings":{"logo":"","business_name":"Krueger Painting","phone":"262-443-1199","facebook_url":"https://www.facebook.com/share/1EySXfm7FM/"},"hero":{"headline_white":"Quality Craftsmanship.","headline_yellow":"Flawless Finishes.","description":"Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.","primary_button":"Tap for Free Estimate","secondary_button":"View Gallery"},"services":{"heading":"What We Do","services":[{"title":"Interior Painting","description":"Professional surface preparation, priming, and precision painting using premium finishes like Sherwin-Williams Emerald enamel for doors, trim, walls, and ceilings."},{"title":"Decks & Exterior Finishing","description":"Comprehensive exterior protection including wood staining, deck restoration, sealing, and pressure washing to withstand Wisconsin weather elements."},{"title":"Wall Repair & Drywall","description":"Expert drywall hanging, professional tape compound layering, mudding, and smooth plaster sanding to establish seamless surfaces ready for paint."}]},"estimate":{"heading":"Request an Estimate","button_text":"Submit Request"},"gallery":{"homepage_heading":"Our Recent Projects","homepage_button":"View Full Photo Library","page_heading":"Photo Gallery","page_intro":"Browse our interior painting, drywall repairs, and exterior finish projects.","categories":[{"title":"Kitchen Painting","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWUyNDJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMTMxOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iY2FiIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZThlY2VmIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJnb2xkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZDUzZCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNmI4MDAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJzaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjYiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmcpIi8+CgogIDwhLS0gS2l0Y2hlbiBXYWxsICYgQmFja3NwbGFzaCAtLT4KICA8cmVjdCB4PSI2MCIgeT0iNTAiIHdpZHRoPSI2ODAiIGhlaWdodD0iNDgwIiByeD0iOCIgZmlsbD0iIzI1MmMzNCIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICAKICA8IS0tIFN1YnRsZSBzdWJ3YXkgdGlsZSBwYXR0ZXJuIC0tPgogIDxnIG9wYWNpdHk9IjAuMTUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMjYwIiB4Mj0iNzQwIiB5Mj0iMjYwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIyOTAiIHgyPSI3NDAiIHkyPSIyOTAiLz4KICAgIDxsaW5lIHgxPSI2MCIgeTE9IjMyMCIgeDI9Ijc0MCIgeTI9IjMyMCIvPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMzUwIiB4Mj0iNzQwIiB5Mj0iMzUwIi8+CiAgPC9nPgoKICA8IS0tIFVwcGVyIENhYmluZXRzIChGcmVzaCBQYWludGVkIFdoaXRlIEZpbmlzaCkgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjgwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE3MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSIxMDUiIHk9Ijk1IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE0MCIgcng9IjIiIGZpbGw9IiNmNGY2ZjgiIHN0cm9rZT0iI2QwZDdkZSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMjQwIiBjeT0iMTY1IiByPSI1IiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjI5MCIgeT0iODAiIHdpZHRoPSIyMjAiIGhlaWdodD0iMTcwIiByeD0iNCIgZmlsbD0idXJsKCNjYWIpIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDxyZWN0IHg9IjMwNSIgeT0iOTUiIHdpZHRoPSIxOTAiIGhlaWdodD0iMTQwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8Y2lyY2xlIGN4PSIzMjAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KICA8Y2lyY2xlIGN4PSI0ODAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KCiAgPHJlY3QgeD0iNTMwIiB5PSI4MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxNzAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iNTQ1IiB5PSI5NSIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIxNDAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjU2MCIgY3k9IjE2NSIgcj0iNSIgZmlsbD0iIzMzMyIvPgoKICA8IS0tIENvdW50ZXJ0b3AgLS0+CiAgPHJlY3QgeD0iNzUiIHk9IjM2MCIgd2lkdGg9IjY1MCIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiMxMTEiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIxIi8+CgogIDwhLS0gTG93ZXIgQ2FiaW5ldHMgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjM4MCIgd2lkdGg9IjI4MCIgaGVpZ2h0PSIxNDAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iMTA1IiB5PSIzOTUiIHdpZHRoPSIyNTAiIGhlaWdodD0iMTEwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cmVjdCB4PSIyMTUiIHk9IjQxNSIgd2lkdGg9IjMwIiBoZWlnaHQ9IjYiIHJ4PSIyIiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjQzMCIgeT0iMzgwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjE0MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSI0NDUiIHk9IjM5NSIgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxMTAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxyZWN0IHg9IjU1NSIgeT0iNDE1IiB3aWR0aD0iMzAiIGhlaWdodD0iNiIgcng9IjIiIGZpbGw9IiMzMzMiLz4KCiAgPCEtLSBCYWRnZSBiYW5uZXIgLS0+CiAgPHJlY3QgeD0iMjQwIiB5PSI1MjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNDIiIHJ4PSIyMSIgZmlsbD0idXJsKCNnb2xkKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPktJVENIRU4gQ0FCSU5FVCBSRUZJTklTSElORzwvdGV4dD4KPC9zdmc+Cg==","tag":"AFTER","alt":"Cabinet paint refinishing with Sherwin-Williams enamel finish"}]},{"title":"Drywall & Wall Repair","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmcyIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJjMzAzNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxODFiMWUiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im11ZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDRkNGNiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmUzIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M5YzliZSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9IndhbGxTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTIiIGZsb29kLW9wYWNpdHk9IjAuNCIvPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNiZzIpIi8+CgogIDwhLS0gV2FsbCBCb2FyZCBTZWN0aW9uIC0tPgogIDxyZWN0IHg9IjcwIiB5PSI2MCIgd2lkdGg9IjY2MCIgaGVpZ2h0PSI0NjAiIHJ4PSI2IiBmaWxsPSIjYTQ5ZTkxIiBmaWx0ZXI9InVybCgjd2FsbFNoYWRvdykiLz4KCiAgPCEtLSBEcnl3YWxsIEpvaW50IC8gU2VhbSAtLT4KICA8bGluZSB4MT0iNDAwIiB5MT0iNjAiIHgyPSI0MDAiIHkyPSI1MjAiIHN0cm9rZT0iIzdlNzg2YiIgc3Ryb2tlLXdpZHRoPSI2Ii8+CgogIDwhLS0gTXVkIGFuZCBUYXBlIExheWVyIChGZWF0aGVyZWQgRWRnZSkgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIzNDAsNjAgNDYwLDYwIDQ1MCw1MjAgMzUwLDUyMCIgZmlsbD0idXJsKCNtdWQpIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPGxpbmUgeDE9IjM5NSIgeTE9IjgwIiB4Mj0iMzk1IiB5Mj0iNTAwIiBzdHJva2U9IiNmY2ZjZjkiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWRhc2hhcnJheT0iMTAgNCIgb3BhY2l0eT0iMC44Ii8+CgogIDwhLS0gU2NyZXcgUGF0Y2hlcyBNdWRkZWQgLS0+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMTUwIiByPSIxOCIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMzAwIiByPSIxNiIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iNDUwIiByPSIxNyIgZmlsbD0idXJsKCNtdWQpIi8+CgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjE4MCIgcj0iMTYiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjMzMCIgcj0iMTgiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjQ2MCIgcj0iMTUiIGZpbGw9InVybCgjbXVkKSIvPgoKICA8IS0tIFRyb3dlbC9LbmlmZSBJbGx1c3RyYXRpb24gLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDIwLCAyNjApIHJvdGF0ZSgtMjUpIj4KICAgIDxwb2x5Z29uIHBvaW50cz0iMCwwIDEyMCwtMTAgMTMwLDQwIDEwLDUwIiBmaWxsPSIjY2VkNGRhIiBzdHJva2U9IiNhZGI1YmQiIHN0cm9rZS13aWR0aD0iMiIvPgogICAgPHJlY3QgeD0iLTQwIiB5PSIxNSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjE4IiByeD0iNCIgZmlsbD0iIzM0M2E0MCIvPgogICAgPGxpbmUgeDE9IjUiIHkxPSIxOCIgeDI9IjExNSIgeTI9IjgiIHN0cm9rZT0iI2Y4ZjlmYSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPC9nPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMzAiIHk9IjUyMCIgd2lkdGg9IjM0MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQyKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPlNFQU1MRVNTIERSWVdBTEwgTVVEICZhbXA7IFRBUEU8L3RleHQ+Cjwvc3ZnPgo=","tag":"DURING (MUD & TAPE)","alt":"Drywall compound taping and seamless plaster finish"}]},{"title":"Decks & Exterior Finishes","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE5MjAyNyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYjBlMTEiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Indvb2RSaWNoIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM4YjQ1MTMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNhMDUyMmQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNmIzNDEwIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJ3b29kQWdlZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjk2OTY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjODA4MDgwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzU1NTU1NSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9ImRlY2tTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmczKSIvPgoKICA8IS0tIERlY2sgUGxhbmtzIC0tPgogIDxnIGZpbHRlcj0idXJsKCNkZWNrU2hhZG93KSI+CiAgICA8IS0tIFdlYXRoZXJlZCBsZWZ0IGhhbGYsIGZyZXNobHkgc3RhaW5lZCByaWdodCBoYWxmIGNvbXBhcmlzb24gLS0+CiAgICA8IS0tIFBsYW5rIDEgLS0+CiAgICA8cmVjdCB4PSI3MCIgeT0iODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSI4MCIgd2lkdGg9IjMzNSIgaGVpZ2h0PSI2NSIgcng9IjMiIGZpbGw9InVybCgjd29vZFJpY2gpIi8+CiAgICAKICAgIDwhLS0gUGxhbmsgMiAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIxNTUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIxNTUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgMyAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIyMzAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIyMzAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNCAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzMDUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzMDUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNSAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzODAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgogIDwvZz4KCiAgPCEtLSBMYWJlbHMgb24gY29tcGFyaXNvbiAtLT4KICA8cmVjdCB4PSIxNDAiIHk9IjI0MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSI0MCIgcng9IjQiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuNzUiLz4KICA8dGV4dCB4PSIyMzAiIHk9IjI2NSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI4MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPldFQVRIRVJFRCBDRURBUjwvdGV4dD4KCiAgPHJlY3QgeD0iNDcwIiB5PSIyNDAiIHdpZHRoPSIxODAiIGhlaWdodD0iNDAiIHJ4PSI0IiBmaWxsPSIjMDAwIiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHRleHQgeD0iNTYwIiB5PSIyNjUiIGZpbGw9IiNmZmQ1M2QiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iODAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GUkVTSExZIFJFU1RPUkVEICZhbXA7IFNUQUlORUQ8L3RleHQ+CgogIDwhLS0gRGl2aWRlciBMaW5lIC0tPgogIDxsaW5lIHgxPSIzOTIiIHkxPSI3MCIgeDI9IjM5MiIgeTI9IjQ1NSIgc3Ryb2tlPSIjZmZkNTNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjYgNCIvPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMjAiIHk9IjUyMCIgd2lkdGg9IjM2MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQzKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPkRFQ0sgUkVTVE9SQVRJT04gJmFtcDsgV0VBVEhFUiBTRUFMPC90ZXh0Pgo8L3N2Zz4K","tag":"AFTER (SEALED)","alt":"Exterior deck power washed and stained"}]}]}};
+        const INITIAL_SITE_DATA = ${JSON.stringify(defaultSiteData)};
         const DEFAULT_PASSWORD_HASH = "9bd1546c479074aeae9bcf8ee5b1da7a108828cbfa1f32aef9281667471f419a"; // "krueger2026"
 
         // State holder
@@ -1421,7 +1217,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             if (adminModal) adminModal.classList.remove("open");
 
             // Bake current siteData into INITIAL_SITE_DATA in the script
-            let fullHtml = "<!DOCTYPE html>\n" + docClone.outerHTML;
+            let fullHtml = "<!DOCTYPE html>\\n" + docClone.outerHTML;
 
             // Generate blob and trigger download
             const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
@@ -1451,3 +1247,8 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     </script>
 </body>
 </html>
+`;
+
+fs.writeFileSync(path.join(root, "index.html"), singleHtmlContent, "utf8");
+fs.writeFileSync(path.join(root, "krueger-single-file.html"), singleHtmlContent, "utf8");
+console.log("Built index.html and krueger-single-file.html successfully!");
