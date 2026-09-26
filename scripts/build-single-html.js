@@ -8,12 +8,17 @@ const cssContent = fs.readFileSync(path.join(root, "css/styles.css"), "utf8");
 const kitchenSvg = "data:image/svg+xml;base64," + fs.readFileSync(path.join(root, "images/kitchen-cabinets.svg")).toString("base64");
 const drywallSvg = "data:image/svg+xml;base64," + fs.readFileSync(path.join(root, "images/drywall-repair.svg")).toString("base64");
 const deckSvg = "data:image/svg+xml;base64," + fs.readFileSync(path.join(root, "images/deck-stain.svg")).toString("base64");
+const heroBgSvg = "data:image/svg+xml;base64," + fs.readFileSync(path.join(root, "images/hero-bg.svg")).toString("base64");
 
 const settings = JSON.parse(fs.readFileSync(path.join(root, "data/settings.json"), "utf8"));
 const hero = JSON.parse(fs.readFileSync(path.join(root, "data/hero.json"), "utf8"));
 const services = JSON.parse(fs.readFileSync(path.join(root, "data/services.json"), "utf8"));
 const estimate = JSON.parse(fs.readFileSync(path.join(root, "data/estimate.json"), "utf8"));
 const gallery = JSON.parse(fs.readFileSync(path.join(root, "data/gallery.json"), "utf8"));
+
+// Update default hero background to embedded SVG
+hero.background_image = heroBgSvg;
+hero.overlay_opacity = 0.80;
 
 // Update gallery photos to use embedded SVG data URLs
 gallery.categories[0].photos[0].image = kitchenSvg;
@@ -303,7 +308,6 @@ ${adminStyles}
             <a href="#services">Services</a>
             <a href="#gallery">Gallery</a>
             <a href="#estimate">Request Estimate</a>
-            <a href="javascript:void(0)" onclick="openAdminModal()" style="color: #ffcc00; font-size: 0.85rem;">Admin Login</a>
         </nav>
         <div class="action-buttons">
             <a href="tel:262-443-1199" class="btn-call" id="header-call-btn" aria-label="Call Krueger Painting">
@@ -417,7 +421,7 @@ ${adminStyles}
                         <span class="logo-monogram" style="font-size: 0.7rem;">KP</span>
                     </div>
                 </div>
-                <span>Krueger Developer &amp; Content Manager</span>
+                <span>Krueger Painting</span>
             </div>
             <div class="admin-controls-right">
                 <button type="button" class="btn-export-html" id="btn-export-site" title="Download updated self-contained HTML file to push to GitHub">
@@ -435,19 +439,18 @@ ${adminStyles}
                 </div>
             </div>
             <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Krueger Painting</h2>
-            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Developer &amp; Site Content Dashboard</p>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Content Manager Portal</p>
 
             <form id="admin-login-form" style="text-align: left;">
                 <div style="margin-bottom: 16px;">
-                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Admin Password</label>
+                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
                     <div style="position: relative; display: flex; align-items: center;">
                         <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter password" required style="padding-right: 42px;" autocomplete="current-password">
                         <button type="button" id="btn-toggle-login-pw" style="position: absolute; right: 10px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 4px;" title="Show/Hide Password">👁</button>
                     </div>
                 </div>
                 <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
-                <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; max-width: 100%;">Sign In to Dashboard</button>
-                <p style="margin-top: 14px; font-size: 0.8rem; color: #778; text-align: center;">Default password: <strong style="color: var(--primary);">krueger2026</strong><br><span style="font-size: 0.75rem; color: #667;">(You can change this password anytime in Security settings)</span></p>
+                <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; max-width: 100%;">Sign In</button>
             </form>
         </div>
 
@@ -456,6 +459,7 @@ ${adminStyles}
             <!-- Tabs Navigation -->
             <div class="admin-tabs-nav">
                 <button type="button" class="admin-tab-btn active" data-tab="tab-logo">Website Logo</button>
+                <button type="button" class="admin-tab-btn" data-tab="tab-hero">Hero Background</button>
                 <button type="button" class="admin-tab-btn" data-tab="tab-photos">Project Photos</button>
                 <button type="button" class="admin-tab-btn" data-tab="tab-contact">Business &amp; Contact</button>
                 <button type="button" class="admin-tab-btn" data-tab="tab-security">Security &amp; Password</button>
@@ -505,6 +509,64 @@ ${adminStyles}
 
                         <div id="logo-remove-wrap" style="margin-top: 16px;">
                             <button type="button" class="btn-outline-danger" id="btn-remove-logo-btn" style="display: none;">Remove Uploaded Logo (Reset to Monogram)</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: HERO BACKGROUND -->
+                <section id="tab-hero" class="admin-tab-section">
+                    <div class="admin-card-box">
+                        <h2 class="admin-card-title">Homepage Hero Background Picture</h2>
+                        <p class="admin-card-desc">
+                            Customize the background image displayed behind the main header text ("Quality Craftsmanship. Flawless Finishes."). The semi-transparent dark overlay keeps your text and estimate buttons bright and easily readable.
+                        </p>
+
+                        <!-- Live Preview of Hero Background -->
+                        <div style="background: #111417; border: 1px dashed #3a4452; border-radius: 6px; padding: 16px; margin: 16px 0 24px 0;">
+                            <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: #828d99; margin-bottom: 10px;">Live Hero Banner Preview</div>
+                            <div id="modal-preview-hero-mock" style="position: relative; border-radius: 6px; padding: 40px 20px; text-align: center; background-size: cover; background-position: center; border: 1px solid #333; overflow: hidden; background-color: #111418;">
+                                <div id="modal-preview-hero-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14, 17, 21, 0.80) 0%, rgba(10, 12, 16, 0.88) 100%); pointer-events: none; z-index: 1;"></div>
+                                <div style="position: relative; z-index: 2;">
+                                    <h3 style="font-size: 1.45rem; margin: 0 0 10px 0; font-weight: 900; line-height: 1.25;">
+                                        <span style="color: #fff;">Quality Craftsmanship.</span><br>
+                                        <span style="color: var(--primary);">Flawless Finishes.</span>
+                                    </h3>
+                                    <p style="color: #ccc; font-size: 0.88rem; max-width: 480px; margin: 0 auto 16px auto; line-height: 1.45;">
+                                        Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship.
+                                    </p>
+                                    <span class="btn-primary" style="display: inline-block; padding: 8px 18px; font-size: 0.82rem; pointer-events: none; border-radius: 4px;">Tap for Free Estimate</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Darkness / Opacity Adjustment -->
+                        <div class="form-group" style="margin-bottom: 22px; background: #15191e; border: 1px solid #2a3440; border-radius: 6px; padding: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <label style="margin: 0; color: #ccc; font-weight: 700; font-size: 0.9rem;">Overlay Darkness / Opacity</label>
+                                <span id="modal-hero-opacity-val" style="font-weight: 800; color: var(--primary); font-size: 0.95rem;">80%</span>
+                            </div>
+                            <input type="range" id="modal-hero-opacity-range" min="40" max="95" value="80" step="5" style="width: 100%; accent-color: var(--primary); cursor: pointer;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #778; margin-top: 6px;">
+                                <span>Lighter (More photo visible)</span>
+                                <span>Darker (Maximum text contrast)</span>
+                            </div>
+                        </div>
+
+                        <input type="file" id="modal-hero-file-picker" accept="image/*" style="display: none;">
+                        <div class="upload-dropzone-box" id="modal-hero-dropzone">
+                            <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 8px;">🌄</div>
+                            <div style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 4px;">Tap to Choose New Hero Background Photo</div>
+                            <div style="font-size: 0.82rem; color: #8894a0;">Select any JPG, PNG, or WEBP photo from your device or camera roll. High-resolution horizontal photos look fantastic!</div>
+                        </div>
+
+                        <div id="modal-hero-action-bar" style="margin-top: 16px; display: none; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <button type="button" class="btn-primary" id="btn-modal-save-hero" style="max-width: 260px; border: none; cursor: pointer;">Save Hero Background</button>
+                            <button type="button" class="btn-outline-danger" id="btn-modal-cancel-hero">Cancel</button>
+                        </div>
+
+                        <div id="modal-hero-reset-wrap" style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" class="btn-outline-danger" id="btn-modal-reset-hero">Reset to Default Painting Texture</button>
+                            <button type="button" class="btn-outline-danger" id="btn-modal-clear-hero">Remove Background (Solid Dark)</button>
                         </div>
                     </div>
                 </section>
@@ -759,12 +821,24 @@ ${adminStyles}
             }
 
             // Hero
+            const heroSection = document.querySelector(".hero");
             if (siteData.hero) {
                 if (siteData.hero.headline_white) document.getElementById("hero-headline-white").textContent = siteData.hero.headline_white;
                 if (siteData.hero.headline_yellow) document.getElementById("hero-headline-yellow").textContent = siteData.hero.headline_yellow;
                 if (siteData.hero.description) document.getElementById("hero-description").textContent = siteData.hero.description;
                 if (siteData.hero.primary_button) document.getElementById("hero-btn-primary").textContent = siteData.hero.primary_button;
                 if (siteData.hero.secondary_button) document.getElementById("hero-btn-secondary").textContent = siteData.hero.secondary_button;
+
+                if (heroSection) {
+                    const bg = siteData.hero.background_image || "";
+                    const opacity = (siteData.hero.overlay_opacity !== undefined) ? siteData.hero.overlay_opacity : 0.80;
+                    heroSection.style.setProperty("--hero-overlay-alpha", opacity);
+                    if (bg && bg.trim()) {
+                        heroSection.style.backgroundImage = 'url("' + bg + '")';
+                    } else {
+                        heroSection.style.backgroundImage = 'none';
+                    }
+                }
             }
 
             // Services
@@ -958,6 +1032,9 @@ ${adminStyles}
             // Logo Tab
             renderAdminLogoTab();
 
+            // Hero Background Tab
+            renderAdminHeroTab();
+
             // Photos Tab
             renderAdminPhotosTab();
 
@@ -1032,6 +1109,112 @@ ${adminStyles}
             renderSite();
             renderAdminLogoTab();
             showAdminAlert("Logo removed.");
+        });
+
+        // ADMIN TAB: HERO BACKGROUND
+        let pendingModalHeroData = null;
+        function renderAdminHeroTab() {
+            const bg = siteData.hero?.background_image || INITIAL_SITE_DATA.hero.background_image || "";
+            const opacity = (siteData.hero?.overlay_opacity !== undefined) ? siteData.hero.overlay_opacity : 0.80;
+            
+            const previewMock = document.getElementById("modal-preview-hero-mock");
+            const previewOverlay = document.getElementById("modal-preview-hero-overlay");
+            const opacityRange = document.getElementById("modal-hero-opacity-range");
+            const opacityVal = document.getElementById("modal-hero-opacity-val");
+
+            if (previewMock) {
+                previewMock.style.backgroundImage = (bg && bg.trim()) ? 'url("' + bg + '")' : "none";
+            }
+            if (previewOverlay) {
+                previewOverlay.style.background = 'linear-gradient(180deg, rgba(14, 17, 21, ' + opacity + ') 0%, rgba(10, 12, 16, ' + Math.min(1, opacity + 0.08) + ') 100%)';
+            }
+            if (opacityRange && opacityVal) {
+                opacityRange.value = Math.round(opacity * 100);
+                opacityVal.textContent = Math.round(opacity * 100) + "%";
+            }
+        }
+
+        const modalHeroOpacity = document.getElementById("modal-hero-opacity-range");
+        const modalHeroOpacityVal = document.getElementById("modal-hero-opacity-val");
+        if (modalHeroOpacity && modalHeroOpacityVal) {
+            modalHeroOpacity.addEventListener("input", async (e) => {
+                const val = parseInt(e.target.value, 10) / 100;
+                modalHeroOpacityVal.textContent = e.target.value + "%";
+                const overlay = document.getElementById("modal-preview-hero-overlay");
+                if (overlay) {
+                    overlay.style.background = 'linear-gradient(180deg, rgba(14, 17, 21, ' + val + ') 0%, rgba(10, 12, 16, ' + Math.min(1, val + 0.08) + ') 100%)';
+                }
+                if (!siteData.hero) siteData.hero = {};
+                siteData.hero.overlay_opacity = val;
+                const heroSection = document.querySelector(".hero");
+                if (heroSection) heroSection.style.setProperty("--hero-overlay-alpha", val);
+            });
+            modalHeroOpacity.addEventListener("change", async () => {
+                await persistSiteData();
+                showAdminAlert("✓ Background darkness saved!");
+            });
+        }
+
+        const modalHeroPicker = document.getElementById("modal-hero-file-picker");
+        const modalHeroDropzone = document.getElementById("modal-hero-dropzone");
+        const modalHeroActionBar = document.getElementById("modal-hero-action-bar");
+
+        modalHeroDropzone.addEventListener("click", () => modalHeroPicker.click());
+        modalHeroPicker.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                pendingModalHeroData = evt.target.result;
+                const previewMock = document.getElementById("modal-preview-hero-mock");
+                if (previewMock) {
+                    previewMock.style.backgroundImage = 'url("' + pendingModalHeroData + '")';
+                }
+                modalHeroActionBar.style.display = "flex";
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById("btn-modal-cancel-hero").addEventListener("click", () => {
+            pendingModalHeroData = null;
+            modalHeroPicker.value = "";
+            modalHeroActionBar.style.display = "none";
+            renderAdminHeroTab();
+        });
+
+        document.getElementById("btn-modal-save-hero").addEventListener("click", async () => {
+            if (!pendingModalHeroData) return;
+            if (!siteData.hero) siteData.hero = {};
+            siteData.hero.background_image = pendingModalHeroData;
+            siteData.hero.overlay_opacity = parseInt(modalHeroOpacity.value, 10) / 100;
+            await persistSiteData();
+            renderSite();
+            renderAdminHeroTab();
+            pendingModalHeroData = null;
+            modalHeroPicker.value = "";
+            modalHeroActionBar.style.display = "none";
+            showAdminAlert("✓ Hero background picture updated! Check out the homepage banner.");
+        });
+
+        document.getElementById("btn-modal-reset-hero").addEventListener("click", async () => {
+            if (!confirm("Reset hero background to default painting texture?")) return;
+            if (!siteData.hero) siteData.hero = {};
+            siteData.hero.background_image = INITIAL_SITE_DATA.hero.background_image;
+            siteData.hero.overlay_opacity = 0.80;
+            await persistSiteData();
+            renderSite();
+            renderAdminHeroTab();
+            showAdminAlert("✓ Reset hero background to default painting texture.");
+        });
+
+        document.getElementById("btn-modal-clear-hero").addEventListener("click", async () => {
+            if (!confirm("Clear background image and use solid dark header?")) return;
+            if (!siteData.hero) siteData.hero = {};
+            siteData.hero.background_image = "";
+            await persistSiteData();
+            renderSite();
+            renderAdminHeroTab();
+            showAdminAlert("Hero background picture removed.");
         });
 
         // ADMIN TAB: PHOTOS
@@ -1218,6 +1401,10 @@ ${adminStyles}
 
             // Bake current siteData into INITIAL_SITE_DATA in the script
             let fullHtml = "<!DOCTYPE html>\\n" + docClone.outerHTML;
+            fullHtml = fullHtml.replace(
+                /const INITIAL_SITE_DATA = \\{[\\s\\S]*?\\};\\s*const DEFAULT_PASSWORD_HASH/,
+                'const INITIAL_SITE_DATA = ' + JSON.stringify(siteData) + ';\\n        const DEFAULT_PASSWORD_HASH'
+            );
 
             // Generate blob and trigger download
             const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });

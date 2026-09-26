@@ -12,6 +12,16 @@ const PORT = 3000;
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
+// Ensure HTML files and root pages are never cached by the browser
+app.use((req, res, next) => {
+  if (req.path.endsWith(".html") || req.path === "/" || req.path === "/admin" || req.path === "/admin/") {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+  }
+  next();
+});
+
 // In-memory blob stores (AI Studio mock for @netlify/blobs)
 const memoryBlobStores = new Map();
 
@@ -247,6 +257,18 @@ app.post("/api/content", async (req, res) => {
       }
 
       return res.json({ success: true });
+    }
+
+    if (payload.action === "update_hero") {
+      const { background_image, overlay_opacity, headline_white, headline_yellow, description } = payload.hero || {};
+      if (background_image !== undefined) current.hero.background_image = background_image;
+      if (overlay_opacity !== undefined) current.hero.overlay_opacity = overlay_opacity;
+      if (headline_white !== undefined) current.hero.headline_white = headline_white;
+      if (headline_yellow !== undefined) current.hero.headline_yellow = headline_yellow;
+      if (description !== undefined) current.hero.description = description;
+
+      await blobStore.setJSON("content", current);
+      return res.json({ success: true, hero: current.hero });
     }
 
     if (payload.action === "save_gallery") {

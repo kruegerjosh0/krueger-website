@@ -351,7 +351,6 @@
             </div>
             <div id="login-error-msg" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
             <button type="submit" class="btn-upload-action" id="btn-login-submit" style="width: 100%; justify-content: center;">Sign In to Dashboard</button>
-            <p style="margin-top: 14px; font-size: 0.8rem; color: #778; text-align: center;">Default password: <strong style="color: var(--primary);">krueger2026</strong><br><span style="font-size: 0.75rem; color: #667;">(You can change this anytime inside the Security tab)</span></p>
         </form>
     </div>
 
@@ -365,7 +364,7 @@
                         <span class="logo-monogram" style="font-size: 0.75rem;">KP</span>
                     </div>
                 </div>
-                <span>Krueger Painting Admin</span>
+                <span>Krueger Painting</span>
             </div>
             <div class="admin-user-bar">
                 <a href="/" target="_blank" class="btn-view-site">View Website ↗</a>
@@ -375,6 +374,7 @@
 
         <div class="admin-tabs">
             <button type="button" class="tab-btn active" data-tab="logo-tab">Website Logo</button>
+            <button type="button" class="tab-btn" data-tab="hero-tab">Hero Background</button>
             <button type="button" class="tab-btn" data-tab="photos-tab">Project Photos</button>
             <button type="button" class="tab-btn" data-tab="info-tab">Business &amp; Contact</button>
             <button type="button" class="tab-btn" data-tab="security-tab">Security &amp; Password</button>
@@ -432,6 +432,76 @@
                         <div id="logo-reset-bar" style="margin-top: 16px;">
                             <button type="button" class="btn-danger-outline" id="btn-remove-logo" style="display: none;">
                                 Remove Uploaded Logo (Reset to Monogram Circle)
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- TAB 2: HERO BACKGROUND -->
+            <section id="hero-tab" class="tab-content" style="display: none;">
+                <div class="admin-card">
+                    <h2 class="card-title">Homepage Hero Background Picture</h2>
+                    <p class="card-desc">
+                        Change the background photo displayed behind the main headline on your homepage ("Quality Craftsmanship. Flawless Finishes."). The dark semi-transparent overlay ensures your headline and estimate buttons remain sharp, bright, and legible.
+                    </p>
+
+                    <!-- Live Mock Preview -->
+                    <div class="preview-box">
+                        <div class="preview-label">Live Hero Banner Preview (Opaque Picture Behind Headline)</div>
+                        <div id="admin-preview-hero-mock" style="position: relative; border-radius: 6px; padding: 42px 20px; text-align: center; background-size: cover; background-position: center; border: 1px solid #333; overflow: hidden; background-color: #111418;">
+                            <div id="admin-preview-hero-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14, 17, 21, 0.80) 0%, rgba(10, 12, 16, 0.88) 100%); pointer-events: none; z-index: 1;"></div>
+                            <div style="position: relative; z-index: 2;">
+                                <h3 style="font-size: 1.45rem; margin: 0 0 10px 0; font-weight: 900; line-height: 1.25;">
+                                    <span style="color: #fff;">Quality Craftsmanship.</span><br>
+                                    <span style="color: var(--primary);">Flawless Finishes.</span>
+                                </h3>
+                                <p style="color: #ccc; font-size: 0.88rem; max-width: 480px; margin: 0 auto 16px auto; line-height: 1.45;">
+                                    Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.
+                                </p>
+                                <span class="btn-primary" style="display: inline-block; padding: 9px 20px; font-size: 0.82rem; pointer-events: none; border-radius: 4px;">Tap for Free Estimate</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overlay Opacity Slider -->
+                    <div style="margin-bottom: 22px; background: #15191e; border: 1px solid #2a3440; border-radius: 6px; padding: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <label style="color: #ccc; font-size: 0.9rem; font-weight: 700; margin: 0;">Overlay Darkness / Opacity</label>
+                            <span id="admin-hero-opacity-val" style="font-weight: 800; color: var(--primary); font-size: 0.95rem;">80%</span>
+                        </div>
+                        <input type="range" id="admin-hero-opacity-range" min="40" max="95" value="80" step="5" style="width: 100%; accent-color: var(--primary); cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #778; margin-top: 6px;">
+                            <span>Lighter (More background picture visible)</span>
+                            <span>Darker (Maximum text contrast)</span>
+                        </div>
+                    </div>
+
+                    <form id="hero-bg-form">
+                        <input type="file" id="hero-bg-file-input" accept="image/*" style="display: none;">
+                        <div class="upload-dropzone" id="hero-bg-dropzone">
+                            <div class="upload-icon">🌄</div>
+                            <div style="font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 6px;">
+                                Tap to Choose New Hero Background Photo
+                            </div>
+                            <div style="font-size: 0.85rem; color: #8894a0;">
+                                Select any JPG, PNG, or WEBP photo from your phone or computer. A horizontal picture of your painting work or craftsmanship looks best!
+                            </div>
+                        </div>
+
+                        <div id="hero-bg-save-bar" style="margin-top: 20px; display: none; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                            <button type="submit" class="btn-upload-action" id="btn-save-hero-bg">
+                                <span>Save Hero Background</span>
+                            </button>
+                            <button type="button" class="btn-danger-outline" id="btn-cancel-hero-bg">Cancel</button>
+                        </div>
+
+                        <div id="hero-bg-presets-bar" style="margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" class="btn-danger-outline" id="btn-reset-hero-default">
+                                Reset to Default Painting Texture
+                            </button>
+                            <button type="button" class="btn-danger-outline" id="btn-clear-hero-bg">
+                                Remove Background (Solid Dark Header)
                             </button>
                         </div>
                     </form>
@@ -685,6 +755,7 @@
                     if (res.ok) {
                         siteData = await res.json();
                         renderLogoTab();
+                        renderHeroTab();
                         renderPhotosTab();
                         renderSettingsTab();
                     }
@@ -813,6 +884,188 @@
                     }
                 } catch (e) {
                     showAlert("Failed to remove logo.", false);
+                }
+            });
+
+            // RENDER HERO BACKGROUND TAB
+            let pendingHeroBgBase64 = null;
+            function renderHeroTab() {
+                const bg = siteData.hero?.background_image || "/images/hero-bg.svg";
+                const opacity = (siteData.hero?.overlay_opacity !== undefined) ? siteData.hero.overlay_opacity : 0.80;
+                
+                const previewMock = document.getElementById("admin-preview-hero-mock");
+                const previewOverlay = document.getElementById("admin-preview-hero-overlay");
+                const opacityRange = document.getElementById("admin-hero-opacity-range");
+                const opacityVal = document.getElementById("admin-hero-opacity-val");
+
+                if (previewMock) {
+                    previewMock.style.backgroundImage = (bg && bg.trim()) ? `url("${bg}")` : "none";
+                }
+                if (previewOverlay) {
+                    previewOverlay.style.background = `linear-gradient(180deg, rgba(14, 17, 21, ${opacity}) 0%, rgba(10, 12, 16, ${Math.min(1, opacity + 0.08)}) 100%)`;
+                }
+                if (opacityRange && opacityVal) {
+                    opacityRange.value = Math.round(opacity * 100);
+                    opacityVal.textContent = Math.round(opacity * 100) + "%";
+                }
+            }
+
+            // Opacity slider live interaction
+            const adminOpacityRange = document.getElementById("admin-hero-opacity-range");
+            const adminOpacityVal = document.getElementById("admin-hero-opacity-val");
+            if (adminOpacityRange && adminOpacityVal) {
+                adminOpacityRange.addEventListener("input", async (e) => {
+                    const val = parseInt(e.target.value, 10) / 100;
+                    adminOpacityVal.textContent = e.target.value + "%";
+                    const overlay = document.getElementById("admin-preview-hero-overlay");
+                    if (overlay) {
+                        overlay.style.background = `linear-gradient(180deg, rgba(14, 17, 21, ${val}) 0%, rgba(10, 12, 16, ${Math.min(1, val + 0.08)}) 100%)`;
+                    }
+                    if (!siteData.hero) siteData.hero = {};
+                    siteData.hero.overlay_opacity = val;
+                });
+                adminOpacityRange.addEventListener("change", async (e) => {
+                    const val = parseInt(e.target.value, 10) / 100;
+                    try {
+                        await fetch("/api/content", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ action: "update_hero", hero: { overlay_opacity: val } })
+                        });
+                        showAlert("✓ Background darkness saved!");
+                    } catch (err) {}
+                });
+            }
+
+            // Hero background file selection
+            const heroBgDropzone = document.getElementById("hero-bg-dropzone");
+            const heroBgFileInput = document.getElementById("hero-bg-file-input");
+            const heroBgSaveBar = document.getElementById("hero-bg-save-bar");
+
+            heroBgDropzone.addEventListener("click", () => { heroBgFileInput.click(); });
+            heroBgFileInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    pendingHeroBgBase64 = event.target.result;
+                    // Update preview immediately
+                    const previewMock = document.getElementById("admin-preview-hero-mock");
+                    if (previewMock) {
+                        previewMock.style.backgroundImage = `url("${pendingHeroBgBase64}")`;
+                    }
+                    heroBgSaveBar.style.display = "flex";
+                };
+                reader.readAsDataURL(file);
+            });
+
+            document.getElementById("btn-cancel-hero-bg").addEventListener("click", () => {
+                pendingHeroBgBase64 = null;
+                heroBgSaveBar.style.display = "none";
+                heroBgFileInput.value = "";
+                renderHeroTab();
+            });
+
+            // Save Hero Background
+            document.getElementById("hero-bg-form").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                if (!pendingHeroBgBase64) return;
+
+                const btn = document.getElementById("btn-save-hero-bg");
+                btn.disabled = true;
+                btn.textContent = "Uploading & Saving Background...";
+
+                try {
+                    // Upload image
+                    const uploadRes = await fetch("/api/upload", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ data: pendingHeroBgBase64 })
+                    });
+                    const uploadData = await uploadRes.json();
+                    if (!uploadRes.ok || !uploadData.url) throw new Error(uploadData.error || "Upload failed");
+
+                    const currentOpacity = parseInt(adminOpacityRange.value, 10) / 100;
+                    const saveRes = await fetch("/api/content", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            action: "update_hero",
+                            hero: {
+                                background_image: uploadData.url,
+                                overlay_opacity: currentOpacity
+                            }
+                        })
+                    });
+
+                    if (saveRes.ok) {
+                        if (!siteData.hero) siteData.hero = {};
+                        siteData.hero.background_image = uploadData.url;
+                        siteData.hero.overlay_opacity = currentOpacity;
+                        renderHeroTab();
+                        heroBgSaveBar.style.display = "none";
+                        pendingHeroBgBase64 = null;
+                        heroBgFileInput.value = "";
+                        showAlert("✓ Hero background picture updated successfully! It is now live behind your homepage headline.");
+                    } else {
+                        throw new Error("Failed to save hero background");
+                    }
+                } catch (err) {
+                    showAlert("Error saving hero background: " + err.message, false);
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = "Save Hero Background";
+                }
+            });
+
+            // Reset Hero to Default
+            document.getElementById("btn-reset-hero-default").addEventListener("click", async () => {
+                if (!confirm("Reset hero background to the default craftsman texture?")) return;
+                try {
+                    const saveRes = await fetch("/api/content", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            action: "update_hero",
+                            hero: {
+                                background_image: "/images/hero-bg.svg",
+                                overlay_opacity: 0.80
+                            }
+                        })
+                    });
+                    if (saveRes.ok) {
+                        if (!siteData.hero) siteData.hero = {};
+                        siteData.hero.background_image = "/images/hero-bg.svg";
+                        siteData.hero.overlay_opacity = 0.80;
+                        renderHeroTab();
+                        showAlert("✓ Hero background reset to default painting texture.");
+                    }
+                } catch (e) {
+                    showAlert("Failed to reset hero background.", false);
+                }
+            });
+
+            // Clear Hero Background
+            document.getElementById("btn-clear-hero-bg").addEventListener("click", async () => {
+                if (!confirm("Clear background image and use solid dark header?")) return;
+                try {
+                    const saveRes = await fetch("/api/content", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            action: "update_hero",
+                            hero: { background_image: "" }
+                        })
+                    });
+                    if (saveRes.ok) {
+                        if (!siteData.hero) siteData.hero = {};
+                        siteData.hero.background_image = "";
+                        renderHeroTab();
+                        showAlert("Hero background picture removed.");
+                    }
+                } catch (e) {
+                    showAlert("Failed to remove hero background.", false);
                 }
             });
 

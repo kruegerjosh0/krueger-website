@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <defs>
+    <!-- Background room gradient -->
+    <linearGradient id="wallGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e242c" />
+      <stop offset="40%" stop-color="#161a20" />
+      <stop offset="100%" stop-color="#0f1216" />
+    </linearGradient>
+
+    <!-- Warm golden ambient architectural lighting -->
+    <radialGradient id="warmLight" cx="20%" cy="15%" r="65%">
+      <stop offset="0%" stop-color="#ffcc00" stop-opacity="0.28" />
+      <stop offset="50%" stop-color="#ffaa00" stop-opacity="0.10" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="accentGlow" cx="80%" cy="75%" r="55%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Subtle paint roller texture pattern -->
+    <pattern id="rollerTexture" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M0 15 Q15 12 30 15 T60 15" fill="none" stroke="#ffffff" stroke-width="0.75" stroke-opacity="0.04" />
+      <path d="M0 35 Q15 38 30 35 T60 35" fill="none" stroke="#ffffff" stroke-width="0.75" stroke-opacity="0.03" />
+      <path d="M0 55 Q15 52 30 55 T60 55" fill="none" stroke="#ffffff" stroke-width="0.75" stroke-opacity="0.04" />
+    </pattern>
+
+    <!-- Drop shadow for architectural moldings -->
+    <filter id="moldingShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+  </defs>
+
+  <!-- Deep architectural wall base -->
+  <rect width="1600" height="900" fill="url(#wallGradient)" />
+
+  <!-- Wall perspective planes (room corner) -->
+  <polygon points="0,0 520,0 480,900 0,900" fill="#1b2027" opacity="0.9" />
+  <line x1="520" y1="0" x2="480" y2="900" stroke="#0a0c0e" stroke-width="4" opacity="0.8" />
+  <line x1="522" y1="0" x2="482" y2="900" stroke="#ffcc00" stroke-width="1.5" stroke-opacity="0.25" />
+
+  <!-- Baseboard trim moulding at bottom -->
+  <polygon points="0,840 1600,840 1600,900 0,900" fill="#121519" />
+  <line x1="0" y1="840" x2="1600" y2="840" stroke="#2c3440" stroke-width="3" />
+  <line x1="0" y1="843" x2="1600" y2="843" stroke="#ffcc00" stroke-width="1" stroke-opacity="0.3" />
+
+  <!-- Crown moulding at top -->
+  <polygon points="0,0 1600,0 1600,45 0,45" fill="#14181d" filter="url(#moldingShadow)" />
+  <line x1="0" y1="45" x2="1600" y2="45" stroke="#2a333f" stroke-width="2" />
+
+  <!-- Roller paint stroke swatch on right accent wall -->
+  <rect x="750" y="100" width="550" height="680" rx="8" fill="#1e252e" stroke="#2d3744" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.6" />
+  <rect x="770" y="120" width="220" height="640" rx="4" fill="#ffcc00" opacity="0.08" />
+
+  <!-- Overlay roller texture pattern -->
+  <rect width="1600" height="900" fill="url(#rollerTexture)" />
+
+  <!-- Ambient lighting glows -->
+  <rect width="1600" height="900" fill="url(#warmLight)" />
+  <rect width="1600" height="900" fill="url(#accentGlow)" />
+
+  <!-- Elegant craftsman paint roller silhouette in background -->
+  <g transform="translate(1320, 240) rotate(18) scale(1.1)" opacity="0.12">
+    <rect x="0" y="0" width="160" height="50" rx="8" fill="#ffcc00" />
+    <path d="M80 50 L80 120 L40 160 L40 280" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

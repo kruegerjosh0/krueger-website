@@ -186,11 +186,33 @@ header {
 }
 
 /* HERO */
-.hero { text-align: center; padding: 50px 20px; border-bottom: 1px solid #222;}
-.hero h2 { font-size: 1.8rem; margin: 0 0 15px 0; font-weight: 900; line-height: 1.3; }
+.hero {
+    position: relative;
+    text-align: center;
+    padding: 70px 20px;
+    border-bottom: 1px solid #222;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #111418;
+    overflow: hidden;
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(14, 17, 21, var(--hero-overlay-alpha, 0.80)) 0%, rgba(10, 12, 16, var(--hero-overlay-alpha, 0.88)) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+.hero > * {
+    position: relative;
+    z-index: 2;
+}
+.hero h2 { font-size: 1.8rem; margin: 0 0 15px 0; font-weight: 900; line-height: 1.3; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 .hero h2 span { color: var(--primary); display: block; }
 .hero h2 span.hero-white { color: inherit; display: inline; }
-.hero p { color: #aaaaaa; font-size: 0.95rem; max-width: 540px; margin: 0 auto 30px auto; }
+.hero p { color: #cccccc; font-size: 0.98rem; max-width: 560px; margin: 0 auto 30px auto; text-shadow: 0 1px 6px rgba(0,0,0,0.8); line-height: 1.6; }
 .hero-btns { display: flex; flex-direction: column; gap: 15px; align-items: center; }
 .btn-primary { background: var(--primary); color: #000; padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
 .btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
@@ -507,7 +529,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <a href="#services">Services</a>
             <a href="#gallery">Gallery</a>
             <a href="#estimate">Request Estimate</a>
-            <a href="javascript:void(0)" onclick="openAdminModal()" style="color: #ffcc00; font-size: 0.85rem;">Admin Login</a>
         </nav>
         <div class="action-buttons">
             <a href="tel:262-443-1199" class="btn-call" id="header-call-btn" aria-label="Call Krueger Painting">
@@ -621,7 +642,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <span class="logo-monogram" style="font-size: 0.7rem;">KP</span>
                     </div>
                 </div>
-                <span>Krueger Developer &amp; Content Manager</span>
+                <span>Krueger Painting</span>
             </div>
             <div class="admin-controls-right">
                 <button type="button" class="btn-export-html" id="btn-export-site" title="Download updated self-contained HTML file to push to GitHub">
@@ -639,19 +660,18 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 </div>
             </div>
             <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Krueger Painting</h2>
-            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Developer &amp; Site Content Dashboard</p>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Content Manager Portal</p>
 
             <form id="admin-login-form" style="text-align: left;">
                 <div style="margin-bottom: 16px;">
-                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Admin Password</label>
+                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
                     <div style="position: relative; display: flex; align-items: center;">
                         <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter password" required style="padding-right: 42px;" autocomplete="current-password">
                         <button type="button" id="btn-toggle-login-pw" style="position: absolute; right: 10px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 4px;" title="Show/Hide Password">👁</button>
                     </div>
                 </div>
                 <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
-                <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; max-width: 100%;">Sign In to Dashboard</button>
-                <p style="margin-top: 14px; font-size: 0.8rem; color: #778; text-align: center;">Default password: <strong style="color: var(--primary);">krueger2026</strong><br><span style="font-size: 0.75rem; color: #667;">(You can change this password anytime in Security settings)</span></p>
+                <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; max-width: 100%;">Sign In</button>
             </form>
         </div>
 
@@ -660,6 +680,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <!-- Tabs Navigation -->
             <div class="admin-tabs-nav">
                 <button type="button" class="admin-tab-btn active" data-tab="tab-logo">Website Logo</button>
+                <button type="button" class="admin-tab-btn" data-tab="tab-hero">Hero Background</button>
                 <button type="button" class="admin-tab-btn" data-tab="tab-photos">Project Photos</button>
                 <button type="button" class="admin-tab-btn" data-tab="tab-contact">Business &amp; Contact</button>
                 <button type="button" class="admin-tab-btn" data-tab="tab-security">Security &amp; Password</button>
@@ -709,6 +730,64 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
                         <div id="logo-remove-wrap" style="margin-top: 16px;">
                             <button type="button" class="btn-outline-danger" id="btn-remove-logo-btn" style="display: none;">Remove Uploaded Logo (Reset to Monogram)</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: HERO BACKGROUND -->
+                <section id="tab-hero" class="admin-tab-section">
+                    <div class="admin-card-box">
+                        <h2 class="admin-card-title">Homepage Hero Background Picture</h2>
+                        <p class="admin-card-desc">
+                            Customize the background image displayed behind the main header text ("Quality Craftsmanship. Flawless Finishes."). The semi-transparent dark overlay keeps your text and estimate buttons bright and easily readable.
+                        </p>
+
+                        <!-- Live Preview of Hero Background -->
+                        <div style="background: #111417; border: 1px dashed #3a4452; border-radius: 6px; padding: 16px; margin: 16px 0 24px 0;">
+                            <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: #828d99; margin-bottom: 10px;">Live Hero Banner Preview</div>
+                            <div id="modal-preview-hero-mock" style="position: relative; border-radius: 6px; padding: 40px 20px; text-align: center; background-size: cover; background-position: center; border: 1px solid #333; overflow: hidden; background-color: #111418;">
+                                <div id="modal-preview-hero-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14, 17, 21, 0.80) 0%, rgba(10, 12, 16, 0.88) 100%); pointer-events: none; z-index: 1;"></div>
+                                <div style="position: relative; z-index: 2;">
+                                    <h3 style="font-size: 1.45rem; margin: 0 0 10px 0; font-weight: 900; line-height: 1.25;">
+                                        <span style="color: #fff;">Quality Craftsmanship.</span><br>
+                                        <span style="color: var(--primary);">Flawless Finishes.</span>
+                                    </h3>
+                                    <p style="color: #ccc; font-size: 0.88rem; max-width: 480px; margin: 0 auto 16px auto; line-height: 1.45;">
+                                        Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship.
+                                    </p>
+                                    <span class="btn-primary" style="display: inline-block; padding: 8px 18px; font-size: 0.82rem; pointer-events: none; border-radius: 4px;">Tap for Free Estimate</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Darkness / Opacity Adjustment -->
+                        <div class="form-group" style="margin-bottom: 22px; background: #15191e; border: 1px solid #2a3440; border-radius: 6px; padding: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <label style="margin: 0; color: #ccc; font-weight: 700; font-size: 0.9rem;">Overlay Darkness / Opacity</label>
+                                <span id="modal-hero-opacity-val" style="font-weight: 800; color: var(--primary); font-size: 0.95rem;">80%</span>
+                            </div>
+                            <input type="range" id="modal-hero-opacity-range" min="40" max="95" value="80" step="5" style="width: 100%; accent-color: var(--primary); cursor: pointer;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #778; margin-top: 6px;">
+                                <span>Lighter (More photo visible)</span>
+                                <span>Darker (Maximum text contrast)</span>
+                            </div>
+                        </div>
+
+                        <input type="file" id="modal-hero-file-picker" accept="image/*" style="display: none;">
+                        <div class="upload-dropzone-box" id="modal-hero-dropzone">
+                            <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 8px;">🌄</div>
+                            <div style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 4px;">Tap to Choose New Hero Background Photo</div>
+                            <div style="font-size: 0.82rem; color: #8894a0;">Select any JPG, PNG, or WEBP photo from your device or camera roll. High-resolution horizontal photos look fantastic!</div>
+                        </div>
+
+                        <div id="modal-hero-action-bar" style="margin-top: 16px; display: none; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <button type="button" class="btn-primary" id="btn-modal-save-hero" style="max-width: 260px; border: none; cursor: pointer;">Save Hero Background</button>
+                            <button type="button" class="btn-outline-danger" id="btn-modal-cancel-hero">Cancel</button>
+                        </div>
+
+                        <div id="modal-hero-reset-wrap" style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" class="btn-outline-danger" id="btn-modal-reset-hero">Reset to Default Painting Texture</button>
+                            <button type="button" class="btn-outline-danger" id="btn-modal-clear-hero">Remove Background (Solid Dark)</button>
                         </div>
                     </div>
                 </section>
@@ -859,7 +938,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <script>
     (function () {
         // EMBEDDED DEFAULT STATE
-        const INITIAL_SITE_DATA = {"settings":{"logo":"","business_name":"Krueger Painting","phone":"262-443-1199","facebook_url":"https://www.facebook.com/share/1EySXfm7FM/"},"hero":{"headline_white":"Quality Craftsmanship.","headline_yellow":"Flawless Finishes.","description":"Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.","primary_button":"Tap for Free Estimate","secondary_button":"View Gallery"},"services":{"heading":"What We Do","services":[{"title":"Interior Painting","description":"Professional surface preparation, priming, and precision painting using premium finishes like Sherwin-Williams Emerald enamel for doors, trim, walls, and ceilings."},{"title":"Decks & Exterior Finishing","description":"Comprehensive exterior protection including wood staining, deck restoration, sealing, and pressure washing to withstand Wisconsin weather elements."},{"title":"Wall Repair & Drywall","description":"Expert drywall hanging, professional tape compound layering, mudding, and smooth plaster sanding to establish seamless surfaces ready for paint."}]},"estimate":{"heading":"Request an Estimate","button_text":"Submit Request"},"gallery":{"homepage_heading":"Our Recent Projects","homepage_button":"View Full Photo Library","page_heading":"Photo Gallery","page_intro":"Browse our interior painting, drywall repairs, and exterior finish projects.","categories":[{"title":"Kitchen Painting","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWUyNDJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMTMxOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iY2FiIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZThlY2VmIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJnb2xkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZDUzZCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNmI4MDAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJzaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjYiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmcpIi8+CgogIDwhLS0gS2l0Y2hlbiBXYWxsICYgQmFja3NwbGFzaCAtLT4KICA8cmVjdCB4PSI2MCIgeT0iNTAiIHdpZHRoPSI2ODAiIGhlaWdodD0iNDgwIiByeD0iOCIgZmlsbD0iIzI1MmMzNCIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICAKICA8IS0tIFN1YnRsZSBzdWJ3YXkgdGlsZSBwYXR0ZXJuIC0tPgogIDxnIG9wYWNpdHk9IjAuMTUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMjYwIiB4Mj0iNzQwIiB5Mj0iMjYwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIyOTAiIHgyPSI3NDAiIHkyPSIyOTAiLz4KICAgIDxsaW5lIHgxPSI2MCIgeTE9IjMyMCIgeDI9Ijc0MCIgeTI9IjMyMCIvPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMzUwIiB4Mj0iNzQwIiB5Mj0iMzUwIi8+CiAgPC9nPgoKICA8IS0tIFVwcGVyIENhYmluZXRzIChGcmVzaCBQYWludGVkIFdoaXRlIEZpbmlzaCkgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjgwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE3MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSIxMDUiIHk9Ijk1IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE0MCIgcng9IjIiIGZpbGw9IiNmNGY2ZjgiIHN0cm9rZT0iI2QwZDdkZSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMjQwIiBjeT0iMTY1IiByPSI1IiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjI5MCIgeT0iODAiIHdpZHRoPSIyMjAiIGhlaWdodD0iMTcwIiByeD0iNCIgZmlsbD0idXJsKCNjYWIpIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDxyZWN0IHg9IjMwNSIgeT0iOTUiIHdpZHRoPSIxOTAiIGhlaWdodD0iMTQwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8Y2lyY2xlIGN4PSIzMjAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KICA8Y2lyY2xlIGN4PSI0ODAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KCiAgPHJlY3QgeD0iNTMwIiB5PSI4MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxNzAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iNTQ1IiB5PSI5NSIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIxNDAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjU2MCIgY3k9IjE2NSIgcj0iNSIgZmlsbD0iIzMzMyIvPgoKICA8IS0tIENvdW50ZXJ0b3AgLS0+CiAgPHJlY3QgeD0iNzUiIHk9IjM2MCIgd2lkdGg9IjY1MCIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiMxMTEiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIxIi8+CgogIDwhLS0gTG93ZXIgQ2FiaW5ldHMgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjM4MCIgd2lkdGg9IjI4MCIgaGVpZ2h0PSIxNDAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iMTA1IiB5PSIzOTUiIHdpZHRoPSIyNTAiIGhlaWdodD0iMTEwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cmVjdCB4PSIyMTUiIHk9IjQxNSIgd2lkdGg9IjMwIiBoZWlnaHQ9IjYiIHJ4PSIyIiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjQzMCIgeT0iMzgwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjE0MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSI0NDUiIHk9IjM5NSIgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxMTAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxyZWN0IHg9IjU1NSIgeT0iNDE1IiB3aWR0aD0iMzAiIGhlaWdodD0iNiIgcng9IjIiIGZpbGw9IiMzMzMiLz4KCiAgPCEtLSBCYWRnZSBiYW5uZXIgLS0+CiAgPHJlY3QgeD0iMjQwIiB5PSI1MjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNDIiIHJ4PSIyMSIgZmlsbD0idXJsKCNnb2xkKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPktJVENIRU4gQ0FCSU5FVCBSRUZJTklTSElORzwvdGV4dD4KPC9zdmc+Cg==","tag":"AFTER","alt":"Cabinet paint refinishing with Sherwin-Williams enamel finish"}]},{"title":"Drywall & Wall Repair","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmcyIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJjMzAzNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxODFiMWUiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im11ZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDRkNGNiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmUzIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M5YzliZSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9IndhbGxTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTIiIGZsb29kLW9wYWNpdHk9IjAuNCIvPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNiZzIpIi8+CgogIDwhLS0gV2FsbCBCb2FyZCBTZWN0aW9uIC0tPgogIDxyZWN0IHg9IjcwIiB5PSI2MCIgd2lkdGg9IjY2MCIgaGVpZ2h0PSI0NjAiIHJ4PSI2IiBmaWxsPSIjYTQ5ZTkxIiBmaWx0ZXI9InVybCgjd2FsbFNoYWRvdykiLz4KCiAgPCEtLSBEcnl3YWxsIEpvaW50IC8gU2VhbSAtLT4KICA8bGluZSB4MT0iNDAwIiB5MT0iNjAiIHgyPSI0MDAiIHkyPSI1MjAiIHN0cm9rZT0iIzdlNzg2YiIgc3Ryb2tlLXdpZHRoPSI2Ii8+CgogIDwhLS0gTXVkIGFuZCBUYXBlIExheWVyIChGZWF0aGVyZWQgRWRnZSkgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIzNDAsNjAgNDYwLDYwIDQ1MCw1MjAgMzUwLDUyMCIgZmlsbD0idXJsKCNtdWQpIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPGxpbmUgeDE9IjM5NSIgeTE9IjgwIiB4Mj0iMzk1IiB5Mj0iNTAwIiBzdHJva2U9IiNmY2ZjZjkiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWRhc2hhcnJheT0iMTAgNCIgb3BhY2l0eT0iMC44Ii8+CgogIDwhLS0gU2NyZXcgUGF0Y2hlcyBNdWRkZWQgLS0+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMTUwIiByPSIxOCIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMzAwIiByPSIxNiIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iNDUwIiByPSIxNyIgZmlsbD0idXJsKCNtdWQpIi8+CgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjE4MCIgcj0iMTYiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjMzMCIgcj0iMTgiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjQ2MCIgcj0iMTUiIGZpbGw9InVybCgjbXVkKSIvPgoKICA8IS0tIFRyb3dlbC9LbmlmZSBJbGx1c3RyYXRpb24gLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDIwLCAyNjApIHJvdGF0ZSgtMjUpIj4KICAgIDxwb2x5Z29uIHBvaW50cz0iMCwwIDEyMCwtMTAgMTMwLDQwIDEwLDUwIiBmaWxsPSIjY2VkNGRhIiBzdHJva2U9IiNhZGI1YmQiIHN0cm9rZS13aWR0aD0iMiIvPgogICAgPHJlY3QgeD0iLTQwIiB5PSIxNSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjE4IiByeD0iNCIgZmlsbD0iIzM0M2E0MCIvPgogICAgPGxpbmUgeDE9IjUiIHkxPSIxOCIgeDI9IjExNSIgeTI9IjgiIHN0cm9rZT0iI2Y4ZjlmYSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPC9nPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMzAiIHk9IjUyMCIgd2lkdGg9IjM0MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQyKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPlNFQU1MRVNTIERSWVdBTEwgTVVEICZhbXA7IFRBUEU8L3RleHQ+Cjwvc3ZnPgo=","tag":"DURING (MUD & TAPE)","alt":"Drywall compound taping and seamless plaster finish"}]},{"title":"Decks & Exterior Finishes","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE5MjAyNyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYjBlMTEiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Indvb2RSaWNoIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM4YjQ1MTMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNhMDUyMmQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNmIzNDEwIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJ3b29kQWdlZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjk2OTY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjODA4MDgwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzU1NTU1NSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9ImRlY2tTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmczKSIvPgoKICA8IS0tIERlY2sgUGxhbmtzIC0tPgogIDxnIGZpbHRlcj0idXJsKCNkZWNrU2hhZG93KSI+CiAgICA8IS0tIFdlYXRoZXJlZCBsZWZ0IGhhbGYsIGZyZXNobHkgc3RhaW5lZCByaWdodCBoYWxmIGNvbXBhcmlzb24gLS0+CiAgICA8IS0tIFBsYW5rIDEgLS0+CiAgICA8cmVjdCB4PSI3MCIgeT0iODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSI4MCIgd2lkdGg9IjMzNSIgaGVpZ2h0PSI2NSIgcng9IjMiIGZpbGw9InVybCgjd29vZFJpY2gpIi8+CiAgICAKICAgIDwhLS0gUGxhbmsgMiAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIxNTUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIxNTUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgMyAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIyMzAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIyMzAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNCAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzMDUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzMDUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNSAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzODAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgogIDwvZz4KCiAgPCEtLSBMYWJlbHMgb24gY29tcGFyaXNvbiAtLT4KICA8cmVjdCB4PSIxNDAiIHk9IjI0MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSI0MCIgcng9IjQiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuNzUiLz4KICA8dGV4dCB4PSIyMzAiIHk9IjI2NSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI4MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPldFQVRIRVJFRCBDRURBUjwvdGV4dD4KCiAgPHJlY3QgeD0iNDcwIiB5PSIyNDAiIHdpZHRoPSIxODAiIGhlaWdodD0iNDAiIHJ4PSI0IiBmaWxsPSIjMDAwIiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHRleHQgeD0iNTYwIiB5PSIyNjUiIGZpbGw9IiNmZmQ1M2QiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iODAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GUkVTSExZIFJFU1RPUkVEICZhbXA7IFNUQUlORUQ8L3RleHQ+CgogIDwhLS0gRGl2aWRlciBMaW5lIC0tPgogIDxsaW5lIHgxPSIzOTIiIHkxPSI3MCIgeDI9IjM5MiIgeTI9IjQ1NSIgc3Ryb2tlPSIjZmZkNTNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjYgNCIvPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMjAiIHk9IjUyMCIgd2lkdGg9IjM2MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQzKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPkRFQ0sgUkVTVE9SQVRJT04gJmFtcDsgV0VBVEhFUiBTRUFMPC90ZXh0Pgo8L3N2Zz4K","tag":"AFTER (SEALED)","alt":"Exterior deck power washed and stained"}]}]}};
+        const INITIAL_SITE_DATA = {"settings":{"logo":"","business_name":"Krueger Painting","phone":"262-443-1199","facebook_url":"https://www.facebook.com/share/1EySXfm7FM/"},"hero":{"headline_white":"Quality Craftsmanship.","headline_yellow":"Flawless Finishes.","description":"Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.","primary_button":"Tap for Free Estimate","secondary_button":"View Gallery","background_image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAwIDkwMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+CiAgPGRlZnM+CiAgICA8IS0tIEJhY2tncm91bmQgcm9vbSBncmFkaWVudCAtLT4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0id2FsbEdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFlMjQyYyIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI0MCUiIHN0b3AtY29sb3I9IiMxNjFhMjAiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMTIxNiIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CgogICAgPCEtLSBXYXJtIGdvbGRlbiBhbWJpZW50IGFyY2hpdGVjdHVyYWwgbGlnaHRpbmcgLS0+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1MaWdodCIgY3g9IjIwJSIgY3k9IjE1JSIgcj0iNjUlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmY2MwMCIgc3RvcC1vcGFjaXR5PSIwLjI4IiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmYWEwMCIgc3RvcC1vcGFjaXR5PSIwLjEwIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMCIgLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CgogICAgPHJhZGlhbEdyYWRpZW50IGlkPSJhY2NlbnRHbG93IiBjeD0iODAlIiBjeT0iNzUlIiByPSI1NSUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjM2I4MmY2IiBzdG9wLW9wYWNpdHk9IjAuMTIiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIiAvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KCiAgICA8IS0tIFN1YnRsZSBwYWludCByb2xsZXIgdGV4dHVyZSBwYXR0ZXJuIC0tPgogICAgPHBhdHRlcm4gaWQ9InJvbGxlclRleHR1cmUiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxwYXRoIGQ9Ik0wIDE1IFExNSAxMiAzMCAxNSBUNjAgMTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIwLjc1IiBzdHJva2Utb3BhY2l0eT0iMC4wNCIgLz4KICAgICAgPHBhdGggZD0iTTAgMzUgUTE1IDM4IDMwIDM1IFQ2MCAzNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjAuNzUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiAvPgogICAgICA8cGF0aCBkPSJNMCA1NSBRMTUgNTIgMzAgNTUgVDYwIDU1IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMC43NSIgc3Ryb2tlLW9wYWNpdHk9IjAuMDQiIC8+CiAgICA8L3BhdHRlcm4+CgogICAgPCEtLSBEcm9wIHNoYWRvdyBmb3IgYXJjaGl0ZWN0dXJhbCBtb2xkaW5ncyAtLT4KICAgIDxmaWx0ZXIgaWQ9Im1vbGRpbmdTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLWNvbG9yPSIjMDAwMDAwIiBmbG9vZC1vcGFjaXR5PSIwLjYiIC8+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CgogIDwhLS0gRGVlcCBhcmNoaXRlY3R1cmFsIHdhbGwgYmFzZSAtLT4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjd2FsbEdyYWRpZW50KSIgLz4KCiAgPCEtLSBXYWxsIHBlcnNwZWN0aXZlIHBsYW5lcyAocm9vbSBjb3JuZXIpIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMCwwIDUyMCwwIDQ4MCw5MDAgMCw5MDAiIGZpbGw9IiMxYjIwMjciIG9wYWNpdHk9IjAuOSIgLz4KICA8bGluZSB4MT0iNTIwIiB5MT0iMCIgeDI9IjQ4MCIgeTI9IjkwMCIgc3Ryb2tlPSIjMGEwYzBlIiBzdHJva2Utd2lkdGg9IjQiIG9wYWNpdHk9IjAuOCIgLz4KICA8bGluZSB4MT0iNTIyIiB5MT0iMCIgeDI9IjQ4MiIgeTI9IjkwMCIgc3Ryb2tlPSIjZmZjYzAwIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMjUiIC8+CgogIDwhLS0gQmFzZWJvYXJkIHRyaW0gbW91bGRpbmcgYXQgYm90dG9tIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMCw4NDAgMTYwMCw4NDAgMTYwMCw5MDAgMCw5MDAiIGZpbGw9IiMxMjE1MTkiIC8+CiAgPGxpbmUgeDE9IjAiIHkxPSI4NDAiIHgyPSIxNjAwIiB5Mj0iODQwIiBzdHJva2U9IiMyYzM0NDAiIHN0cm9rZS13aWR0aD0iMyIgLz4KICA8bGluZSB4MT0iMCIgeTE9Ijg0MyIgeDI9IjE2MDAiIHkyPSI4NDMiIHN0cm9rZT0iI2ZmY2MwMCIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2Utb3BhY2l0eT0iMC4zIiAvPgoKICA8IS0tIENyb3duIG1vdWxkaW5nIGF0IHRvcCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjAsMCAxNjAwLDAgMTYwMCw0NSAwLDQ1IiBmaWxsPSIjMTQxODFkIiBmaWx0ZXI9InVybCgjbW9sZGluZ1NoYWRvdykiIC8+CiAgPGxpbmUgeDE9IjAiIHkxPSI0NSIgeDI9IjE2MDAiIHkyPSI0NSIgc3Ryb2tlPSIjMmEzMzNmIiBzdHJva2Utd2lkdGg9IjIiIC8+CgogIDwhLS0gUm9sbGVyIHBhaW50IHN0cm9rZSBzd2F0Y2ggb24gcmlnaHQgYWNjZW50IHdhbGwgLS0+CiAgPHJlY3QgeD0iNzUwIiB5PSIxMDAiIHdpZHRoPSI1NTAiIGhlaWdodD0iNjgwIiByeD0iOCIgZmlsbD0iIzFlMjUyZSIgc3Ryb2tlPSIjMmQzNzQ0IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iOCA2IiBvcGFjaXR5PSIwLjYiIC8+CiAgPHJlY3QgeD0iNzcwIiB5PSIxMjAiIHdpZHRoPSIyMjAiIGhlaWdodD0iNjQwIiByeD0iNCIgZmlsbD0iI2ZmY2MwMCIgb3BhY2l0eT0iMC4wOCIgLz4KCiAgPCEtLSBPdmVybGF5IHJvbGxlciB0ZXh0dXJlIHBhdHRlcm4gLS0+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI3JvbGxlclRleHR1cmUpIiAvPgoKICA8IS0tIEFtYmllbnQgbGlnaHRpbmcgZ2xvd3MgLS0+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI3dhcm1MaWdodCkiIC8+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI2FjY2VudEdsb3cpIiAvPgoKICA8IS0tIEVsZWdhbnQgY3JhZnRzbWFuIHBhaW50IHJvbGxlciBzaWxob3VldHRlIGluIGJhY2tncm91bmQgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTMyMCwgMjQwKSByb3RhdGUoMTgpIHNjYWxlKDEuMSkiIG9wYWNpdHk9IjAuMTIiPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI1MCIgcng9IjgiIGZpbGw9IiNmZmNjMDAiIC8+CiAgICA8cGF0aCBkPSJNODAgNTAgTDgwIDEyMCBMNDAgMTYwIEw0MCAyODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiAvPgogIDwvZz4KPC9zdmc+Cg==","overlay_opacity":0.8},"services":{"heading":"What We Do","services":[{"title":"Interior Painting","description":"Professional surface preparation, priming, and precision painting using premium finishes like Sherwin-Williams Emerald enamel for doors, trim, walls, and ceilings."},{"title":"Decks & Exterior Finishing","description":"Comprehensive exterior protection including wood staining, deck restoration, sealing, and pressure washing to withstand Wisconsin weather elements."},{"title":"Wall Repair & Drywall","description":"Expert drywall hanging, professional tape compound layering, mudding, and smooth plaster sanding to establish seamless surfaces ready for paint."}]},"estimate":{"heading":"Request an Estimate","button_text":"Submit Request"},"gallery":{"homepage_heading":"Our Recent Projects","homepage_button":"View Full Photo Library","page_heading":"Photo Gallery","page_intro":"Browse our interior painting, drywall repairs, and exterior finish projects.","categories":[{"title":"Kitchen Painting","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWUyNDJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMTMxOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iY2FiIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZThlY2VmIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJnb2xkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZDUzZCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNmI4MDAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJzaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjYiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmcpIi8+CgogIDwhLS0gS2l0Y2hlbiBXYWxsICYgQmFja3NwbGFzaCAtLT4KICA8cmVjdCB4PSI2MCIgeT0iNTAiIHdpZHRoPSI2ODAiIGhlaWdodD0iNDgwIiByeD0iOCIgZmlsbD0iIzI1MmMzNCIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICAKICA8IS0tIFN1YnRsZSBzdWJ3YXkgdGlsZSBwYXR0ZXJuIC0tPgogIDxnIG9wYWNpdHk9IjAuMTUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMjYwIiB4Mj0iNzQwIiB5Mj0iMjYwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIyOTAiIHgyPSI3NDAiIHkyPSIyOTAiLz4KICAgIDxsaW5lIHgxPSI2MCIgeTE9IjMyMCIgeDI9Ijc0MCIgeTI9IjMyMCIvPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMzUwIiB4Mj0iNzQwIiB5Mj0iMzUwIi8+CiAgPC9nPgoKICA8IS0tIFVwcGVyIENhYmluZXRzIChGcmVzaCBQYWludGVkIFdoaXRlIEZpbmlzaCkgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjgwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE3MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSIxMDUiIHk9Ijk1IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE0MCIgcng9IjIiIGZpbGw9IiNmNGY2ZjgiIHN0cm9rZT0iI2QwZDdkZSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMjQwIiBjeT0iMTY1IiByPSI1IiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjI5MCIgeT0iODAiIHdpZHRoPSIyMjAiIGhlaWdodD0iMTcwIiByeD0iNCIgZmlsbD0idXJsKCNjYWIpIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDxyZWN0IHg9IjMwNSIgeT0iOTUiIHdpZHRoPSIxOTAiIGhlaWdodD0iMTQwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8Y2lyY2xlIGN4PSIzMjAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KICA8Y2lyY2xlIGN4PSI0ODAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KCiAgPHJlY3QgeD0iNTMwIiB5PSI4MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxNzAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iNTQ1IiB5PSI5NSIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIxNDAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjU2MCIgY3k9IjE2NSIgcj0iNSIgZmlsbD0iIzMzMyIvPgoKICA8IS0tIENvdW50ZXJ0b3AgLS0+CiAgPHJlY3QgeD0iNzUiIHk9IjM2MCIgd2lkdGg9IjY1MCIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiMxMTEiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIxIi8+CgogIDwhLS0gTG93ZXIgQ2FiaW5ldHMgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjM4MCIgd2lkdGg9IjI4MCIgaGVpZ2h0PSIxNDAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iMTA1IiB5PSIzOTUiIHdpZHRoPSIyNTAiIGhlaWdodD0iMTEwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cmVjdCB4PSIyMTUiIHk9IjQxNSIgd2lkdGg9IjMwIiBoZWlnaHQ9IjYiIHJ4PSIyIiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjQzMCIgeT0iMzgwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjE0MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSI0NDUiIHk9IjM5NSIgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxMTAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxyZWN0IHg9IjU1NSIgeT0iNDE1IiB3aWR0aD0iMzAiIGhlaWdodD0iNiIgcng9IjIiIGZpbGw9IiMzMzMiLz4KCiAgPCEtLSBCYWRnZSBiYW5uZXIgLS0+CiAgPHJlY3QgeD0iMjQwIiB5PSI1MjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNDIiIHJ4PSIyMSIgZmlsbD0idXJsKCNnb2xkKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPktJVENIRU4gQ0FCSU5FVCBSRUZJTklTSElORzwvdGV4dD4KPC9zdmc+Cg==","tag":"AFTER","alt":"Cabinet paint refinishing with Sherwin-Williams enamel finish"}]},{"title":"Drywall & Wall Repair","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmcyIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJjMzAzNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxODFiMWUiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im11ZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDRkNGNiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmUzIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M5YzliZSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9IndhbGxTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTIiIGZsb29kLW9wYWNpdHk9IjAuNCIvPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNiZzIpIi8+CgogIDwhLS0gV2FsbCBCb2FyZCBTZWN0aW9uIC0tPgogIDxyZWN0IHg9IjcwIiB5PSI2MCIgd2lkdGg9IjY2MCIgaGVpZ2h0PSI0NjAiIHJ4PSI2IiBmaWxsPSIjYTQ5ZTkxIiBmaWx0ZXI9InVybCgjd2FsbFNoYWRvdykiLz4KCiAgPCEtLSBEcnl3YWxsIEpvaW50IC8gU2VhbSAtLT4KICA8bGluZSB4MT0iNDAwIiB5MT0iNjAiIHgyPSI0MDAiIHkyPSI1MjAiIHN0cm9rZT0iIzdlNzg2YiIgc3Ryb2tlLXdpZHRoPSI2Ii8+CgogIDwhLS0gTXVkIGFuZCBUYXBlIExheWVyIChGZWF0aGVyZWQgRWRnZSkgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIzNDAsNjAgNDYwLDYwIDQ1MCw1MjAgMzUwLDUyMCIgZmlsbD0idXJsKCNtdWQpIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPGxpbmUgeDE9IjM5NSIgeTE9IjgwIiB4Mj0iMzk1IiB5Mj0iNTAwIiBzdHJva2U9IiNmY2ZjZjkiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWRhc2hhcnJheT0iMTAgNCIgb3BhY2l0eT0iMC44Ii8+CgogIDwhLS0gU2NyZXcgUGF0Y2hlcyBNdWRkZWQgLS0+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMTUwIiByPSIxOCIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMzAwIiByPSIxNiIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iNDUwIiByPSIxNyIgZmlsbD0idXJsKCNtdWQpIi8+CgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjE4MCIgcj0iMTYiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjMzMCIgcj0iMTgiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjQ2MCIgcj0iMTUiIGZpbGw9InVybCgjbXVkKSIvPgoKICA8IS0tIFRyb3dlbC9LbmlmZSBJbGx1c3RyYXRpb24gLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDIwLCAyNjApIHJvdGF0ZSgtMjUpIj4KICAgIDxwb2x5Z29uIHBvaW50cz0iMCwwIDEyMCwtMTAgMTMwLDQwIDEwLDUwIiBmaWxsPSIjY2VkNGRhIiBzdHJva2U9IiNhZGI1YmQiIHN0cm9rZS13aWR0aD0iMiIvPgogICAgPHJlY3QgeD0iLTQwIiB5PSIxNSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjE4IiByeD0iNCIgZmlsbD0iIzM0M2E0MCIvPgogICAgPGxpbmUgeDE9IjUiIHkxPSIxOCIgeDI9IjExNSIgeTI9IjgiIHN0cm9rZT0iI2Y4ZjlmYSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPC9nPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMzAiIHk9IjUyMCIgd2lkdGg9IjM0MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQyKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPlNFQU1MRVNTIERSWVdBTEwgTVVEICZhbXA7IFRBUEU8L3RleHQ+Cjwvc3ZnPgo=","tag":"DURING (MUD & TAPE)","alt":"Drywall compound taping and seamless plaster finish"}]},{"title":"Decks & Exterior Finishes","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE5MjAyNyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYjBlMTEiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Indvb2RSaWNoIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM4YjQ1MTMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNhMDUyMmQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNmIzNDEwIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJ3b29kQWdlZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjk2OTY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjODA4MDgwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzU1NTU1NSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9ImRlY2tTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmczKSIvPgoKICA8IS0tIERlY2sgUGxhbmtzIC0tPgogIDxnIGZpbHRlcj0idXJsKCNkZWNrU2hhZG93KSI+CiAgICA8IS0tIFdlYXRoZXJlZCBsZWZ0IGhhbGYsIGZyZXNobHkgc3RhaW5lZCByaWdodCBoYWxmIGNvbXBhcmlzb24gLS0+CiAgICA8IS0tIFBsYW5rIDEgLS0+CiAgICA8cmVjdCB4PSI3MCIgeT0iODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSI4MCIgd2lkdGg9IjMzNSIgaGVpZ2h0PSI2NSIgcng9IjMiIGZpbGw9InVybCgjd29vZFJpY2gpIi8+CiAgICAKICAgIDwhLS0gUGxhbmsgMiAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIxNTUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIxNTUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgMyAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIyMzAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIyMzAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNCAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzMDUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzMDUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNSAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzODAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgogIDwvZz4KCiAgPCEtLSBMYWJlbHMgb24gY29tcGFyaXNvbiAtLT4KICA8cmVjdCB4PSIxNDAiIHk9IjI0MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSI0MCIgcng9IjQiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuNzUiLz4KICA8dGV4dCB4PSIyMzAiIHk9IjI2NSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI4MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPldFQVRIRVJFRCBDRURBUjwvdGV4dD4KCiAgPHJlY3QgeD0iNDcwIiB5PSIyNDAiIHdpZHRoPSIxODAiIGhlaWdodD0iNDAiIHJ4PSI0IiBmaWxsPSIjMDAwIiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHRleHQgeD0iNTYwIiB5PSIyNjUiIGZpbGw9IiNmZmQ1M2QiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iODAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GUkVTSExZIFJFU1RPUkVEICZhbXA7IFNUQUlORUQ8L3RleHQ+CgogIDwhLS0gRGl2aWRlciBMaW5lIC0tPgogIDxsaW5lIHgxPSIzOTIiIHkxPSI3MCIgeDI9IjM5MiIgeTI9IjQ1NSIgc3Ryb2tlPSIjZmZkNTNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjYgNCIvPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMjAiIHk9IjUyMCIgd2lkdGg9IjM2MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQzKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPkRFQ0sgUkVTVE9SQVRJT04gJmFtcDsgV0VBVEhFUiBTRUFMPC90ZXh0Pgo8L3N2Zz4K","tag":"AFTER (SEALED)","alt":"Exterior deck power washed and stained"}]}]}};
         const DEFAULT_PASSWORD_HASH = "9bd1546c479074aeae9bcf8ee5b1da7a108828cbfa1f32aef9281667471f419a"; // "krueger2026"
 
         // State holder
@@ -963,12 +1042,24 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             }
 
             // Hero
+            const heroSection = document.querySelector(".hero");
             if (siteData.hero) {
                 if (siteData.hero.headline_white) document.getElementById("hero-headline-white").textContent = siteData.hero.headline_white;
                 if (siteData.hero.headline_yellow) document.getElementById("hero-headline-yellow").textContent = siteData.hero.headline_yellow;
                 if (siteData.hero.description) document.getElementById("hero-description").textContent = siteData.hero.description;
                 if (siteData.hero.primary_button) document.getElementById("hero-btn-primary").textContent = siteData.hero.primary_button;
                 if (siteData.hero.secondary_button) document.getElementById("hero-btn-secondary").textContent = siteData.hero.secondary_button;
+
+                if (heroSection) {
+                    const bg = siteData.hero.background_image || "";
+                    const opacity = (siteData.hero.overlay_opacity !== undefined) ? siteData.hero.overlay_opacity : 0.80;
+                    heroSection.style.setProperty("--hero-overlay-alpha", opacity);
+                    if (bg && bg.trim()) {
+                        heroSection.style.backgroundImage = 'url("' + bg + '")';
+                    } else {
+                        heroSection.style.backgroundImage = 'none';
+                    }
+                }
             }
 
             // Services
@@ -1162,6 +1253,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             // Logo Tab
             renderAdminLogoTab();
 
+            // Hero Background Tab
+            renderAdminHeroTab();
+
             // Photos Tab
             renderAdminPhotosTab();
 
@@ -1236,6 +1330,112 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             renderSite();
             renderAdminLogoTab();
             showAdminAlert("Logo removed.");
+        });
+
+        // ADMIN TAB: HERO BACKGROUND
+        let pendingModalHeroData = null;
+        function renderAdminHeroTab() {
+            const bg = siteData.hero?.background_image || INITIAL_SITE_DATA.hero.background_image || "";
+            const opacity = (siteData.hero?.overlay_opacity !== undefined) ? siteData.hero.overlay_opacity : 0.80;
+            
+            const previewMock = document.getElementById("modal-preview-hero-mock");
+            const previewOverlay = document.getElementById("modal-preview-hero-overlay");
+            const opacityRange = document.getElementById("modal-hero-opacity-range");
+            const opacityVal = document.getElementById("modal-hero-opacity-val");
+
+            if (previewMock) {
+                previewMock.style.backgroundImage = (bg && bg.trim()) ? 'url("' + bg + '")' : "none";
+            }
+            if (previewOverlay) {
+                previewOverlay.style.background = 'linear-gradient(180deg, rgba(14, 17, 21, ' + opacity + ') 0%, rgba(10, 12, 16, ' + Math.min(1, opacity + 0.08) + ') 100%)';
+            }
+            if (opacityRange && opacityVal) {
+                opacityRange.value = Math.round(opacity * 100);
+                opacityVal.textContent = Math.round(opacity * 100) + "%";
+            }
+        }
+
+        const modalHeroOpacity = document.getElementById("modal-hero-opacity-range");
+        const modalHeroOpacityVal = document.getElementById("modal-hero-opacity-val");
+        if (modalHeroOpacity && modalHeroOpacityVal) {
+            modalHeroOpacity.addEventListener("input", async (e) => {
+                const val = parseInt(e.target.value, 10) / 100;
+                modalHeroOpacityVal.textContent = e.target.value + "%";
+                const overlay = document.getElementById("modal-preview-hero-overlay");
+                if (overlay) {
+                    overlay.style.background = 'linear-gradient(180deg, rgba(14, 17, 21, ' + val + ') 0%, rgba(10, 12, 16, ' + Math.min(1, val + 0.08) + ') 100%)';
+                }
+                if (!siteData.hero) siteData.hero = {};
+                siteData.hero.overlay_opacity = val;
+                const heroSection = document.querySelector(".hero");
+                if (heroSection) heroSection.style.setProperty("--hero-overlay-alpha", val);
+            });
+            modalHeroOpacity.addEventListener("change", async () => {
+                await persistSiteData();
+                showAdminAlert("✓ Background darkness saved!");
+            });
+        }
+
+        const modalHeroPicker = document.getElementById("modal-hero-file-picker");
+        const modalHeroDropzone = document.getElementById("modal-hero-dropzone");
+        const modalHeroActionBar = document.getElementById("modal-hero-action-bar");
+
+        modalHeroDropzone.addEventListener("click", () => modalHeroPicker.click());
+        modalHeroPicker.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                pendingModalHeroData = evt.target.result;
+                const previewMock = document.getElementById("modal-preview-hero-mock");
+                if (previewMock) {
+                    previewMock.style.backgroundImage = 'url("' + pendingModalHeroData + '")';
+                }
+                modalHeroActionBar.style.display = "flex";
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById("btn-modal-cancel-hero").addEventListener("click", () => {
+            pendingModalHeroData = null;
+            modalHeroPicker.value = "";
+            modalHeroActionBar.style.display = "none";
+            renderAdminHeroTab();
+        });
+
+        document.getElementById("btn-modal-save-hero").addEventListener("click", async () => {
+            if (!pendingModalHeroData) return;
+            if (!siteData.hero) siteData.hero = {};
+            siteData.hero.background_image = pendingModalHeroData;
+            siteData.hero.overlay_opacity = parseInt(modalHeroOpacity.value, 10) / 100;
+            await persistSiteData();
+            renderSite();
+            renderAdminHeroTab();
+            pendingModalHeroData = null;
+            modalHeroPicker.value = "";
+            modalHeroActionBar.style.display = "none";
+            showAdminAlert("✓ Hero background picture updated! Check out the homepage banner.");
+        });
+
+        document.getElementById("btn-modal-reset-hero").addEventListener("click", async () => {
+            if (!confirm("Reset hero background to default painting texture?")) return;
+            if (!siteData.hero) siteData.hero = {};
+            siteData.hero.background_image = INITIAL_SITE_DATA.hero.background_image;
+            siteData.hero.overlay_opacity = 0.80;
+            await persistSiteData();
+            renderSite();
+            renderAdminHeroTab();
+            showAdminAlert("✓ Reset hero background to default painting texture.");
+        });
+
+        document.getElementById("btn-modal-clear-hero").addEventListener("click", async () => {
+            if (!confirm("Clear background image and use solid dark header?")) return;
+            if (!siteData.hero) siteData.hero = {};
+            siteData.hero.background_image = "";
+            await persistSiteData();
+            renderSite();
+            renderAdminHeroTab();
+            showAdminAlert("Hero background picture removed.");
         });
 
         // ADMIN TAB: PHOTOS
@@ -1422,6 +1622,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
             // Bake current siteData into INITIAL_SITE_DATA in the script
             let fullHtml = "<!DOCTYPE html>\n" + docClone.outerHTML;
+            fullHtml = fullHtml.replace(
+                /const INITIAL_SITE_DATA = \{[\s\S]*?\};\s*const DEFAULT_PASSWORD_HASH/,
+                'const INITIAL_SITE_DATA = ' + JSON.stringify(siteData) + ';\n        const DEFAULT_PASSWORD_HASH'
+            );
 
             // Generate blob and trigger download
             const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
