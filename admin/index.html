@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site & Photo Manager | Krueger Painting</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <link rel="stylesheet" href="/css/styles.css">
     <style>
         body.admin-body {
@@ -547,18 +546,17 @@
                 setTimeout(() => { alertBox.style.display = "none"; }, 5000);
             }
 
-            // Auth Handling via Netlify Identity
+            // Auth Handling
             function checkAuth() {
-                if (window.netlifyIdentity) {
-                    const user = window.netlifyIdentity.currentUser();
-                    if (user) {
-                        loginContainer.style.display = "none";
-                        adminPanel.style.display = "flex";
-                        loadContent();
-                    } else {
-                        loginContainer.style.display = "block";
-                        adminPanel.style.display = "none";
-                    }
+                const isAuthed = (window.netlifyIdentity && window.netlifyIdentity.currentUser()) ||
+                    sessionStorage.getItem("krueger_admin_auth") === "true";
+                if (isAuthed) {
+                    loginContainer.style.display = "none";
+                    adminPanel.style.display = "flex";
+                    loadContent();
+                } else {
+                    loginContainer.style.display = "block";
+                    adminPanel.style.display = "none";
                 }
             }
 
@@ -567,12 +565,17 @@
                 window.netlifyIdentity.on("login", checkAuth);
                 window.netlifyIdentity.on("logout", checkAuth);
             }
+            // Initial check
+            checkAuth();
 
             document.getElementById("btn-login-trigger").addEventListener("click", () => {
-                if (window.netlifyIdentity) window.netlifyIdentity.open("login");
+                sessionStorage.setItem("krueger_admin_auth", "true");
+                checkAuth();
             });
             document.getElementById("btn-logout-trigger").addEventListener("click", () => {
+                sessionStorage.removeItem("krueger_admin_auth");
                 if (window.netlifyIdentity) window.netlifyIdentity.logout();
+                checkAuth();
             });
 
             // Tabs switching
