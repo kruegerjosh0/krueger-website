@@ -1351,7 +1351,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         function renderAdminHeroTab() {
             const bg = siteData.hero?.background_image || INITIAL_SITE_DATA.hero.background_image || "";
             const opacity = (siteData.hero?.overlay_opacity !== undefined) ? siteData.hero.overlay_opacity : 0.80;
-            
+
             const previewMock = document.getElementById("modal-preview-hero-mock");
             const previewOverlay = document.getElementById("modal-preview-hero-overlay");
             const opacityRange = document.getElementById("modal-hero-opacity-range");
