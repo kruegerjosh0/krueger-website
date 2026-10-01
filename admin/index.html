@@ -343,6 +343,10 @@
 
         <form id="admin-login-form" style="text-align: left;">
             <div style="margin-bottom: 16px;">
+                <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Email</label>
+                <div style="position: relative; display: flex; align-items: center; margin-bottom: 16px;">
+                    <input type="email" id="admin-email-input" class="form-control" placeholder="Enter email" required autocomplete="username" style="width: 100%; box-sizing: border-box; padding: 10px; border-radius: 4px; border: 1px solid #333; background: #111; color: #fff;">
+                </div>
                 <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
                 <div style="position: relative; display: flex; align-items: center;">
                     <input type="password" id="admin-password-input" class="form-control" placeholder="Enter admin password" required style="padding-right: 42px;" autocomplete="current-password">
@@ -645,6 +649,8 @@
         </main>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
     <script>
         (function() {
             let siteData = {
@@ -666,32 +672,34 @@
                 setTimeout(() => { alertBox.style.display = "none"; }, 5000);
             }
 
-            // SHA-256 helper
-            async function sha256(message) {
-                const msgBuffer = new TextEncoder().encode(message);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            
+            const firebaseConfig = {
+              apiKey: "AIzaSyCX2kXkMSEvw5OqHYMBke5JS-l92L4syFg",
+              authDomain: "gen-lang-client-0104266968.firebaseapp.com",
+              projectId: "gen-lang-client-0104266968",
+              storageBucket: "gen-lang-client-0104266968.firebasestorage.app",
+              messagingSenderId: "156022333695",
+              appId: "1:156022333695:web:5da1064545a9f35a426cca",
+              measurementId: "G-W3KT69GB1K"
+            };
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
             }
+            const auth = firebase.auth();
 
-            // Default password is 'krueger2026'
-            const DEFAULT_PASSWORD_HASH = "9bd1546c479074aeae9bcf8ee5b1da7a108828cbfa1f32aef9281667471f419a";
-
-            function getAdminPasswordHash() {
-                return localStorage.getItem("kp_admin_hash") || DEFAULT_PASSWORD_HASH;
-            }
 
             // Auth Handling
             function checkAuth() {
-                const isAuthed = sessionStorage.getItem("krueger_admin_auth") === "true";
-                if (isAuthed) {
-                    loginContainer.style.display = "none";
-                    adminPanel.style.display = "flex";
-                    loadContent();
-                } else {
-                    loginContainer.style.display = "block";
-                    adminPanel.style.display = "none";
-                }
+                auth.onAuthStateChanged((user) => {
+                    if (user) {
+                        loginContainer.style.display = "none";
+                        adminPanel.style.display = "flex";
+                        loadContent();
+                    } else {
+                        loginContainer.style.display = "block";
+                        adminPanel.style.display = "none";
+                    }
+                });
             }
 
             // Password Toggle Visibility
@@ -711,27 +719,34 @@
             if (loginForm) {
                 loginForm.addEventListener("submit", async (e) => {
                     e.preventDefault();
-                    const entered = pwInput.value;
-                    const enteredHash = await sha256(entered);
-                    const targetHash = getAdminPasswordHash();
+                    
+                    const btn = document.getElementById("btn-login-submit");
+                    btn.disabled = true;
+                    btn.textContent = "Signing In...";
+                    
+                    const emailInput = document.getElementById("admin-email-input");
+                    const enteredEmail = emailInput ? emailInput.value : "";
+                    const enteredPass = pwInput.value;
 
-                    if (enteredHash === targetHash) {
+                    try {
+                        await auth.signInWithEmailAndPassword(enteredEmail, enteredPass);
                         loginErrorMsg.style.display = "none";
                         pwInput.value = "";
-                        sessionStorage.setItem("krueger_admin_auth", "true");
-                        checkAuth();
-                    } else {
-                        loginErrorMsg.textContent = "Incorrect password. Please try again.";
+                        if (emailInput) emailInput.value = "";
+                    } catch (error) {
+                        loginErrorMsg.textContent = error.message || "Incorrect credentials. Please try again.";
                         loginErrorMsg.style.display = "block";
                         pwInput.focus();
+                    } finally {
+                        btn.disabled = false;
+                        btn.textContent = "Sign In to Dashboard";
                     }
                 });
             }
 
             // Logout
             document.getElementById("btn-logout-trigger").addEventListener("click", () => {
-                sessionStorage.removeItem("krueger_admin_auth");
-                checkAuth();
+                auth.signOut();
             });
 
             // Initial check
@@ -1291,16 +1306,6 @@
                     const next = document.getElementById("input-new-pw").value;
                     const confirm = document.getElementById("input-confirm-pw").value;
 
-                    const currHash = await sha256(curr);
-                    if (currHash !== getAdminPasswordHash()) {
-                        changePwMsg.textContent = "Current password does not match.";
-                        changePwMsg.style.background = "rgba(255, 107, 107, 0.12)";
-                        changePwMsg.style.color = "#ff6b6b";
-                        changePwMsg.style.border = "1px solid #ff6b6b";
-                        changePwMsg.style.display = "block";
-                        return;
-                    }
-
                     if (next.length < 6) {
                         changePwMsg.textContent = "New password must be at least 6 characters.";
                         changePwMsg.style.background = "rgba(255, 107, 107, 0.12)";
@@ -1319,17 +1324,30 @@
                         return;
                     }
 
-                    const newHash = await sha256(next);
-                    localStorage.setItem("kp_admin_hash", newHash);
+                    try {
+                        const user = auth.currentUser;
+                        if (!user) throw new Error("Not logged in");
+                        // Re-authenticate
+                        const credential = firebase.auth.EmailAuthProvider.credential(user.email, curr);
+                        await user.reauthenticateWithCredential(credential);
+                        // Update
+                        await user.updatePassword(next);
 
-                    changePwMsg.textContent = "✓ Password updated successfully! Please keep your new password safe.";
-                    changePwMsg.style.background = "rgba(34, 197, 94, 0.12)";
-                    changePwMsg.style.color = "#22c55e";
-                    changePwMsg.style.border = "1px solid #22c55e";
-                    changePwMsg.style.display = "block";
+                        changePwMsg.textContent = "✓ Password updated successfully! Please keep your new password safe.";
+                        changePwMsg.style.background = "rgba(34, 197, 94, 0.12)";
+                        changePwMsg.style.color = "#22c55e";
+                        changePwMsg.style.border = "1px solid #22c55e";
+                        changePwMsg.style.display = "block";
 
-                    changePwForm.reset();
-                    showAlert("✓ Admin password has been updated.");
+                        changePwForm.reset();
+                        showAlert("✓ Admin password has been updated.");
+                    } catch (err) {
+                        changePwMsg.textContent = err.message || "Failed to update password.";
+                        changePwMsg.style.background = "rgba(255, 107, 107, 0.12)";
+                        changePwMsg.style.color = "#ff6b6b";
+                        changePwMsg.style.border = "1px solid #ff6b6b";
+                        changePwMsg.style.display = "block";
+                    }
                 });
             }
 
