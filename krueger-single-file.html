@@ -674,7 +674,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <button type="button" id="btn-toggle-login-pw" style="position: absolute; right: 10px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 4px;" title="Show/Hide Password">👁</button>
                     </div>
                 </div>
+                <div style="text-align: right; margin-top: 8px; margin-bottom: 16px;">
+                    <button type="button" id="btn-forgot-password" style="background: none; border: none; color: #4facfe; font-size: 0.85rem; cursor: pointer; text-decoration: underline; padding: 0;">Forgot Password?</button>
+                </div>
                 <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                <div id="login-success-alert" style="display: none; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid #51cf66; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
                 <button type="submit" class="btn-primary" id="btn-login-submit" style="width: 100%; border: none; cursor: pointer; max-width: 100%; justify-content: center;">Sign In to Dashboard</button>
             </form>
         </div>
@@ -946,13 +950,12 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
         // Firebase Configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyCX2kXkMSEvw5OqHYMBke5JS-l92L4syFg",
-          authDomain: "gen-lang-client-0104266968.firebaseapp.com",
-          projectId: "gen-lang-client-0104266968",
-          storageBucket: "gen-lang-client-0104266968.firebasestorage.app",
-          messagingSenderId: "156022333695",
-          appId: "1:156022333695:web:5da1064545a9f35a426cca",
-          measurementId: "G-W3KT69GB1K"
+          apiKey: "YOUR_FIREBASE_API_KEY",
+          authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+          projectId: "YOUR_FIREBASE_PROJECT_ID",
+          storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+          messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+          appId: "YOUR_FIREBASE_APP_ID"
         };
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
@@ -1230,6 +1233,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             const enteredEmail = emailInput ? emailInput.value : "";
             const enteredPass = pwInput.value;
             const errBox = document.getElementById("login-error-alert");
+            const successBox = document.getElementById("login-success-alert");
+
+            if (successBox) successBox.style.display = "none";
+            if (errBox) errBox.style.display = "none";
 
             try {
                 await auth.signInWithEmailAndPassword(enteredEmail, enteredPass);
@@ -1245,6 +1252,42 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 btn.textContent = "Sign In to Dashboard";
             }
         });
+
+        const forgotPasswordBtn = document.getElementById("btn-forgot-password");
+        if (forgotPasswordBtn) {
+            forgotPasswordBtn.addEventListener("click", () => {
+                const errBox = document.getElementById("login-error-alert");
+                const successBox = document.getElementById("login-success-alert");
+
+                if (errBox) errBox.style.display = "none";
+                if (successBox) successBox.style.display = "none";
+
+                const emailInput = document.getElementById("admin-email-input");
+                const email = emailInput ? emailInput.value.trim() : "";
+                if (!email) {
+                    if (errBox) {
+                        errBox.textContent = "Please enter your email address to reset your password.";
+                        errBox.style.display = "block";
+                    }
+                    return;
+                }
+
+                auth.sendPasswordResetEmail(email)
+                    .then(() => {
+                        if (successBox) {
+                            successBox.textContent = "Password reset email sent. Check your inbox.";
+                            successBox.style.display = "block";
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Password reset error:", error);
+                        if (errBox) {
+                            errBox.textContent = "Failed to send reset email: " + error.message;
+                            errBox.style.display = "block";
+                        }
+                    });
+            });
+        }
 
         // Logout
         document.getElementById("btn-admin-logout").addEventListener("click", () => {
