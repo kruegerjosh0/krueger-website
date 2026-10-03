@@ -285,6 +285,9 @@ const singleHtmlContent = `<!DOCTYPE html>
     <meta property="og:title" content="Krueger Painting | Professional Painting">
     <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with photo gallery and content manager.">
 
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+
     <style>
 ${cssContent}
 ${adminStyles}
@@ -424,9 +427,6 @@ ${adminStyles}
                 <span>Krueger Painting</span>
             </div>
             <div class="admin-controls-right">
-                <button type="button" class="btn-export-html" id="btn-export-site" title="Download updated self-contained HTML file to push to GitHub">
-                    ⬇ Export Single HTML
-                </button>
                 <button type="button" class="btn-admin-close" onclick="closeAdminModal()">Close ✕</button>
             </div>
         </nav>
@@ -443,14 +443,22 @@ ${adminStyles}
 
             <form id="admin-login-form" style="text-align: left;">
                 <div style="margin-bottom: 16px;">
+                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Email</label>
+                    <div style="position: relative; display: flex; align-items: center; margin-bottom: 16px;">
+                        <input type="email" id="admin-email-input" class="form-control" placeholder="Enter email" required autocomplete="username" style="width: 100%;">
+                    </div>
                     <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
                     <div style="position: relative; display: flex; align-items: center;">
                         <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter password" required style="padding-right: 42px;" autocomplete="current-password">
                         <button type="button" id="btn-toggle-login-pw" style="position: absolute; right: 10px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 4px;" title="Show/Hide Password">👁</button>
                     </div>
                 </div>
+                <div style="text-align: right; margin-top: 8px; margin-bottom: 16px;">
+                    <button type="button" id="btn-forgot-password" style="background: none; border: none; color: #4facfe; font-size: 0.85rem; cursor: pointer; text-decoration: underline; padding: 0;">Forgot Password?</button>
+                </div>
                 <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
-                <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; max-width: 100%;">Sign In</button>
+                <div id="login-success-alert" style="display: none; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid #51cf66; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                <button type="submit" class="btn-primary" id="btn-login-submit" style="width: 100%; border: none; cursor: pointer; max-width: 100%; justify-content: center;">Sign In to Dashboard</button>
             </form>
         </div>
 
@@ -718,7 +726,21 @@ ${adminStyles}
     (function () {
         // EMBEDDED DEFAULT STATE
         const INITIAL_SITE_DATA = ${JSON.stringify(defaultSiteData)};
-        const DEFAULT_PASSWORD_HASH = "9bd1546c479074aeae9bcf8ee5b1da7a108828cbfa1f32aef9281667471f419a"; // "krueger2026"
+
+        // Firebase Configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCX2kXkMSEvw5OqHYMBke5JS-l92L4syFg",
+          authDomain: "gen-lang-client-0104266968.firebaseapp.com",
+          projectId: "gen-lang-client-0104266968",
+          storageBucket: "gen-lang-client-0104266968.firebasestorage.app",
+          messagingSenderId: "156022333695",
+          appId: "1:156022333695:web:5da1064545a9f35a426cca",
+          measurementId: "G-W3KT69GB1K"
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
 
         // State holder
         let siteData = loadPersistedData();
@@ -761,18 +783,6 @@ ${adminStyles}
                     body: JSON.stringify({ action: "save_gallery", categories: siteData.gallery.categories })
                 }).catch(() => {});
             } catch (e) {}
-        }
-
-        // SHA-256 helper
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        function getStoredPasswordHash() {
-            return localStorage.getItem("kp_admin_hash") || DEFAULT_PASSWORD_HASH;
         }
 
         // Render Homepage and Gallery from siteData
@@ -967,18 +977,19 @@ ${adminStyles}
         }
 
         function checkAdminSession() {
-            const isAuth = sessionStorage.getItem("kp_admin_logged_in") === "true";
             const loginView = document.getElementById("admin-login-view");
             const dashView = document.getElementById("admin-dashboard-view");
 
-            if (isAuth) {
-                loginView.style.display = "none";
-                dashView.style.display = "flex";
-                populateAdminFields();
-            } else {
-                loginView.style.display = "block";
-                dashView.style.display = "none";
-            }
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    loginView.style.display = "none";
+                    dashView.style.display = "flex";
+                    populateAdminFields();
+                } else {
+                    loginView.style.display = "block";
+                    dashView.style.display = "none";
+                }
+            });
         }
 
         // Password Show/Hide Toggle
@@ -993,27 +1004,74 @@ ${adminStyles}
         // Admin Login Form Submission
         document.getElementById("admin-login-form").addEventListener("submit", async (e) => {
             e.preventDefault();
-            const entered = pwInput.value;
-            const enteredHash = await sha256(entered);
-            const targetHash = getStoredPasswordHash();
-            const errBox = document.getElementById("login-error-alert");
 
-            if (enteredHash === targetHash) {
+            const btn = document.getElementById("btn-login-submit");
+            btn.disabled = true;
+            btn.textContent = "Signing In...";
+
+            const emailInput = document.getElementById("admin-email-input");
+            const enteredEmail = emailInput ? emailInput.value : "";
+            const enteredPass = pwInput.value;
+            const errBox = document.getElementById("login-error-alert");
+            const successBox = document.getElementById("login-success-alert");
+
+            if (successBox) successBox.style.display = "none";
+            if (errBox) errBox.style.display = "none";
+
+            try {
+                await auth.signInWithEmailAndPassword(enteredEmail, enteredPass);
                 errBox.style.display = "none";
                 pwInput.value = "";
-                sessionStorage.setItem("kp_admin_logged_in", "true");
-                checkAdminSession();
-            } else {
-                errBox.textContent = "Incorrect password. Please try again.";
+                if (emailInput) emailInput.value = "";
+            } catch (error) {
+                errBox.textContent = error.message || "Incorrect credentials. Please try again.";
                 errBox.style.display = "block";
                 pwInput.focus();
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Sign In to Dashboard";
             }
         });
 
+        const forgotPasswordBtn = document.getElementById("btn-forgot-password");
+        if (forgotPasswordBtn) {
+            forgotPasswordBtn.addEventListener("click", () => {
+                const errBox = document.getElementById("login-error-alert");
+                const successBox = document.getElementById("login-success-alert");
+
+                if (errBox) errBox.style.display = "none";
+                if (successBox) successBox.style.display = "none";
+
+                const emailInput = document.getElementById("admin-email-input");
+                const email = emailInput ? emailInput.value.trim() : "";
+                if (!email) {
+                    if (errBox) {
+                        errBox.textContent = "Please enter your email address to reset your password.";
+                        errBox.style.display = "block";
+                    }
+                    return;
+                }
+
+                auth.sendPasswordResetEmail(email)
+                    .then(() => {
+                        if (successBox) {
+                            successBox.textContent = "Password reset email sent. Check your inbox.";
+                            successBox.style.display = "block";
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Password reset error:", error);
+                        if (errBox) {
+                            errBox.textContent = "Failed to send reset email: " + error.message;
+                            errBox.style.display = "block";
+                        }
+                    });
+            });
+        }
+
         // Logout
         document.getElementById("btn-admin-logout").addEventListener("click", () => {
-            sessionStorage.removeItem("kp_admin_logged_in");
-            checkAdminSession();
+            auth.signOut();
         });
 
         // Tab Navigation inside Admin Dashboard
@@ -1361,13 +1419,6 @@ ${adminStyles}
             const conf = document.getElementById("pw-confirm-input").value;
             const msgBox = document.getElementById("pw-status-msg");
 
-            const currHash = await sha256(curr);
-            if (currHash !== getStoredPasswordHash()) {
-                msgBox.textContent = "Current password is incorrect.";
-                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
-                return;
-            }
-
             if (next.length < 6) {
                 msgBox.textContent = "New password must be at least 6 characters long.";
                 msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
@@ -1380,14 +1431,26 @@ ${adminStyles}
                 return;
             }
 
-            const newHash = await sha256(next);
-            localStorage.setItem("kp_admin_hash", newHash);
+            const user = auth.currentUser;
+            if (!user) {
+                msgBox.textContent = "You must be logged in to change the password.";
+                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
+                return;
+            }
 
-            msgBox.textContent = "✓ Password updated successfully! Please remember your new password.";
-            msgBox.style = "display: block; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid #22c55e;";
+            try {
+                const credential = firebase.auth.EmailAuthProvider.credential(user.email, curr);
+                await user.reauthenticateWithCredential(credential);
+                await user.updatePassword(next);
 
-            document.getElementById("change-pw-form").reset();
-            showAdminAlert("✓ Admin password updated.");
+                msgBox.textContent = "✓ Password updated successfully! Please remember your new password.";
+                msgBox.style = "display: block; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid #22c55e;";
+                document.getElementById("change-pw-form").reset();
+                showAdminAlert("✓ Admin password updated.");
+            } catch (error) {
+                msgBox.textContent = error.message || "Failed to update password. Make sure current password is correct.";
+                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
+            }
         });
 
         // EXPORT STANDALONE HTML FILE
@@ -1420,8 +1483,10 @@ ${adminStyles}
             showAdminAlert("✓ index.html downloaded! You can push this file directly to GitHub.");
         }
 
-        document.getElementById("btn-export-site").onclick = exportSingleHtmlFile;
-        document.getElementById("btn-export-site-big").onclick = exportSingleHtmlFile;
+        const btnExportSite = document.getElementById("btn-export-site");
+        if (btnExportSite) btnExportSite.onclick = exportSingleHtmlFile;
+        const btnExportSiteBig = document.getElementById("btn-export-site-big");
+        if (btnExportSiteBig) btnExportSiteBig.onclick = exportSingleHtmlFile;
 
         // Check hash on load (e.g. #admin opens admin portal)
         if (window.location.hash === "#admin") {

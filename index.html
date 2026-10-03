@@ -8,6 +8,9 @@
     <meta property="og:title" content="Krueger Painting | Professional Painting">
     <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with photo gallery and content manager.">
 
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+
     <style>
 :root {
     --primary: #ffcc00;
@@ -661,14 +664,22 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
             <form id="admin-login-form" style="text-align: left;">
                 <div style="margin-bottom: 16px;">
+                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Email</label>
+                    <div style="position: relative; display: flex; align-items: center; margin-bottom: 16px;">
+                        <input type="email" id="admin-email-input" class="form-control" placeholder="Enter email" required autocomplete="username" style="width: 100%;">
+                    </div>
                     <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
                     <div style="position: relative; display: flex; align-items: center;">
                         <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter password" required style="padding-right: 42px;" autocomplete="current-password">
                         <button type="button" id="btn-toggle-login-pw" style="position: absolute; right: 10px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 4px;" title="Show/Hide Password">👁</button>
                     </div>
                 </div>
+                <div style="text-align: right; margin-top: 8px; margin-bottom: 16px;">
+                    <button type="button" id="btn-forgot-password" style="background: none; border: none; color: #4facfe; font-size: 0.85rem; cursor: pointer; text-decoration: underline; padding: 0;">Forgot Password?</button>
+                </div>
                 <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
-                <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; max-width: 100%;">Sign In</button>
+                <div id="login-success-alert" style="display: none; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid #51cf66; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                <button type="submit" class="btn-primary" id="btn-login-submit" style="width: 100%; border: none; cursor: pointer; max-width: 100%; justify-content: center;">Sign In to Dashboard</button>
             </form>
         </div>
 
@@ -936,7 +947,21 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     (function () {
         // EMBEDDED DEFAULT STATE
         const INITIAL_SITE_DATA = {"settings":{"logo":"","business_name":"Krueger Painting","phone":"262-443-1199","facebook_url":"https://www.facebook.com/share/1EySXfm7FM/"},"hero":{"headline_white":"Quality Craftsmanship.","headline_yellow":"Flawless Finishes.","description":"Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.","primary_button":"Tap for Free Estimate","secondary_button":"View Gallery","background_image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAwIDkwMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+CiAgPGRlZnM+CiAgICA8IS0tIEJhY2tncm91bmQgcm9vbSBncmFkaWVudCAtLT4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0id2FsbEdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFlMjQyYyIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI0MCUiIHN0b3AtY29sb3I9IiMxNjFhMjAiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMTIxNiIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CgogICAgPCEtLSBXYXJtIGdvbGRlbiBhbWJpZW50IGFyY2hpdGVjdHVyYWwgbGlnaHRpbmcgLS0+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1MaWdodCIgY3g9IjIwJSIgY3k9IjE1JSIgcj0iNjUlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmY2MwMCIgc3RvcC1vcGFjaXR5PSIwLjI4IiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmYWEwMCIgc3RvcC1vcGFjaXR5PSIwLjEwIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMCIgLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CgogICAgPHJhZGlhbEdyYWRpZW50IGlkPSJhY2NlbnRHbG93IiBjeD0iODAlIiBjeT0iNzUlIiByPSI1NSUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjM2I4MmY2IiBzdG9wLW9wYWNpdHk9IjAuMTIiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIiAvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KCiAgICA8IS0tIFN1YnRsZSBwYWludCByb2xsZXIgdGV4dHVyZSBwYXR0ZXJuIC0tPgogICAgPHBhdHRlcm4gaWQ9InJvbGxlclRleHR1cmUiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxwYXRoIGQ9Ik0wIDE1IFExNSAxMiAzMCAxNSBUNjAgMTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIwLjc1IiBzdHJva2Utb3BhY2l0eT0iMC4wNCIgLz4KICAgICAgPHBhdGggZD0iTTAgMzUgUTE1IDM4IDMwIDM1IFQ2MCAzNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjAuNzUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiAvPgogICAgICA8cGF0aCBkPSJNMCA1NSBRMTUgNTIgMzAgNTUgVDYwIDU1IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMC43NSIgc3Ryb2tlLW9wYWNpdHk9IjAuMDQiIC8+CiAgICA8L3BhdHRlcm4+CgogICAgPCEtLSBEcm9wIHNoYWRvdyBmb3IgYXJjaGl0ZWN0dXJhbCBtb2xkaW5ncyAtLT4KICAgIDxmaWx0ZXIgaWQ9Im1vbGRpbmdTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLWNvbG9yPSIjMDAwMDAwIiBmbG9vZC1vcGFjaXR5PSIwLjYiIC8+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CgogIDwhLS0gRGVlcCBhcmNoaXRlY3R1cmFsIHdhbGwgYmFzZSAtLT4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjd2FsbEdyYWRpZW50KSIgLz4KCiAgPCEtLSBXYWxsIHBlcnNwZWN0aXZlIHBsYW5lcyAocm9vbSBjb3JuZXIpIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMCwwIDUyMCwwIDQ4MCw5MDAgMCw5MDAiIGZpbGw9IiMxYjIwMjciIG9wYWNpdHk9IjAuOSIgLz4KICA8bGluZSB4MT0iNTIwIiB5MT0iMCIgeDI9IjQ4MCIgeTI9IjkwMCIgc3Ryb2tlPSIjMGEwYzBlIiBzdHJva2Utd2lkdGg9IjQiIG9wYWNpdHk9IjAuOCIgLz4KICA8bGluZSB4MT0iNTIyIiB5MT0iMCIgeDI9IjQ4MiIgeTI9IjkwMCIgc3Ryb2tlPSIjZmZjYzAwIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMjUiIC8+CgogIDwhLS0gQmFzZWJvYXJkIHRyaW0gbW91bGRpbmcgYXQgYm90dG9tIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMCw4NDAgMTYwMCw4NDAgMTYwMCw5MDAgMCw5MDAiIGZpbGw9IiMxMjE1MTkiIC8+CiAgPGxpbmUgeDE9IjAiIHkxPSI4NDAiIHgyPSIxNjAwIiB5Mj0iODQwIiBzdHJva2U9IiMyYzM0NDAiIHN0cm9rZS13aWR0aD0iMyIgLz4KICA8bGluZSB4MT0iMCIgeTE9Ijg0MyIgeDI9IjE2MDAiIHkyPSI4NDMiIHN0cm9rZT0iI2ZmY2MwMCIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2Utb3BhY2l0eT0iMC4zIiAvPgoKICA8IS0tIENyb3duIG1vdWxkaW5nIGF0IHRvcCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjAsMCAxNjAwLDAgMTYwMCw0NSAwLDQ1IiBmaWxsPSIjMTQxODFkIiBmaWx0ZXI9InVybCgjbW9sZGluZ1NoYWRvdykiIC8+CiAgPGxpbmUgeDE9IjAiIHkxPSI0NSIgeDI9IjE2MDAiIHkyPSI0NSIgc3Ryb2tlPSIjMmEzMzNmIiBzdHJva2Utd2lkdGg9IjIiIC8+CgogIDwhLS0gUm9sbGVyIHBhaW50IHN0cm9rZSBzd2F0Y2ggb24gcmlnaHQgYWNjZW50IHdhbGwgLS0+CiAgPHJlY3QgeD0iNzUwIiB5PSIxMDAiIHdpZHRoPSI1NTAiIGhlaWdodD0iNjgwIiByeD0iOCIgZmlsbD0iIzFlMjUyZSIgc3Ryb2tlPSIjMmQzNzQ0IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iOCA2IiBvcGFjaXR5PSIwLjYiIC8+CiAgPHJlY3QgeD0iNzcwIiB5PSIxMjAiIHdpZHRoPSIyMjAiIGhlaWdodD0iNjQwIiByeD0iNCIgZmlsbD0iI2ZmY2MwMCIgb3BhY2l0eT0iMC4wOCIgLz4KCiAgPCEtLSBPdmVybGF5IHJvbGxlciB0ZXh0dXJlIHBhdHRlcm4gLS0+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI3JvbGxlclRleHR1cmUpIiAvPgoKICA8IS0tIEFtYmllbnQgbGlnaHRpbmcgZ2xvd3MgLS0+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI3dhcm1MaWdodCkiIC8+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI2FjY2VudEdsb3cpIiAvPgoKICA8IS0tIEVsZWdhbnQgY3JhZnRzbWFuIHBhaW50IHJvbGxlciBzaWxob3VldHRlIGluIGJhY2tncm91bmQgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTMyMCwgMjQwKSByb3RhdGUoMTgpIHNjYWxlKDEuMSkiIG9wYWNpdHk9IjAuMTIiPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI1MCIgcng9IjgiIGZpbGw9IiNmZmNjMDAiIC8+CiAgICA8cGF0aCBkPSJNODAgNTAgTDgwIDEyMCBMNDAgMTYwIEw0MCAyODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiAvPgogIDwvZz4KPC9zdmc+Cg==","overlay_opacity":0.8},"services":{"heading":"What We Do","services":[{"title":"Interior Painting","description":"Professional surface preparation, priming, and precision painting using premium finishes like Sherwin-Williams Emerald enamel for doors, trim, walls, and ceilings."},{"title":"Decks & Exterior Finishing","description":"Comprehensive exterior protection including wood staining, deck restoration, sealing, and pressure washing to withstand Wisconsin weather elements."},{"title":"Wall Repair & Drywall","description":"Expert drywall hanging, professional tape compound layering, mudding, and smooth plaster sanding to establish seamless surfaces ready for paint."}]},"estimate":{"heading":"Request an Estimate","button_text":"Submit Request"},"gallery":{"homepage_heading":"Our Recent Projects","homepage_button":"View Full Photo Library","page_heading":"Photo Gallery","page_intro":"Browse our interior painting, drywall repairs, and exterior finish projects.","categories":[{"title":"Kitchen Painting","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWUyNDJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMTMxOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iY2FiIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZThlY2VmIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJnb2xkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZDUzZCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNmI4MDAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJzaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjYiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmcpIi8+CgogIDwhLS0gS2l0Y2hlbiBXYWxsICYgQmFja3NwbGFzaCAtLT4KICA8cmVjdCB4PSI2MCIgeT0iNTAiIHdpZHRoPSI2ODAiIGhlaWdodD0iNDgwIiByeD0iOCIgZmlsbD0iIzI1MmMzNCIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICAKICA8IS0tIFN1YnRsZSBzdWJ3YXkgdGlsZSBwYXR0ZXJuIC0tPgogIDxnIG9wYWNpdHk9IjAuMTUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMjYwIiB4Mj0iNzQwIiB5Mj0iMjYwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIyOTAiIHgyPSI3NDAiIHkyPSIyOTAiLz4KICAgIDxsaW5lIHgxPSI2MCIgeTE9IjMyMCIgeDI9Ijc0MCIgeTI9IjMyMCIvPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMzUwIiB4Mj0iNzQwIiB5Mj0iMzUwIi8+CiAgPC9nPgoKICA8IS0tIFVwcGVyIENhYmluZXRzIChGcmVzaCBQYWludGVkIFdoaXRlIEZpbmlzaCkgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjgwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE3MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSIxMDUiIHk9Ijk1IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE0MCIgcng9IjIiIGZpbGw9IiNmNGY2ZjgiIHN0cm9rZT0iI2QwZDdkZSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMjQwIiBjeT0iMTY1IiByPSI1IiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjI5MCIgeT0iODAiIHdpZHRoPSIyMjAiIGhlaWdodD0iMTcwIiByeD0iNCIgZmlsbD0idXJsKCNjYWIpIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDxyZWN0IHg9IjMwNSIgeT0iOTUiIHdpZHRoPSIxOTAiIGhlaWdodD0iMTQwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8Y2lyY2xlIGN4PSIzMjAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KICA8Y2lyY2xlIGN4PSI0ODAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KCiAgPHJlY3QgeD0iNTMwIiB5PSI4MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxNzAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iNTQ1IiB5PSI5NSIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIxNDAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjU2MCIgY3k9IjE2NSIgcj0iNSIgZmlsbD0iIzMzMyIvPgoKICA8IS0tIENvdW50ZXJ0b3AgLS0+CiAgPHJlY3QgeD0iNzUiIHk9IjM2MCIgd2lkdGg9IjY1MCIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiMxMTEiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIxIi8+CgogIDwhLS0gTG93ZXIgQ2FiaW5ldHMgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjM4MCIgd2lkdGg9IjI4MCIgaGVpZ2h0PSIxNDAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iMTA1IiB5PSIzOTUiIHdpZHRoPSIyNTAiIGhlaWdodD0iMTEwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cmVjdCB4PSIyMTUiIHk9IjQxNSIgd2lkdGg9IjMwIiBoZWlnaHQ9IjYiIHJ4PSIyIiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjQzMCIgeT0iMzgwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjE0MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSI0NDUiIHk9IjM5NSIgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxMTAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxyZWN0IHg9IjU1NSIgeT0iNDE1IiB3aWR0aD0iMzAiIGhlaWdodD0iNiIgcng9IjIiIGZpbGw9IiMzMzMiLz4KCiAgPCEtLSBCYWRnZSBiYW5uZXIgLS0+CiAgPHJlY3QgeD0iMjQwIiB5PSI1MjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNDIiIHJ4PSIyMSIgZmlsbD0idXJsKCNnb2xkKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPktJVENIRU4gQ0FCSU5FVCBSRUZJTklTSElORzwvdGV4dD4KPC9zdmc+Cg==","tag":"AFTER","alt":"Cabinet paint refinishing with Sherwin-Williams enamel finish"}]},{"title":"Drywall & Wall Repair","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmcyIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJjMzAzNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxODFiMWUiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im11ZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDRkNGNiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmUzIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M5YzliZSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9IndhbGxTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTIiIGZsb29kLW9wYWNpdHk9IjAuNCIvPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNiZzIpIi8+CgogIDwhLS0gV2FsbCBCb2FyZCBTZWN0aW9uIC0tPgogIDxyZWN0IHg9IjcwIiB5PSI2MCIgd2lkdGg9IjY2MCIgaGVpZ2h0PSI0NjAiIHJ4PSI2IiBmaWxsPSIjYTQ5ZTkxIiBmaWx0ZXI9InVybCgjd2FsbFNoYWRvdykiLz4KCiAgPCEtLSBEcnl3YWxsIEpvaW50IC8gU2VhbSAtLT4KICA8bGluZSB4MT0iNDAwIiB5MT0iNjAiIHgyPSI0MDAiIHkyPSI1MjAiIHN0cm9rZT0iIzdlNzg2YiIgc3Ryb2tlLXdpZHRoPSI2Ii8+CgogIDwhLS0gTXVkIGFuZCBUYXBlIExheWVyIChGZWF0aGVyZWQgRWRnZSkgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIzNDAsNjAgNDYwLDYwIDQ1MCw1MjAgMzUwLDUyMCIgZmlsbD0idXJsKCNtdWQpIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPGxpbmUgeDE9IjM5NSIgeTE9IjgwIiB4Mj0iMzk1IiB5Mj0iNTAwIiBzdHJva2U9IiNmY2ZjZjkiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWRhc2hhcnJheT0iMTAgNCIgb3BhY2l0eT0iMC44Ii8+CgogIDwhLS0gU2NyZXcgUGF0Y2hlcyBNdWRkZWQgLS0+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMTUwIiByPSIxOCIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMzAwIiByPSIxNiIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iNDUwIiByPSIxNyIgZmlsbD0idXJsKCNtdWQpIi8+CgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjE4MCIgcj0iMTYiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjMzMCIgcj0iMTgiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjQ2MCIgcj0iMTUiIGZpbGw9InVybCgjbXVkKSIvPgoKICA8IS0tIFRyb3dlbC9LbmlmZSBJbGx1c3RyYXRpb24gLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDIwLCAyNjApIHJvdGF0ZSgtMjUpIj4KICAgIDxwb2x5Z29uIHBvaW50cz0iMCwwIDEyMCwtMTAgMTMwLDQwIDEwLDUwIiBmaWxsPSIjY2VkNGRhIiBzdHJva2U9IiNhZGI1YmQiIHN0cm9rZS13aWR0aD0iMiIvPgogICAgPHJlY3QgeD0iLTQwIiB5PSIxNSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjE4IiByeD0iNCIgZmlsbD0iIzM0M2E0MCIvPgogICAgPGxpbmUgeDE9IjUiIHkxPSIxOCIgeDI9IjExNSIgeTI9IjgiIHN0cm9rZT0iI2Y4ZjlmYSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPC9nPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMzAiIHk9IjUyMCIgd2lkdGg9IjM0MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQyKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPlNFQU1MRVNTIERSWVdBTEwgTVVEICZhbXA7IFRBUEU8L3RleHQ+Cjwvc3ZnPgo=","tag":"DURING (MUD & TAPE)","alt":"Drywall compound taping and seamless plaster finish"}]},{"title":"Decks & Exterior Finishes","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE5MjAyNyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYjBlMTEiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Indvb2RSaWNoIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM4YjQ1MTMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNhMDUyMmQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNmIzNDEwIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJ3b29kQWdlZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjk2OTY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjODA4MDgwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzU1NTU1NSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9ImRlY2tTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmczKSIvPgoKICA8IS0tIERlY2sgUGxhbmtzIC0tPgogIDxnIGZpbHRlcj0idXJsKCNkZWNrU2hhZG93KSI+CiAgICA8IS0tIFdlYXRoZXJlZCBsZWZ0IGhhbGYsIGZyZXNobHkgc3RhaW5lZCByaWdodCBoYWxmIGNvbXBhcmlzb24gLS0+CiAgICA8IS0tIFBsYW5rIDEgLS0+CiAgICA8cmVjdCB4PSI3MCIgeT0iODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSI4MCIgd2lkdGg9IjMzNSIgaGVpZ2h0PSI2NSIgcng9IjMiIGZpbGw9InVybCgjd29vZFJpY2gpIi8+CiAgICAKICAgIDwhLS0gUGxhbmsgMiAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIxNTUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIxNTUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgMyAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIyMzAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIyMzAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNCAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzMDUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzMDUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNSAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzODAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgogIDwvZz4KCiAgPCEtLSBMYWJlbHMgb24gY29tcGFyaXNvbiAtLT4KICA8cmVjdCB4PSIxNDAiIHk9IjI0MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSI0MCIgcng9IjQiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuNzUiLz4KICA8dGV4dCB4PSIyMzAiIHk9IjI2NSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI4MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPldFQVRIRVJFRCBDRURBUjwvdGV4dD4KCiAgPHJlY3QgeD0iNDcwIiB5PSIyNDAiIHdpZHRoPSIxODAiIGhlaWdodD0iNDAiIHJ4PSI0IiBmaWxsPSIjMDAwIiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHRleHQgeD0iNTYwIiB5PSIyNjUiIGZpbGw9IiNmZmQ1M2QiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iODAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GUkVTSExZIFJFU1RPUkVEICZhbXA7IFNUQUlORUQ8L3RleHQ+CgogIDwhLS0gRGl2aWRlciBMaW5lIC0tPgogIDxsaW5lIHgxPSIzOTIiIHkxPSI3MCIgeDI9IjM5MiIgeTI9IjQ1NSIgc3Ryb2tlPSIjZmZkNTNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjYgNCIvPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMjAiIHk9IjUyMCIgd2lkdGg9IjM2MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQzKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPkRFQ0sgUkVTVE9SQVRJT04gJmFtcDsgV0VBVEhFUiBTRUFMPC90ZXh0Pgo8L3N2Zz4K","tag":"AFTER (SEALED)","alt":"Exterior deck power washed and stained"}]}]}};
-        const DEFAULT_PASSWORD_HASH = "9bd1546c479074aeae9bcf8ee5b1da7a108828cbfa1f32aef9281667471f419a"; // "krueger2026"
+
+        // Firebase Configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCX2kXkMSEvw5OqHYMBke5JS-l92L4syFg",
+          authDomain: "gen-lang-client-0104266968.firebaseapp.com",
+          projectId: "gen-lang-client-0104266968",
+          storageBucket: "gen-lang-client-0104266968.firebasestorage.app",
+          messagingSenderId: "156022333695",
+          appId: "1:156022333695:web:5da1064545a9f35a426cca",
+          measurementId: "G-W3KT69GB1K"
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
 
         // State holder
         let siteData = loadPersistedData();
@@ -979,18 +1004,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     body: JSON.stringify({ action: "save_gallery", categories: siteData.gallery.categories })
                 }).catch(() => {});
             } catch (e) {}
-        }
-
-        // SHA-256 helper
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        function getStoredPasswordHash() {
-            return localStorage.getItem("kp_admin_hash") || DEFAULT_PASSWORD_HASH;
         }
 
         // Render Homepage and Gallery from siteData
@@ -1185,18 +1198,19 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         }
 
         function checkAdminSession() {
-            const isAuth = sessionStorage.getItem("kp_admin_logged_in") === "true";
             const loginView = document.getElementById("admin-login-view");
             const dashView = document.getElementById("admin-dashboard-view");
 
-            if (isAuth) {
-                loginView.style.display = "none";
-                dashView.style.display = "flex";
-                populateAdminFields();
-            } else {
-                loginView.style.display = "block";
-                dashView.style.display = "none";
-            }
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    loginView.style.display = "none";
+                    dashView.style.display = "flex";
+                    populateAdminFields();
+                } else {
+                    loginView.style.display = "block";
+                    dashView.style.display = "none";
+                }
+            });
         }
 
         // Password Show/Hide Toggle
@@ -1211,27 +1225,74 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         // Admin Login Form Submission
         document.getElementById("admin-login-form").addEventListener("submit", async (e) => {
             e.preventDefault();
-            const entered = pwInput.value;
-            const enteredHash = await sha256(entered);
-            const targetHash = getStoredPasswordHash();
-            const errBox = document.getElementById("login-error-alert");
 
-            if (enteredHash === targetHash) {
+            const btn = document.getElementById("btn-login-submit");
+            btn.disabled = true;
+            btn.textContent = "Signing In...";
+
+            const emailInput = document.getElementById("admin-email-input");
+            const enteredEmail = emailInput ? emailInput.value : "";
+            const enteredPass = pwInput.value;
+            const errBox = document.getElementById("login-error-alert");
+            const successBox = document.getElementById("login-success-alert");
+
+            if (successBox) successBox.style.display = "none";
+            if (errBox) errBox.style.display = "none";
+
+            try {
+                await auth.signInWithEmailAndPassword(enteredEmail, enteredPass);
                 errBox.style.display = "none";
                 pwInput.value = "";
-                sessionStorage.setItem("kp_admin_logged_in", "true");
-                checkAdminSession();
-            } else {
-                errBox.textContent = "Incorrect password. Please try again.";
+                if (emailInput) emailInput.value = "";
+            } catch (error) {
+                errBox.textContent = error.message || "Incorrect credentials. Please try again.";
                 errBox.style.display = "block";
                 pwInput.focus();
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Sign In to Dashboard";
             }
         });
 
+        const forgotPasswordBtn = document.getElementById("btn-forgot-password");
+        if (forgotPasswordBtn) {
+            forgotPasswordBtn.addEventListener("click", () => {
+                const errBox = document.getElementById("login-error-alert");
+                const successBox = document.getElementById("login-success-alert");
+
+                if (errBox) errBox.style.display = "none";
+                if (successBox) successBox.style.display = "none";
+
+                const emailInput = document.getElementById("admin-email-input");
+                const email = emailInput ? emailInput.value.trim() : "";
+                if (!email) {
+                    if (errBox) {
+                        errBox.textContent = "Please enter your email address to reset your password.";
+                        errBox.style.display = "block";
+                    }
+                    return;
+                }
+
+                auth.sendPasswordResetEmail(email)
+                    .then(() => {
+                        if (successBox) {
+                            successBox.textContent = "Password reset email sent. Check your inbox.";
+                            successBox.style.display = "block";
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Password reset error:", error);
+                        if (errBox) {
+                            errBox.textContent = "Failed to send reset email: " + error.message;
+                            errBox.style.display = "block";
+                        }
+                    });
+            });
+        }
+
         // Logout
         document.getElementById("btn-admin-logout").addEventListener("click", () => {
-            sessionStorage.removeItem("kp_admin_logged_in");
-            checkAdminSession();
+            auth.signOut();
         });
 
         // Tab Navigation inside Admin Dashboard
@@ -1579,13 +1640,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             const conf = document.getElementById("pw-confirm-input").value;
             const msgBox = document.getElementById("pw-status-msg");
 
-            const currHash = await sha256(curr);
-            if (currHash !== getStoredPasswordHash()) {
-                msgBox.textContent = "Current password is incorrect.";
-                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
-                return;
-            }
-
             if (next.length < 6) {
                 msgBox.textContent = "New password must be at least 6 characters long.";
                 msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
@@ -1598,14 +1652,26 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 return;
             }
 
-            const newHash = await sha256(next);
-            localStorage.setItem("kp_admin_hash", newHash);
+            const user = auth.currentUser;
+            if (!user) {
+                msgBox.textContent = "You must be logged in to change the password.";
+                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
+                return;
+            }
 
-            msgBox.textContent = "✓ Password updated successfully! Please remember your new password.";
-            msgBox.style = "display: block; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid #22c55e;";
+            try {
+                const credential = firebase.auth.EmailAuthProvider.credential(user.email, curr);
+                await user.reauthenticateWithCredential(credential);
+                await user.updatePassword(next);
 
-            document.getElementById("change-pw-form").reset();
-            showAdminAlert("✓ Admin password updated.");
+                msgBox.textContent = "✓ Password updated successfully! Please remember your new password.";
+                msgBox.style = "display: block; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid #22c55e;";
+                document.getElementById("change-pw-form").reset();
+                showAdminAlert("✓ Admin password updated.");
+            } catch (error) {
+                msgBox.textContent = error.message || "Failed to update password. Make sure current password is correct.";
+                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
+            }
         });
 
         // EXPORT STANDALONE HTML FILE
@@ -1638,8 +1704,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             showAdminAlert("✓ index.html downloaded! You can push this file directly to GitHub.");
         }
 
-        document.getElementById("btn-export-site").onclick = exportSingleHtmlFile;
-        document.getElementById("btn-export-site-big").onclick = exportSingleHtmlFile;
+        const btnExportSite = document.getElementById("btn-export-site");
+        if (btnExportSite) btnExportSite.onclick = exportSingleHtmlFile;
+        const btnExportSiteBig = document.getElementById("btn-export-site-big");
+        if (btnExportSiteBig) btnExportSiteBig.onclick = exportSingleHtmlFile;
 
         // Check hash on load (e.g. #admin opens admin portal)
         if (window.location.hash === "#admin") {
