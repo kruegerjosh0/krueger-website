@@ -296,10 +296,11 @@ app.post("/api/content", async (req, res) => {
             .returning();
 
           if (Array.isArray(cat.photos)) {
+            const photosToInsert = [];
             for (let j = 0; j < cat.photos.length; j++) {
               const photo = cat.photos[j];
               if (photo.image) {
-                await db.insert(galleryPhotos).values({
+                photosToInsert.push({
                   categoryId: insertedCat.id,
                   imageUrl: photo.image,
                   tag: photo.tag || "",
@@ -307,6 +308,9 @@ app.post("/api/content", async (req, res) => {
                   sortOrder: j,
                 });
               }
+            }
+            if (photosToInsert.length > 0) {
+              await db.insert(galleryPhotos).values(photosToInsert);
             }
           }
         }
