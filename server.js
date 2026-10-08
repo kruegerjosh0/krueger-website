@@ -1,5 +1,6 @@
 import express from "express";
-import { readFile, writeFile } from "node:fs/promises";
+import fsPromises from "node:fs/promises";
+const { writeFile } = fsPromises;
 import { join, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -53,10 +54,10 @@ function getStore(storeName) {
 }
 
 // Fallback JSON loader from /data/
-async function loadFallbackJSON(name) {
+export async function loadFallbackJSON(name) {
   try {
     const filePath = join(__dirname, "data", `${name}.json`);
-    const content = await readFile(filePath, "utf-8");
+    const content = await fsPromises.readFile(filePath, "utf-8");
     return JSON.parse(content);
   } catch (err) {
     return null;
@@ -378,7 +379,7 @@ app.get("/api/images/:key", async (req, res) => {
       // Check if file exists on disk in images/ directory
       try {
         const filePath = join(__dirname, "images", key);
-        buffer = await readFile(filePath);
+        buffer = await fsPromises.readFile(filePath);
       } catch {
         // Not found
       }
@@ -415,8 +416,12 @@ app.get("/api/images/:key", async (req, res) => {
 app.use(express.static(__dirname));
 
 // Start server on port 3000 and host 0.0.0.0
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`> Ready on http://localhost:${PORT}`);
-  console.log(`> Local: http://localhost:${PORT}`);
-  console.log(`> Network: http://0.0.0.0:${PORT}`);
-});
+// Only start the server if run directly
+const _filename = fileURLToPath(import.meta.url);
+if (process.argv[1] === _filename) {
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`> Ready on http://localhost:${PORT}`);
+    console.log(`> Local: http://localhost:${PORT}`);
+    console.log(`> Network: http://0.0.0.0:${PORT}`);
+  });
+}
