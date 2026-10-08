@@ -284,30 +284,39 @@ app.post("/api/content", async (req, res) => {
         await db.delete(galleryPhotos);
         await db.delete(galleryCategories);
 
-        for (let i = 0; i < categories.length; i++) {
-          const cat = categories[i];
-          const [insertedCat] = await db
+        if (categories.length > 0) {
+          const categoriesToInsert = categories.map((cat, i) => ({
+            title: cat.title || "Category",
+            showOnHomepage: cat.show_on_homepage !== false,
+            sortOrder: i,
+          }));
+
+          const insertedCategories = await db
             .insert(galleryCategories)
-            .values({
-              title: cat.title || "Category",
-              showOnHomepage: cat.show_on_homepage !== false,
-              sortOrder: i,
-            })
+            .values(categoriesToInsert)
             .returning();
 
-          if (Array.isArray(cat.photos)) {
-            for (let j = 0; j < cat.photos.length; j++) {
-              const photo = cat.photos[j];
-              if (photo.image) {
-                await db.insert(galleryPhotos).values({
-                  categoryId: insertedCat.id,
-                  imageUrl: photo.image,
-                  tag: photo.tag || "",
-                  altText: photo.alt || "",
-                  sortOrder: j,
-                });
+          const photosToInsert = [];
+          for (const insertedCat of insertedCategories) {
+            const originalCat = categories[insertedCat.sortOrder];
+            if (originalCat && Array.isArray(originalCat.photos)) {
+              for (let j = 0; j < originalCat.photos.length; j++) {
+                const photo = originalCat.photos[j];
+                if (photo.image) {
+                  photosToInsert.push({
+                    categoryId: insertedCat.id,
+                    imageUrl: photo.image,
+                    tag: photo.tag || "",
+                    altText: photo.alt || "",
+                    sortOrder: j,
+                  });
+                }
               }
             }
+          }
+
+          if (photosToInsert.length > 0) {
+            await db.insert(galleryPhotos).values(photosToInsert);
           }
         }
       } catch {
