@@ -1,6 +1,6 @@
 import express from "express";
 import { readFile, writeFile } from "node:fs/promises";
-import { join, extname } from "node:path";
+import { join, extname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
@@ -370,14 +370,16 @@ app.get("/api/images/:key", async (req, res) => {
     return res.status(400).send("Missing image key");
   }
 
+  const safeKey = basename(key);
+
   try {
     const store = getStore("site-images");
-    let buffer = await store.get(key);
+    let buffer = await store.get(safeKey);
 
     if (!buffer) {
       // Check if file exists on disk in images/ directory
       try {
-        const filePath = join(__dirname, "images", key);
+        const filePath = join(__dirname, "images", safeKey);
         buffer = await readFile(filePath);
       } catch {
         // Not found
