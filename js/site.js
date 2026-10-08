@@ -22,6 +22,11 @@
         }
     }
 
+    // Expose internal functions for testing environment
+    if (typeof window !== "undefined" && window.process && window.process.env && window.process.env.NODE_ENV === "test") {
+        window.__TEST_EXPORTS__ = { loadJSON };
+    }
+
     function lookup(data, path) {
         const [file, key] = path.split(".");
         return data[file] ? data[file][key] : undefined;
