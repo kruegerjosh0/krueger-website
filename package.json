@@ -7,7 +7,7 @@
     "start": "PORT=3000 node server.js",
     "build": "echo 'Build complete'",
     "lint": "node -c server.js",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "jest"
   },
   "dependencies": {
     "@netlify/blobs": "^9.1.2",
@@ -17,7 +17,10 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "drizzle-kit": "1.0.0-beta.22",
+    "jest": "^30.5.2",
+    "jsdom": "^29.1.1",
     "typescript": "^5.8.0"
   }
 }
