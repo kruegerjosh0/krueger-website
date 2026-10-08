@@ -2,11 +2,42 @@ import express from "express";
 import { readFile, writeFile } from "node:fs/promises";
 import { join, extname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { initializeApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+
+// Initialize Firebase Admin (in a real scenario, use proper credentials)
+// Since this is a test/sandbox environment, we'll initialize it with default if possible,
+// or handle errors gracefully if credentials are missing.
+try {
+  initializeApp({ projectId: 'krueger-painting-demo' });
+} catch (e) {
+  console.warn("Firebase admin initialization failed or already initialized", e);
+}
+
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 const app = express();
 const PORT = 3000;
+
+// Authentication Middleware
+const authenticateAdmin = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Unauthorized: Missing or invalid authorization header' });
+  }
+
+  const idToken = authHeader.split('Bearer ')[1];
+  try {
+    const decodedToken = await getAuth().verifyIdToken(idToken);
+    req.user = decodedToken;
+    next();
+  } catch (error) {
+    console.error('Error verifying Firebase ID token:', error);
+    return res.status(401).json({ error: 'Unauthorized: Invalid token' });
+  }
+};
+
 
 // Body parsing with 50mb limit for image uploads
 app.use(express.json({ limit: "50mb" }));
@@ -178,7 +209,7 @@ app.get("/api/content", async (_req, res) => {
 });
 
 // POST /api/content
-app.post("/api/content", async (req, res) => {
+app.post("/api/content", authenticateAdmin, async (req, res) => {
   try {
     const payload = req.body;
     const current = await getBaseContent();
@@ -325,7 +356,7 @@ app.post("/api/content", async (req, res) => {
 });
 
 // POST /api/upload
-app.post("/api/upload", async (req, res) => {
+app.post("/api/upload", authenticateAdmin, async (req, res) => {
   try {
     const contentType = req.headers["content-type"] || "";
     let fileBuffer;

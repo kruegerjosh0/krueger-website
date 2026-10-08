@@ -740,6 +740,17 @@ ${adminStyles}
             firebase.initializeApp(firebaseConfig);
         }
         const auth = firebase.auth();
+        async function getAuthHeaders() {
+            const headers = { "Content-Type": "application/json" };
+            if (typeof auth !== 'undefined' && auth.currentUser) {
+                try {
+                    const token = await auth.currentUser.getIdToken();
+                    headers["Authorization"] = "Bearer " + token;
+                } catch(e) {}
+            }
+            return headers;
+        }
+
 
         // State holder
         let siteData = loadPersistedData();
@@ -771,16 +782,20 @@ ${adminStyles}
 
             // Sync with backend API if available
             try {
-                fetch("/api/content", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ action: "update_settings", settings: siteData.settings })
-                }).catch(() => {});
-                fetch("/api/content", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ action: "save_gallery", categories: siteData.gallery.categories })
-                }).catch(() => {});
+                getAuthHeaders().then(headers => {
+                    fetch("/api/content", {
+                        method: "POST",
+                        headers,
+                        body: JSON.stringify({ action: "update_settings", settings: siteData.settings })
+                    }).catch(() => {});
+                });
+                getAuthHeaders().then(headers => {
+                    fetch("/api/content", {
+                        method: "POST",
+                        headers,
+                        body: JSON.stringify({ action: "save_gallery", categories: siteData.gallery.categories })
+                    }).catch(() => {});
+                });
             } catch (e) {}
         }
 

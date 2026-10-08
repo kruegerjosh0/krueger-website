@@ -1,7 +1,36 @@
+import { initializeApp, getApps } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+
+try {
+  if (getApps().length === 0) {
+    initializeApp({
+        projectId: "krueger-painting-demo" // Use a fallback string to prevent missing credentials errors locally when not specified. We can extract it from the env later if needed.
+    });
+  }
+} catch (e) {}
+
+async function authenticate(req: Request) {
+  const authHeader = req.headers.get("authorization");
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return false;
+  }
+  const idToken = authHeader.split("Bearer ")[1];
+  try {
+    // If not in a real Firebase setup with credentials, verification will fail.
+    // In many standalone setups, initializing without credentials checks GOOGLE_APPLICATION_CREDENTIALS.
+    await getAuth().verifyIdToken(idToken);
+    return true;
+  } catch {
+    return false;
+  }
+}
 import type { Config, Context } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 
 export default async (req: Request, _context: Context) => {
+  if (!(await authenticate(req))) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
   if (req.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
   }

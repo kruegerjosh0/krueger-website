@@ -689,6 +689,17 @@
                 firebase.initializeApp(firebaseConfig);
             }
             const auth = firebase.auth();
+        async function getAuthHeaders() {
+            const headers = { "Content-Type": "application/json" };
+            if (typeof auth !== 'undefined' && auth.currentUser) {
+                try {
+                    const token = await auth.currentUser.getIdToken();
+                    headers["Authorization"] = "Bearer " + token;
+                } catch(e) {}
+            }
+            return headers;
+        }
+
 
 
             // Auth Handling
@@ -892,7 +903,7 @@
                     // 1. Upload to Netlify Blobs via /api/upload
                     const uploadRes = await fetch("/api/upload", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({ data: pendingLogoBase64 })
                     });
                     const uploadData = await uploadRes.json();
@@ -901,7 +912,7 @@
                     // 2. Update site content via /api/content
                     const saveRes = await fetch("/api/content", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({ action: "update_logo", logo: uploadData.url })
                     });
 
@@ -929,7 +940,7 @@
                 try {
                     const saveRes = await fetch("/api/content", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({ action: "update_logo", logo: "" })
                     });
                     if (saveRes.ok) {
@@ -984,7 +995,7 @@
                     try {
                         await fetch("/api/content", {
                             method: "POST",
-                            headers: { "Content-Type": "application/json" },
+                            headers: await getAuthHeaders(),
                             body: JSON.stringify({ action: "update_hero", hero: { overlay_opacity: val } })
                         });
                         showAlert("✓ Background darkness saved!");
@@ -1035,7 +1046,7 @@
                     // Upload image
                     const uploadRes = await fetch("/api/upload", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({ data: pendingHeroBgBase64 })
                     });
                     const uploadData = await uploadRes.json();
@@ -1044,7 +1055,7 @@
                     const currentOpacity = parseInt(adminOpacityRange.value, 10) / 100;
                     const saveRes = await fetch("/api/content", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({
                             action: "update_hero",
                             hero: {
@@ -1080,7 +1091,7 @@
                 try {
                     const saveRes = await fetch("/api/content", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({
                             action: "update_hero",
                             hero: {
@@ -1107,7 +1118,7 @@
                 try {
                     const saveRes = await fetch("/api/content", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({
                             action: "update_hero",
                             hero: { background_image: "" }
@@ -1236,7 +1247,7 @@
                 try {
                     const res = await fetch("/api/content", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({
                             action: "save_gallery",
                             categories: siteData.gallery.categories
@@ -1264,7 +1275,7 @@
                     // Upload image binary to Netlify Blobs
                     const uploadRes = await fetch("/api/upload", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({ data: pendingPhotoBase64 })
                     });
                     const uploadData = await uploadRes.json();
@@ -1317,7 +1328,7 @@
                 try {
                     const res = await fetch("/api/content", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: await getAuthHeaders(),
                         body: JSON.stringify({ action: "update_settings", settings: updated })
                     });
 
