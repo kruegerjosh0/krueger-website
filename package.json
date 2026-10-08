@@ -7,7 +7,7 @@
     "start": "PORT=3000 node server.js",
     "build": "echo 'Build complete'",
     "lint": "node -c server.js",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "node --test"
   },
   "dependencies": {
     "@netlify/blobs": "^9.1.2",
