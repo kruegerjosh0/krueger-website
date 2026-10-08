@@ -232,4 +232,16 @@
     }
 
     init();
+    if (typeof module !== "undefined" && module.exports) {
+        module.exports = {
+            lookup,
+            isWebLink,
+            applySimpleFields,
+            renderServices,
+            categoriesWithPhotos,
+            renderHomeGallery,
+            renderGalleryPage
+        };
+    }
+
 })();
