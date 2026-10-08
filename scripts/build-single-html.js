@@ -1402,7 +1402,12 @@ ${adminStyles}
 
             const addr = document.getElementById("setting-address").value.trim();
             if (addr) {
-                document.getElementById("footer-address").innerHTML = "<strong>Mailing Address:</strong> " + addr;
+                const footerAddress = document.getElementById("footer-address");
+                footerAddress.textContent = "";
+                const strong = document.createElement("strong");
+                strong.textContent = "Mailing Address: ";
+                footerAddress.appendChild(strong);
+                footerAddress.appendChild(document.createTextNode(addr));
             }
 
             await persistSiteData();
