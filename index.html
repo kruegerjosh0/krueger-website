@@ -8,8 +8,6 @@
     <meta property="og:title" content="Krueger Painting | Professional Painting">
     <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with photo gallery and content manager.">
 
-    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
 
     <style>
 :root {
@@ -620,7 +618,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         <p class="footer-address" id="footer-address"><strong>Mailing Address:</strong> N630 Moraine Dr., Campbellsport, WI 53010</p>
         <p class="footer-phone" id="footer-phone-wrap"><strong>Phone:</strong> <a href="tel:262-443-1199" id="footer-phone-link">262-443-1199</a></p>
         <p style="margin: 8px 0;">
-            <a href="javascript:void(0)" onclick="openAdminModal()" class="admin-link">🔒 Admin / Developer Login</a>
+
         </p>
         <p style="font-size: 0.75rem; color: #555; margin-top: 16px;">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
     </footer>
@@ -942,780 +940,164 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </div>
 
-    <!-- MAIN JAVASCRIPT LOGIC (SELF-CONTAINED) -->
-    <script>
-    (function () {
-        // EMBEDDED DEFAULT STATE
-        const INITIAL_SITE_DATA = {"settings":{"logo":"","business_name":"Krueger Painting","phone":"262-443-1199","facebook_url":"https://www.facebook.com/share/1EySXfm7FM/"},"hero":{"headline_white":"Quality Craftsmanship.","headline_yellow":"Flawless Finishes.","description":"Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.","primary_button":"Tap for Free Estimate","secondary_button":"View Gallery","background_image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAwIDkwMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+CiAgPGRlZnM+CiAgICA8IS0tIEJhY2tncm91bmQgcm9vbSBncmFkaWVudCAtLT4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0id2FsbEdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzFlMjQyYyIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI0MCUiIHN0b3AtY29sb3I9IiMxNjFhMjAiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMTIxNiIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CgogICAgPCEtLSBXYXJtIGdvbGRlbiBhbWJpZW50IGFyY2hpdGVjdHVyYWwgbGlnaHRpbmcgLS0+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Indhcm1MaWdodCIgY3g9IjIwJSIgY3k9IjE1JSIgcj0iNjUlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmY2MwMCIgc3RvcC1vcGFjaXR5PSIwLjI4IiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmYWEwMCIgc3RvcC1vcGFjaXR5PSIwLjEwIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMCIgLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CgogICAgPHJhZGlhbEdyYWRpZW50IGlkPSJhY2NlbnRHbG93IiBjeD0iODAlIiBjeT0iNzUlIiByPSI1NSUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjM2I4MmY2IiBzdG9wLW9wYWNpdHk9IjAuMTIiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIiAvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KCiAgICA8IS0tIFN1YnRsZSBwYWludCByb2xsZXIgdGV4dHVyZSBwYXR0ZXJuIC0tPgogICAgPHBhdHRlcm4gaWQ9InJvbGxlclRleHR1cmUiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxwYXRoIGQ9Ik0wIDE1IFExNSAxMiAzMCAxNSBUNjAgMTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIwLjc1IiBzdHJva2Utb3BhY2l0eT0iMC4wNCIgLz4KICAgICAgPHBhdGggZD0iTTAgMzUgUTE1IDM4IDMwIDM1IFQ2MCAzNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjAuNzUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiAvPgogICAgICA8cGF0aCBkPSJNMCA1NSBRMTUgNTIgMzAgNTUgVDYwIDU1IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMC43NSIgc3Ryb2tlLW9wYWNpdHk9IjAuMDQiIC8+CiAgICA8L3BhdHRlcm4+CgogICAgPCEtLSBEcm9wIHNoYWRvdyBmb3IgYXJjaGl0ZWN0dXJhbCBtb2xkaW5ncyAtLT4KICAgIDxmaWx0ZXIgaWQ9Im1vbGRpbmdTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLWNvbG9yPSIjMDAwMDAwIiBmbG9vZC1vcGFjaXR5PSIwLjYiIC8+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CgogIDwhLS0gRGVlcCBhcmNoaXRlY3R1cmFsIHdhbGwgYmFzZSAtLT4KICA8cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjd2FsbEdyYWRpZW50KSIgLz4KCiAgPCEtLSBXYWxsIHBlcnNwZWN0aXZlIHBsYW5lcyAocm9vbSBjb3JuZXIpIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMCwwIDUyMCwwIDQ4MCw5MDAgMCw5MDAiIGZpbGw9IiMxYjIwMjciIG9wYWNpdHk9IjAuOSIgLz4KICA8bGluZSB4MT0iNTIwIiB5MT0iMCIgeDI9IjQ4MCIgeTI9IjkwMCIgc3Ryb2tlPSIjMGEwYzBlIiBzdHJva2Utd2lkdGg9IjQiIG9wYWNpdHk9IjAuOCIgLz4KICA8bGluZSB4MT0iNTIyIiB5MT0iMCIgeDI9IjQ4MiIgeTI9IjkwMCIgc3Ryb2tlPSIjZmZjYzAwIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMjUiIC8+CgogIDwhLS0gQmFzZWJvYXJkIHRyaW0gbW91bGRpbmcgYXQgYm90dG9tIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMCw4NDAgMTYwMCw4NDAgMTYwMCw5MDAgMCw5MDAiIGZpbGw9IiMxMjE1MTkiIC8+CiAgPGxpbmUgeDE9IjAiIHkxPSI4NDAiIHgyPSIxNjAwIiB5Mj0iODQwIiBzdHJva2U9IiMyYzM0NDAiIHN0cm9rZS13aWR0aD0iMyIgLz4KICA8bGluZSB4MT0iMCIgeTE9Ijg0MyIgeDI9IjE2MDAiIHkyPSI4NDMiIHN0cm9rZT0iI2ZmY2MwMCIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2Utb3BhY2l0eT0iMC4zIiAvPgoKICA8IS0tIENyb3duIG1vdWxkaW5nIGF0IHRvcCAtLT4KICA8cG9seWdvbiBwb2ludHM9IjAsMCAxNjAwLDAgMTYwMCw0NSAwLDQ1IiBmaWxsPSIjMTQxODFkIiBmaWx0ZXI9InVybCgjbW9sZGluZ1NoYWRvdykiIC8+CiAgPGxpbmUgeDE9IjAiIHkxPSI0NSIgeDI9IjE2MDAiIHkyPSI0NSIgc3Ryb2tlPSIjMmEzMzNmIiBzdHJva2Utd2lkdGg9IjIiIC8+CgogIDwhLS0gUm9sbGVyIHBhaW50IHN0cm9rZSBzd2F0Y2ggb24gcmlnaHQgYWNjZW50IHdhbGwgLS0+CiAgPHJlY3QgeD0iNzUwIiB5PSIxMDAiIHdpZHRoPSI1NTAiIGhlaWdodD0iNjgwIiByeD0iOCIgZmlsbD0iIzFlMjUyZSIgc3Ryb2tlPSIjMmQzNzQ0IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iOCA2IiBvcGFjaXR5PSIwLjYiIC8+CiAgPHJlY3QgeD0iNzcwIiB5PSIxMjAiIHdpZHRoPSIyMjAiIGhlaWdodD0iNjQwIiByeD0iNCIgZmlsbD0iI2ZmY2MwMCIgb3BhY2l0eT0iMC4wOCIgLz4KCiAgPCEtLSBPdmVybGF5IHJvbGxlciB0ZXh0dXJlIHBhdHRlcm4gLS0+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI3JvbGxlclRleHR1cmUpIiAvPgoKICA8IS0tIEFtYmllbnQgbGlnaHRpbmcgZ2xvd3MgLS0+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI3dhcm1MaWdodCkiIC8+CiAgPHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSJ1cmwoI2FjY2VudEdsb3cpIiAvPgoKICA8IS0tIEVsZWdhbnQgY3JhZnRzbWFuIHBhaW50IHJvbGxlciBzaWxob3VldHRlIGluIGJhY2tncm91bmQgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTMyMCwgMjQwKSByb3RhdGUoMTgpIHNjYWxlKDEuMSkiIG9wYWNpdHk9IjAuMTIiPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI1MCIgcng9IjgiIGZpbGw9IiNmZmNjMDAiIC8+CiAgICA8cGF0aCBkPSJNODAgNTAgTDgwIDEyMCBMNDAgMTYwIEw0MCAyODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiAvPgogIDwvZz4KPC9zdmc+Cg==","overlay_opacity":0.8},"services":{"heading":"What We Do","services":[{"title":"Interior Painting","description":"Professional surface preparation, priming, and precision painting using premium finishes like Sherwin-Williams Emerald enamel for doors, trim, walls, and ceilings."},{"title":"Decks & Exterior Finishing","description":"Comprehensive exterior protection including wood staining, deck restoration, sealing, and pressure washing to withstand Wisconsin weather elements."},{"title":"Wall Repair & Drywall","description":"Expert drywall hanging, professional tape compound layering, mudding, and smooth plaster sanding to establish seamless surfaces ready for paint."}]},"estimate":{"heading":"Request an Estimate","button_text":"Submit Request"},"gallery":{"homepage_heading":"Our Recent Projects","homepage_button":"View Full Photo Library","page_heading":"Photo Gallery","page_intro":"Browse our interior painting, drywall repairs, and exterior finish projects.","categories":[{"title":"Kitchen Painting","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWUyNDJiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBmMTMxOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iY2FiIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZThlY2VmIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJnb2xkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZDUzZCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNmI4MDAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJzaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjYiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmcpIi8+CgogIDwhLS0gS2l0Y2hlbiBXYWxsICYgQmFja3NwbGFzaCAtLT4KICA8cmVjdCB4PSI2MCIgeT0iNTAiIHdpZHRoPSI2ODAiIGhlaWdodD0iNDgwIiByeD0iOCIgZmlsbD0iIzI1MmMzNCIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICAKICA8IS0tIFN1YnRsZSBzdWJ3YXkgdGlsZSBwYXR0ZXJuIC0tPgogIDxnIG9wYWNpdHk9IjAuMTUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMjYwIiB4Mj0iNzQwIiB5Mj0iMjYwIi8+CiAgICA8bGluZSB4MT0iNjAiIHkxPSIyOTAiIHgyPSI3NDAiIHkyPSIyOTAiLz4KICAgIDxsaW5lIHgxPSI2MCIgeTE9IjMyMCIgeDI9Ijc0MCIgeTI9IjMyMCIvPgogICAgPGxpbmUgeDE9IjYwIiB5MT0iMzUwIiB4Mj0iNzQwIiB5Mj0iMzUwIi8+CiAgPC9nPgoKICA8IS0tIFVwcGVyIENhYmluZXRzIChGcmVzaCBQYWludGVkIFdoaXRlIEZpbmlzaCkgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjgwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE3MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSIxMDUiIHk9Ijk1IiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE0MCIgcng9IjIiIGZpbGw9IiNmNGY2ZjgiIHN0cm9rZT0iI2QwZDdkZSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iMjQwIiBjeT0iMTY1IiByPSI1IiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjI5MCIgeT0iODAiIHdpZHRoPSIyMjAiIGhlaWdodD0iMTcwIiByeD0iNCIgZmlsbD0idXJsKCNjYWIpIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDxyZWN0IHg9IjMwNSIgeT0iOTUiIHdpZHRoPSIxOTAiIGhlaWdodD0iMTQwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8Y2lyY2xlIGN4PSIzMjAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KICA8Y2lyY2xlIGN4PSI0ODAiIGN5PSIxNjUiIHI9IjUiIGZpbGw9IiMzMzMiLz4KCiAgPHJlY3QgeD0iNTMwIiB5PSI4MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxNzAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iNTQ1IiB5PSI5NSIgd2lkdGg9IjE1MCIgaGVpZ2h0PSIxNDAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjU2MCIgY3k9IjE2NSIgcj0iNSIgZmlsbD0iIzMzMyIvPgoKICA8IS0tIENvdW50ZXJ0b3AgLS0+CiAgPHJlY3QgeD0iNzUiIHk9IjM2MCIgd2lkdGg9IjY1MCIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiMxMTEiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIxIi8+CgogIDwhLS0gTG93ZXIgQ2FiaW5ldHMgLS0+CiAgPHJlY3QgeD0iOTAiIHk9IjM4MCIgd2lkdGg9IjI4MCIgaGVpZ2h0PSIxNDAiIHJ4PSI0IiBmaWxsPSJ1cmwoI2NhYikiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+CiAgPHJlY3QgeD0iMTA1IiB5PSIzOTUiIHdpZHRoPSIyNTAiIGhlaWdodD0iMTEwIiByeD0iMiIgZmlsbD0iI2Y0ZjZmOCIgc3Ryb2tlPSIjZDBkN2RlIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cmVjdCB4PSIyMTUiIHk9IjQxNSIgd2lkdGg9IjMwIiBoZWlnaHQ9IjYiIHJ4PSIyIiBmaWxsPSIjMzMzIi8+CgogIDxyZWN0IHg9IjQzMCIgeT0iMzgwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjE0MCIgcng9IjQiIGZpbGw9InVybCgjY2FiKSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8cmVjdCB4PSI0NDUiIHk9IjM5NSIgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxMTAiIHJ4PSIyIiBmaWxsPSIjZjRmNmY4IiBzdHJva2U9IiNkMGQ3ZGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxyZWN0IHg9IjU1NSIgeT0iNDE1IiB3aWR0aD0iMzAiIGhlaWdodD0iNiIgcng9IjIiIGZpbGw9IiMzMzMiLz4KCiAgPCEtLSBCYWRnZSBiYW5uZXIgLS0+CiAgPHJlY3QgeD0iMjQwIiB5PSI1MjAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNDIiIHJ4PSIyMSIgZmlsbD0idXJsKCNnb2xkKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPktJVENIRU4gQ0FCSU5FVCBSRUZJTklTSElORzwvdGV4dD4KPC9zdmc+Cg==","tag":"AFTER","alt":"Cabinet paint refinishing with Sherwin-Williams enamel finish"}]},{"title":"Drywall & Wall Repair","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmcyIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJjMzAzNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxODFiMWUiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Im11ZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDRkNGNiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmUzIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M5YzliZSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9IndhbGxTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTIiIGZsb29kLW9wYWNpdHk9IjAuNCIvPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNiZzIpIi8+CgogIDwhLS0gV2FsbCBCb2FyZCBTZWN0aW9uIC0tPgogIDxyZWN0IHg9IjcwIiB5PSI2MCIgd2lkdGg9IjY2MCIgaGVpZ2h0PSI0NjAiIHJ4PSI2IiBmaWxsPSIjYTQ5ZTkxIiBmaWx0ZXI9InVybCgjd2FsbFNoYWRvdykiLz4KCiAgPCEtLSBEcnl3YWxsIEpvaW50IC8gU2VhbSAtLT4KICA8bGluZSB4MT0iNDAwIiB5MT0iNjAiIHgyPSI0MDAiIHkyPSI1MjAiIHN0cm9rZT0iIzdlNzg2YiIgc3Ryb2tlLXdpZHRoPSI2Ii8+CgogIDwhLS0gTXVkIGFuZCBUYXBlIExheWVyIChGZWF0aGVyZWQgRWRnZSkgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIzNDAsNjAgNDYwLDYwIDQ1MCw1MjAgMzUwLDUyMCIgZmlsbD0idXJsKCNtdWQpIiBvcGFjaXR5PSIwLjk1Ii8+CiAgPGxpbmUgeDE9IjM5NSIgeTE9IjgwIiB4Mj0iMzk1IiB5Mj0iNTAwIiBzdHJva2U9IiNmY2ZjZjkiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWRhc2hhcnJheT0iMTAgNCIgb3BhY2l0eT0iMC44Ii8+CgogIDwhLS0gU2NyZXcgUGF0Y2hlcyBNdWRkZWQgLS0+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMTUwIiByPSIxOCIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMzAwIiByPSIxNiIgZmlsbD0idXJsKCNtdWQpIi8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iNDUwIiByPSIxNyIgZmlsbD0idXJsKCNtdWQpIi8+CgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjE4MCIgcj0iMTYiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjMzMCIgcj0iMTgiIGZpbGw9InVybCgjbXVkKSIvPgogIDxjaXJjbGUgY3g9IjU4MCIgY3k9IjQ2MCIgcj0iMTUiIGZpbGw9InVybCgjbXVkKSIvPgoKICA8IS0tIFRyb3dlbC9LbmlmZSBJbGx1c3RyYXRpb24gLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDIwLCAyNjApIHJvdGF0ZSgtMjUpIj4KICAgIDxwb2x5Z29uIHBvaW50cz0iMCwwIDEyMCwtMTAgMTMwLDQwIDEwLDUwIiBmaWxsPSIjY2VkNGRhIiBzdHJva2U9IiNhZGI1YmQiIHN0cm9rZS13aWR0aD0iMiIvPgogICAgPHJlY3QgeD0iLTQwIiB5PSIxNSIgd2lkdGg9IjQ1IiBoZWlnaHQ9IjE4IiByeD0iNCIgZmlsbD0iIzM0M2E0MCIvPgogICAgPGxpbmUgeDE9IjUiIHkxPSIxOCIgeDI9IjExNSIgeTI9IjgiIHN0cm9rZT0iI2Y4ZjlmYSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPC9nPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMzAiIHk9IjUyMCIgd2lkdGg9IjM0MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQyKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPlNFQU1MRVNTIERSWVdBTEwgTVVEICZhbXA7IFRBUEU8L3RleHQ+Cjwvc3ZnPgo=","tag":"DURING (MUD & TAPE)","alt":"Drywall compound taping and seamless plaster finish"}]},{"title":"Decks & Exterior Finishes","show_on_homepage":true,"photos":[{"image":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjAwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE5MjAyNyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYjBlMTEiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9Indvb2RSaWNoIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM4YjQ1MTMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNhMDUyMmQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNmIzNDEwIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJ3b29kQWdlZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNjk2OTY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjODA4MDgwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzU1NTU1NSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZDMiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZkNTNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U2YjgwMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9ImRlY2tTaGFkb3ciIHg9Ii01JSIgeT0iLTUlIiB3aWR0aD0iMTEwJSIgaGVpZ2h0PSIxMTAlIj4KICAgICAgPGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjgiIHN0ZERldmlhdGlvbj0iMTAiIGZsb29kLW9wYWNpdHk9IjAuMzUiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmczKSIvPgoKICA8IS0tIERlY2sgUGxhbmtzIC0tPgogIDxnIGZpbHRlcj0idXJsKCNkZWNrU2hhZG93KSI+CiAgICA8IS0tIFdlYXRoZXJlZCBsZWZ0IGhhbGYsIGZyZXNobHkgc3RhaW5lZCByaWdodCBoYWxmIGNvbXBhcmlzb24gLS0+CiAgICA8IS0tIFBsYW5rIDEgLS0+CiAgICA8cmVjdCB4PSI3MCIgeT0iODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSI4MCIgd2lkdGg9IjMzNSIgaGVpZ2h0PSI2NSIgcng9IjMiIGZpbGw9InVybCgjd29vZFJpY2gpIi8+CiAgICAKICAgIDwhLS0gUGxhbmsgMiAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIxNTUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIxNTUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgMyAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIyMzAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIyMzAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNCAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzMDUiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzMDUiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgoKICAgIDwhLS0gUGxhbmsgNSAtLT4KICAgIDxyZWN0IHg9IjcwIiB5PSIzODAiIHdpZHRoPSIzMjAiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RBZ2VkKSIvPgogICAgPHJlY3QgeD0iMzk1IiB5PSIzODAiIHdpZHRoPSIzMzUiIGhlaWdodD0iNjUiIHJ4PSIzIiBmaWxsPSJ1cmwoI3dvb2RSaWNoKSIvPgogIDwvZz4KCiAgPCEtLSBMYWJlbHMgb24gY29tcGFyaXNvbiAtLT4KICA8cmVjdCB4PSIxNDAiIHk9IjI0MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSI0MCIgcng9IjQiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuNzUiLz4KICA8dGV4dCB4PSIyMzAiIHk9IjI2NSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSI4MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPldFQVRIRVJFRCBDRURBUjwvdGV4dD4KCiAgPHJlY3QgeD0iNDcwIiB5PSIyNDAiIHdpZHRoPSIxODAiIGhlaWdodD0iNDAiIHJ4PSI0IiBmaWxsPSIjMDAwIiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHRleHQgeD0iNTYwIiB5PSIyNjUiIGZpbGw9IiNmZmQ1M2QiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iODAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5GUkVTSExZIFJFU1RPUkVEICZhbXA7IFNUQUlORUQ8L3RleHQ+CgogIDwhLS0gRGl2aWRlciBMaW5lIC0tPgogIDxsaW5lIHgxPSIzOTIiIHkxPSI3MCIgeDI9IjM5MiIgeTI9IjQ1NSIgc3Ryb2tlPSIjZmZkNTNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjYgNCIvPgoKICA8IS0tIEJhZGdlIGJhbm5lciAtLT4KICA8cmVjdCB4PSIyMjAiIHk9IjUyMCIgd2lkdGg9IjM2MCIgaGVpZ2h0PSI0MiIgcng9IjIxIiBmaWxsPSJ1cmwoI2dvbGQzKSIvPgogIDx0ZXh0IHg9IjQwMCIgeT0iNTQ3IiBmaWxsPSIjMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjkwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjEiPkRFQ0sgUkVTVE9SQVRJT04gJmFtcDsgV0VBVEhFUiBTRUFMPC90ZXh0Pgo8L3N2Zz4K","tag":"AFTER (SEALED)","alt":"Exterior deck power washed and stained"}]}]}};
 
-        // Firebase Configuration
-        const firebaseConfig = {
-          apiKey: "YOUR_FIREBASE_API_KEY",
-          authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-          projectId: "YOUR_FIREBASE_PROJECT_ID",
-          storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-          messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-          appId: "YOUR_FIREBASE_APP_ID"
-        };
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const auth = firebase.auth();
 
-        // State holder
-        let siteData = loadPersistedData();
-        let activeManageCatIdx = 0;
-        let pendingNewPhotoData = null;
-        let pendingLogoData = null;
-
-        // Load data from localStorage (or fallback to bundled defaults)
-        function loadPersistedData() {
-            try {
-                const stored = localStorage.getItem("kp_site_content");
-                if (stored) {
-                    const parsed = JSON.parse(stored);
-                    if (parsed && parsed.settings && parsed.gallery) {
-                        return parsed;
-                    }
-                }
-            } catch (e) {}
-            return JSON.parse(JSON.stringify(INITIAL_SITE_DATA));
-        }
-
-        // Save data to localStorage (and sync with /api/content if backend is online)
-        async function persistSiteData() {
-            try {
-                localStorage.setItem("kp_site_content", JSON.stringify(siteData));
-            } catch (e) {
-                console.warn("localStorage quota exceeded or disabled", e);
-            }
-
-            // Sync with backend API if available
-            try {
-                fetch("/api/content", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ action: "update_settings", settings: siteData.settings })
-                }).catch(() => {});
-                fetch("/api/content", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ action: "save_gallery", categories: siteData.gallery.categories })
-                }).catch(() => {});
-            } catch (e) {}
-        }
-
-        // Render Homepage and Gallery from siteData
-        function renderSite() {
-            // Business Name & Logo
-            const name = siteData.settings.business_name || "Krueger Painting";
-            document.getElementById("header-business-name").textContent = name;
-            document.title = name + " | Professional Painting";
-
-            const logo = siteData.settings.logo;
-            const logoImg = document.getElementById("header-logo-img");
-            const logoFallback = document.getElementById("header-logo-fallback");
-            const adminTopLogo = document.getElementById("admin-top-logo");
-            const adminTopFallback = document.getElementById("admin-top-fallback");
-
-            if (logo && logo.trim()) {
-                logoImg.src = logo;
-                logoImg.hidden = false;
-                logoFallback.hidden = true;
-                adminTopLogo.src = logo;
-                adminTopLogo.hidden = false;
-                adminTopFallback.hidden = true;
-            } else {
-                logoImg.hidden = true;
-                logoFallback.hidden = false;
-                adminTopLogo.hidden = true;
-                adminTopFallback.hidden = false;
-            }
-
-            // Phone
-            const phone = siteData.settings.phone || "262-443-1199";
-            const callBtn = document.getElementById("header-call-btn");
-            callBtn.href = "tel:" + phone.replace(/[^0-9]/g, "");
-            const footerPhone = document.getElementById("footer-phone-link");
-            footerPhone.href = "tel:" + phone.replace(/[^0-9]/g, "");
-            footerPhone.textContent = phone;
-
-            // Facebook
-            const fbBtn = document.getElementById("header-fb-btn");
-            const fbUrl = siteData.settings.facebook_url;
-            if (fbUrl && fbUrl.trim()) {
-                fbBtn.href = fbUrl;
-                fbBtn.style.display = "inline-flex";
-            } else {
-                fbBtn.style.display = "none";
-            }
-
-            // Hero
-            const heroSection = document.querySelector(".hero");
-            if (siteData.hero) {
-                if (siteData.hero.headline_white) document.getElementById("hero-headline-white").textContent = siteData.hero.headline_white;
-                if (siteData.hero.headline_yellow) document.getElementById("hero-headline-yellow").textContent = siteData.hero.headline_yellow;
-                if (siteData.hero.description) document.getElementById("hero-description").textContent = siteData.hero.description;
-                if (siteData.hero.primary_button) document.getElementById("hero-btn-primary").textContent = siteData.hero.primary_button;
-                if (siteData.hero.secondary_button) document.getElementById("hero-btn-secondary").textContent = siteData.hero.secondary_button;
-
-                if (heroSection) {
-                    const bg = siteData.hero.background_image || "";
-                    const opacity = (siteData.hero.overlay_opacity !== undefined) ? siteData.hero.overlay_opacity : 0.80;
-                    heroSection.style.setProperty("--hero-overlay-alpha", opacity);
-                    if (bg && bg.trim()) {
-                        heroSection.style.backgroundImage = 'url("' + bg + '")';
-                    } else {
-                        heroSection.style.backgroundImage = 'none';
-                    }
-                }
-            }
-
-            // Services
-            const servicesList = document.getElementById("services-list");
-            const services = siteData.services?.services || [];
-            servicesList.replaceChildren(...services.map(s => {
-                const card = document.createElement("div");
-                card.className = "service-card";
-                const h4 = document.createElement("h4");
-                h4.textContent = s.title;
-                const p = document.createElement("p");
-                p.textContent = s.description;
-                card.append(h4, p);
-                return card;
-            }));
-
-            // Gallery
-            renderGallerySection();
-
-            // Footer year
-            document.getElementById("year-copy").textContent = new Date().getFullYear();
-        }
-
-        // Gallery filter & photo rendering
-        function renderGallerySection() {
-            const grid = document.getElementById("photo-grid");
-            const filterBar = document.getElementById("filter-bar");
-            const categories = siteData.gallery?.categories || [];
-
-            const lightbox = document.getElementById("lightbox");
-            const lightboxImg = document.getElementById("lightbox-img");
-            const lightboxCaption = document.getElementById("lightbox-caption");
-
-            const allPhotos = [];
-            categories.forEach(cat => {
-                (cat.photos || []).forEach(photo => {
-                    if (photo.image) {
-                        allPhotos.push({
-                            ...photo,
-                            categoryTitle: cat.title
-                        });
-                    }
-                });
-            });
-
-            if (!allPhotos.length) {
-                grid.replaceChildren(Object.assign(document.createElement("p"), {
-                    className: "empty-note",
-                    textContent: "Project photos coming soon."
-                }));
-                filterBar.innerHTML = "";
-                return;
-            }
-
-            const tiles = allPhotos.map(item => {
-                const figure = document.createElement("figure");
-                figure.className = "photo-tile";
-                figure.dataset.category = item.categoryTitle;
-
-                const img = document.createElement("img");
-                img.src = item.image;
-                img.alt = item.alt || item.tag || item.categoryTitle;
-                img.loading = "lazy";
-                figure.appendChild(img);
-
-                if (item.tag) {
-                    const badge = document.createElement("span");
-                    badge.className = "tag-badge";
-                    badge.textContent = item.tag;
-                    figure.appendChild(badge);
-                }
-
-                figure.addEventListener("click", () => {
-                    lightboxImg.src = item.image;
-                    lightboxImg.alt = img.alt;
-                    lightboxCaption.textContent = [item.categoryTitle, item.tag, item.alt].filter(Boolean).join(" · ");
-                    lightbox.hidden = false;
-                });
-
-                return figure;
-            });
-
-            grid.replaceChildren(...tiles);
-
-            // Filter buttons
-            const filterLabels = ["All", ...categories.map(c => c.title)];
-            filterBar.replaceChildren(...filterLabels.map((lbl, idx) => {
-                const btn = document.createElement("button");
-                btn.type = "button";
-                btn.className = "filter-btn" + (idx === 0 ? " active" : "");
-                btn.textContent = lbl;
-                btn.addEventListener("click", () => {
-                    filterBar.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b === btn));
-                    tiles.forEach(tile => {
-                        tile.hidden = (lbl !== "All" && tile.dataset.category !== lbl);
-                    });
-                });
-                return btn;
-            }));
-
-            // Lightbox close
-            const closeLightbox = () => { lightbox.hidden = true; };
-            document.getElementById("lightbox-close-btn").onclick = closeLightbox;
-            lightbox.onclick = (e) => { if (e.target === lightbox) closeLightbox(); };
-            document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
-        }
-
-        // ==========================================
-        // ADMIN DASHBOARD LOGIC
-        // ==========================================
-        window.openAdminModal = function() {
-            document.getElementById("admin-modal").classList.add("open");
-            checkAdminSession();
-        };
-
-        window.closeAdminModal = function() {
-            document.getElementById("admin-modal").classList.remove("open");
-        };
-
-        function showAdminAlert(msg, isSuccess = true) {
-            const el = document.getElementById("admin-status-alert");
-            el.textContent = msg;
-            el.className = "admin-alert-banner " + (isSuccess ? "admin-alert-success" : "admin-alert-error");
-            el.style.display = "block";
-            setTimeout(() => { el.style.display = "none"; }, 5000);
-        }
-
-        function checkAdminSession() {
-            const loginView = document.getElementById("admin-login-view");
-            const dashView = document.getElementById("admin-dashboard-view");
-
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    loginView.style.display = "none";
-                    dashView.style.display = "flex";
-                    populateAdminFields();
-                } else {
-                    loginView.style.display = "block";
-                    dashView.style.display = "none";
-                }
-            });
-        }
-
-        // Password Show/Hide Toggle
-        const togglePwBtn = document.getElementById("btn-toggle-login-pw");
-        const pwInput = document.getElementById("admin-pass-input");
-        togglePwBtn.addEventListener("click", () => {
-            const isPw = pwInput.type === "password";
-            pwInput.type = isPw ? "text" : "password";
-            togglePwBtn.textContent = isPw ? "🙈" : "👁";
-        });
-
-        // Admin Login Form Submission
-        document.getElementById("admin-login-form").addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const btn = document.getElementById("btn-login-submit");
-            btn.disabled = true;
-            btn.textContent = "Signing In...";
-
-            const emailInput = document.getElementById("admin-email-input");
-            const enteredEmail = emailInput ? emailInput.value : "";
-            const enteredPass = pwInput.value;
-            const errBox = document.getElementById("login-error-alert");
-            const successBox = document.getElementById("login-success-alert");
-
-            if (successBox) successBox.style.display = "none";
-            if (errBox) errBox.style.display = "none";
-
-            try {
-                await auth.signInWithEmailAndPassword(enteredEmail, enteredPass);
-                errBox.style.display = "none";
-                pwInput.value = "";
-                if (emailInput) emailInput.value = "";
-            } catch (error) {
-                errBox.textContent = error.message || "Incorrect credentials. Please try again.";
-                errBox.style.display = "block";
-                pwInput.focus();
-            } finally {
-                btn.disabled = false;
-                btn.textContent = "Sign In to Dashboard";
-            }
-        });
-
-        const forgotPasswordBtn = document.getElementById("btn-forgot-password");
-        if (forgotPasswordBtn) {
-            forgotPasswordBtn.addEventListener("click", () => {
-                const errBox = document.getElementById("login-error-alert");
-                const successBox = document.getElementById("login-success-alert");
-
-                if (errBox) errBox.style.display = "none";
-                if (successBox) successBox.style.display = "none";
-
-                const emailInput = document.getElementById("admin-email-input");
-                const email = emailInput ? emailInput.value.trim() : "";
-                if (!email) {
-                    if (errBox) {
-                        errBox.textContent = "Please enter your email address to reset your password.";
-                        errBox.style.display = "block";
-                    }
-                    return;
-                }
-
-                auth.sendPasswordResetEmail(email)
-                    .then(() => {
-                        if (successBox) {
-                            successBox.textContent = "Password reset email sent. Check your inbox.";
-                            successBox.style.display = "block";
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Password reset error:", error);
-                        if (errBox) {
-                            errBox.textContent = "Failed to send reset email: " + error.message;
-                            errBox.style.display = "block";
-                        }
-                    });
-            });
-        }
-
-        // Logout
-        document.getElementById("btn-admin-logout").addEventListener("click", () => {
-            auth.signOut();
-        });
-
-        // Tab Navigation inside Admin Dashboard
-        document.querySelectorAll(".admin-tab-btn[data-tab]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                document.querySelectorAll(".admin-tab-btn").forEach(b => b.classList.remove("active"));
-                document.querySelectorAll(".admin-tab-section").forEach(s => s.classList.remove("active"));
-                btn.classList.add("active");
-                const targetId = btn.dataset.tab;
-                document.getElementById(targetId)?.classList.add("active");
-            });
-        });
-
-        // Populate fields in Admin Dashboard
-        function populateAdminFields() {
-            // Logo Tab
-            renderAdminLogoTab();
-
-            // Hero Background Tab
-            renderAdminHeroTab();
-
-            // Photos Tab
-            renderAdminPhotosTab();
-
-            // Contact Tab
-            document.getElementById("setting-biz-name").value = siteData.settings.business_name || "Krueger Painting";
-            document.getElementById("setting-phone").value = siteData.settings.phone || "262-443-1199";
-            document.getElementById("setting-facebook").value = siteData.settings.facebook_url || "";
-        }
-
-        // ADMIN TAB: LOGO
-        function renderAdminLogoTab() {
-            const logo = siteData.settings.logo;
-            const previewImg = document.getElementById("preview-logo-img");
-            const previewFallback = document.getElementById("preview-logo-fallback");
-            const removeBtn = document.getElementById("btn-remove-logo-btn");
-            document.getElementById("preview-biz-title").textContent = siteData.settings.business_name || "Krueger Painting";
-
-            if (logo && logo.trim()) {
-                previewImg.src = logo;
-                previewImg.hidden = false;
-                previewFallback.hidden = true;
-                removeBtn.style.display = "inline-block";
-            } else {
-                previewImg.hidden = true;
-                previewFallback.hidden = false;
-                removeBtn.style.display = "none";
-            }
-        }
-
-        const logoPicker = document.getElementById("logo-file-picker");
-        const logoDropzone = document.getElementById("logo-dropzone");
-        const logoActionBar = document.getElementById("logo-action-bar");
-
-        logoDropzone.addEventListener("click", () => logoPicker.click());
-        logoPicker.addEventListener("change", (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (evt) => {
-                pendingLogoData = evt.target.result;
-                document.getElementById("preview-logo-img").src = pendingLogoData;
-                document.getElementById("preview-logo-img").hidden = false;
-                document.getElementById("preview-logo-fallback").hidden = true;
-                logoActionBar.style.display = "flex";
-            };
-            reader.readAsDataURL(file);
-        });
-
-        document.getElementById("btn-cancel-logo-file").addEventListener("click", () => {
-            pendingLogoData = null;
-            logoPicker.value = "";
-            logoActionBar.style.display = "none";
-            renderAdminLogoTab();
-        });
-
-        document.getElementById("btn-save-logo-file").addEventListener("click", async () => {
-            if (!pendingLogoData) return;
-            siteData.settings.logo = pendingLogoData;
-            await persistSiteData();
-            renderSite();
-            renderAdminLogoTab();
-            pendingLogoData = null;
-            logoPicker.value = "";
-            logoActionBar.style.display = "none";
-            showAdminAlert("✓ Website logo updated successfully!");
-        });
-
-        document.getElementById("btn-remove-logo-btn").addEventListener("click", async () => {
-            if (!confirm("Remove uploaded logo and restore default monogram?")) return;
-            siteData.settings.logo = "";
-            await persistSiteData();
-            renderSite();
-            renderAdminLogoTab();
-            showAdminAlert("Logo removed.");
-        });
-
-        // ADMIN TAB: HERO BACKGROUND
-        let pendingModalHeroData = null;
-        function renderAdminHeroTab() {
-            const bg = siteData.hero?.background_image || INITIAL_SITE_DATA.hero.background_image || "";
-            const opacity = (siteData.hero?.overlay_opacity !== undefined) ? siteData.hero.overlay_opacity : 0.80;
-            
-            const previewMock = document.getElementById("modal-preview-hero-mock");
-            const previewOverlay = document.getElementById("modal-preview-hero-overlay");
-            const opacityRange = document.getElementById("modal-hero-opacity-range");
-            const opacityVal = document.getElementById("modal-hero-opacity-val");
-
-            if (previewMock) {
-                previewMock.style.backgroundImage = (bg && bg.trim()) ? 'url("' + bg + '")' : "none";
-            }
-            if (previewOverlay) {
-                previewOverlay.style.background = 'linear-gradient(180deg, rgba(14, 17, 21, ' + opacity + ') 0%, rgba(10, 12, 16, ' + Math.min(1, opacity + 0.08) + ') 100%)';
-            }
-            if (opacityRange && opacityVal) {
-                opacityRange.value = Math.round(opacity * 100);
-                opacityVal.textContent = Math.round(opacity * 100) + "%";
-            }
-        }
-
-        const modalHeroOpacity = document.getElementById("modal-hero-opacity-range");
-        const modalHeroOpacityVal = document.getElementById("modal-hero-opacity-val");
-        if (modalHeroOpacity && modalHeroOpacityVal) {
-            modalHeroOpacity.addEventListener("input", async (e) => {
-                const val = parseInt(e.target.value, 10) / 100;
-                modalHeroOpacityVal.textContent = e.target.value + "%";
-                const overlay = document.getElementById("modal-preview-hero-overlay");
-                if (overlay) {
-                    overlay.style.background = 'linear-gradient(180deg, rgba(14, 17, 21, ' + val + ') 0%, rgba(10, 12, 16, ' + Math.min(1, val + 0.08) + ') 100%)';
-                }
-                if (!siteData.hero) siteData.hero = {};
-                siteData.hero.overlay_opacity = val;
-                const heroSection = document.querySelector(".hero");
-                if (heroSection) heroSection.style.setProperty("--hero-overlay-alpha", val);
-            });
-            modalHeroOpacity.addEventListener("change", async () => {
-                await persistSiteData();
-                showAdminAlert("✓ Background darkness saved!");
-            });
-        }
-
-        const modalHeroPicker = document.getElementById("modal-hero-file-picker");
-        const modalHeroDropzone = document.getElementById("modal-hero-dropzone");
-        const modalHeroActionBar = document.getElementById("modal-hero-action-bar");
-
-        modalHeroDropzone.addEventListener("click", () => modalHeroPicker.click());
-        modalHeroPicker.addEventListener("change", (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (evt) => {
-                pendingModalHeroData = evt.target.result;
-                const previewMock = document.getElementById("modal-preview-hero-mock");
-                if (previewMock) {
-                    previewMock.style.backgroundImage = 'url("' + pendingModalHeroData + '")';
-                }
-                modalHeroActionBar.style.display = "flex";
-            };
-            reader.readAsDataURL(file);
-        });
-
-        document.getElementById("btn-modal-cancel-hero").addEventListener("click", () => {
-            pendingModalHeroData = null;
-            modalHeroPicker.value = "";
-            modalHeroActionBar.style.display = "none";
-            renderAdminHeroTab();
-        });
-
-        document.getElementById("btn-modal-save-hero").addEventListener("click", async () => {
-            if (!pendingModalHeroData) return;
-            if (!siteData.hero) siteData.hero = {};
-            siteData.hero.background_image = pendingModalHeroData;
-            siteData.hero.overlay_opacity = parseInt(modalHeroOpacity.value, 10) / 100;
-            await persistSiteData();
-            renderSite();
-            renderAdminHeroTab();
-            pendingModalHeroData = null;
-            modalHeroPicker.value = "";
-            modalHeroActionBar.style.display = "none";
-            showAdminAlert("✓ Hero background picture updated! Check out the homepage banner.");
-        });
-
-        document.getElementById("btn-modal-reset-hero").addEventListener("click", async () => {
-            if (!confirm("Reset hero background to default painting texture?")) return;
-            if (!siteData.hero) siteData.hero = {};
-            siteData.hero.background_image = INITIAL_SITE_DATA.hero.background_image;
-            siteData.hero.overlay_opacity = 0.80;
-            await persistSiteData();
-            renderSite();
-            renderAdminHeroTab();
-            showAdminAlert("✓ Reset hero background to default painting texture.");
-        });
-
-        document.getElementById("btn-modal-clear-hero").addEventListener("click", async () => {
-            if (!confirm("Clear background image and use solid dark header?")) return;
-            if (!siteData.hero) siteData.hero = {};
-            siteData.hero.background_image = "";
-            await persistSiteData();
-            renderSite();
-            renderAdminHeroTab();
-            showAdminAlert("Hero background picture removed.");
-        });
-
-        // ADMIN TAB: PHOTOS
-        function renderAdminPhotosTab() {
-            const catBar = document.getElementById("manage-cat-tabs");
-            const container = document.getElementById("manage-photos-container");
-            const categories = siteData.gallery.categories || [];
-
-            catBar.replaceChildren(...categories.map((cat, idx) => {
-                const btn = document.createElement("button");
-                btn.type = "button";
-                btn.className = "filter-btn" + (idx === activeManageCatIdx ? " active" : "");
-                btn.textContent = cat.title + " (" + (cat.photos?.length || 0) + ")";
-                btn.onclick = () => {
-                    activeManageCatIdx = idx;
-                    renderAdminPhotosTab();
-                };
-                return btn;
-            }));
-
-            const activeCat = categories[activeManageCatIdx];
-            if (!activeCat || !activeCat.photos || !activeCat.photos.length) {
-                container.innerHTML = '<div style="grid-column: 1 / -1; color: #888; text-align: center; padding: 20px; border: 1px dashed #444; border-radius: 6px;">No photos in this category yet. Use the form below to add one!</div>';
-                return;
-            }
-
-            container.replaceChildren(...activeCat.photos.map((p, pIdx) => {
-                const card = document.createElement("div");
-                card.className = "photo-item-card";
-
-                const img = document.createElement("img");
-                img.src = p.image;
-                img.alt = p.alt || "Photo";
-
-                const details = document.createElement("div");
-                details.className = "photo-item-details";
-
-                if (p.tag) {
-                    const tag = document.createElement("div");
-                    tag.className = "photo-item-tag";
-                    tag.textContent = p.tag;
-                    details.appendChild(tag);
-                }
-
-                if (p.alt) {
-                    const caption = document.createElement("div");
-                    caption.style = "font-size: 0.78rem; color: #aaa; margin-bottom: 8px;";
-                    caption.textContent = p.alt;
-                    details.appendChild(caption);
-                }
-
-                const delBtn = document.createElement("button");
-                delBtn.type = "button";
-                delBtn.className = "btn-outline-danger";
-                delBtn.style = "width: 100%; padding: 4px; font-size: 0.75rem;";
-                delBtn.textContent = "Delete Photo";
-                delBtn.onclick = async () => {
-                    if (!confirm("Are you sure you want to delete this photo?")) return;
-                    activeCat.photos.splice(pIdx, 1);
-                    await persistSiteData();
-                    renderSite();
-                    renderAdminPhotosTab();
-                    showAdminAlert("Photo deleted.");
-                };
-                details.appendChild(delBtn);
-
-                card.append(img, details);
-                return card;
-            }));
-        }
-
-        // Photo file picker
-        const photoInput = document.getElementById("photo-upload-input");
-        const photoDrop = document.getElementById("photo-dropzone-trigger");
-        const previewWrap = document.getElementById("new-photo-preview-wrap");
-        const previewImg = document.getElementById("new-photo-preview-img");
-
-        photoDrop.addEventListener("click", () => photoInput.click());
-        photoInput.addEventListener("change", (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (evt) => {
-                pendingNewPhotoData = evt.target.result;
-                previewImg.src = pendingNewPhotoData;
-                previewWrap.style.display = "block";
-            };
-            reader.readAsDataURL(file);
-        });
-
-        window.setQuickTag = function(tag) {
-            document.getElementById("new-photo-tag").value = tag;
-        };
-
-        document.getElementById("add-photo-form").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            if (!pendingNewPhotoData) return;
-
-            const activeCat = siteData.gallery.categories[activeManageCatIdx];
-            if (!activeCat.photos) activeCat.photos = [];
-
-            activeCat.photos.push({
-                image: pendingNewPhotoData,
-                tag: document.getElementById("new-photo-tag").value.trim(),
-                alt: document.getElementById("new-photo-alt").value.trim()
-            });
-
-            await persistSiteData();
-            renderSite();
-            renderAdminPhotosTab();
-
-            // Reset
-            pendingNewPhotoData = null;
-            photoInput.value = "";
-            document.getElementById("new-photo-tag").value = "";
-            document.getElementById("new-photo-alt").value = "";
-            previewWrap.style.display = "none";
-
-            showAdminAlert("✓ New photo added to " + activeCat.title + "!");
-        });
-
-        // ADMIN TAB: BUSINESS CONTACT
-        document.getElementById("business-settings-form").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            siteData.settings.business_name = document.getElementById("setting-biz-name").value.trim();
-            siteData.settings.phone = document.getElementById("setting-phone").value.trim();
-            siteData.settings.facebook_url = document.getElementById("setting-facebook").value.trim();
-
-            const addr = document.getElementById("setting-address").value.trim();
-            if (addr) {
-                document.getElementById("footer-address").innerHTML = "<strong>Mailing Address:</strong> " + addr;
-            }
-
-            await persistSiteData();
-            renderSite();
-            showAdminAlert("✓ Business contact info updated!");
-        });
-
-        // ADMIN TAB: SECURITY PASSWORD
-        document.getElementById("change-pw-form").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const curr = document.getElementById("pw-curr-input").value;
-            const next = document.getElementById("pw-new-input").value;
-            const conf = document.getElementById("pw-confirm-input").value;
-            const msgBox = document.getElementById("pw-status-msg");
-
-            if (next.length < 6) {
-                msgBox.textContent = "New password must be at least 6 characters long.";
-                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
-                return;
-            }
-
-            if (next !== conf) {
-                msgBox.textContent = "New passwords do not match.";
-                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
-                return;
-            }
-
-            const user = auth.currentUser;
-            if (!user) {
-                msgBox.textContent = "You must be logged in to change the password.";
-                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
-                return;
-            }
-
-            try {
-                const credential = firebase.auth.EmailAuthProvider.credential(user.email, curr);
-                await user.reauthenticateWithCredential(credential);
-                await user.updatePassword(next);
-
-                msgBox.textContent = "✓ Password updated successfully! Please remember your new password.";
-                msgBox.style = "display: block; background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid #22c55e;";
-                document.getElementById("change-pw-form").reset();
-                showAdminAlert("✓ Admin password updated.");
-            } catch (error) {
-                msgBox.textContent = error.message || "Failed to update password. Make sure current password is correct.";
-                msgBox.style = "display: block; background: rgba(255, 107, 107, 0.15); color: #ff6b6b; border: 1px solid #ff6b6b;";
-            }
-        });
-
-        // EXPORT STANDALONE HTML FILE
-        function exportSingleHtmlFile() {
-            // Clone current page document
-            const docClone = document.documentElement.cloneNode(true);
-
-            // Remove any open state on admin modal
-            const adminModal = docClone.querySelector("#admin-modal");
-            if (adminModal) adminModal.classList.remove("open");
-
-            // Bake current siteData into INITIAL_SITE_DATA in the script
-            let fullHtml = "<!DOCTYPE html>\n" + docClone.outerHTML;
-            fullHtml = fullHtml.replace(
-                /const INITIAL_SITE_DATA = \{[\s\S]*?\};\s*const DEFAULT_PASSWORD_HASH/,
-                'const INITIAL_SITE_DATA = ' + JSON.stringify(siteData) + ';\n        const DEFAULT_PASSWORD_HASH'
-            );
-
-            // Generate blob and trigger download
-            const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "index.html";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showAdminAlert("✓ index.html downloaded! You can push this file directly to GitHub.");
-        }
-
-        const btnExportSite = document.getElementById("btn-export-site");
-        if (btnExportSite) btnExportSite.onclick = exportSingleHtmlFile;
-        const btnExportSiteBig = document.getElementById("btn-export-site-big");
-        if (btnExportSiteBig) btnExportSiteBig.onclick = exportSingleHtmlFile;
-
-        // Check hash on load (e.g. #admin opens admin portal)
-        if (window.location.hash === "#admin") {
-            openAdminModal();
-        }
-
-        // Initial render
-        renderSite();
-    })();
-    </script>
+<script>
+  async function loadData() {
+    try {
+      const [settingsRes, heroRes, servicesRes, galleryRes] = await Promise.all([
+        fetch('data/settings.json'),
+        fetch('data/hero.json'),
+        fetch('data/services.json'),
+        fetch('data/gallery.json')
+      ]);
+
+      const siteData = {
+        settings: await settingsRes.json(),
+        hero: await heroRes.json(),
+        services: await servicesRes.json(),
+        gallery: await galleryRes.json()
+      };
+
+      // --- RENDER LOGIC ---
+      // Business Name & Logo
+      const name = siteData.settings.business_name || "Krueger Painting";
+      document.getElementById("header-business-name").textContent = name;
+      document.title = name + " | Professional Painting";
+
+      if (siteData.settings.logo) {
+          const topLogo = document.getElementById("admin-top-logo");
+          if(topLogo) { topLogo.src = siteData.settings.logo; topLogo.hidden = false; }
+          const topFb = document.getElementById("admin-top-fallback");
+          if(topFb) topFb.hidden = true;
+
+          const circs = document.querySelectorAll(".logo-circle");
+          circs.forEach(c => {
+              c.style.backgroundImage = `url(${siteData.settings.logo})`;
+              c.style.backgroundSize = "cover";
+              c.style.backgroundPosition = "center";
+          });
+      }
+
+      // Contact Details
+      if (siteData.settings.phone) {
+          document.querySelectorAll(".btn-call").forEach(btn => {
+              btn.textContent = "Call " + siteData.settings.phone;
+              btn.href = "tel:" + siteData.settings.phone;
+          });
+      }
+      if (siteData.settings.facebook_url) {
+          const btn = document.getElementById("btn-facebook");
+          if (btn) {
+              btn.href = siteData.settings.facebook_url;
+              btn.hidden = false;
+          }
+      }
+      if (siteData.settings.footer_text) {
+          const ft = document.getElementById("footer-text");
+          if (ft) ft.textContent = siteData.settings.footer_text;
+      }
+
+      // Hero
+      if (siteData.hero) {
+          if (siteData.hero.headline_white) document.getElementById("hero-headline-white").textContent = siteData.hero.headline_white;
+          if (siteData.hero.headline_yellow) document.getElementById("hero-headline-yellow").textContent = siteData.hero.headline_yellow;
+          if (siteData.hero.description) document.getElementById("hero-description").textContent = siteData.hero.description;
+          if (siteData.hero.primary_button) document.getElementById("hero-btn-primary").textContent = siteData.hero.primary_button;
+          if (siteData.hero.secondary_button) document.getElementById("hero-btn-secondary").textContent = siteData.hero.secondary_button;
+
+          if (siteData.hero.background_image) {
+              const heroSection = document.querySelector(".hero");
+              if (heroSection) {
+                  heroSection.style.backgroundImage = `url(${siteData.hero.background_image})`;
+              }
+          }
+          if (siteData.hero.overlay_opacity !== undefined) {
+              document.documentElement.style.setProperty('--hero-overlay-alpha', siteData.hero.overlay_opacity);
+          }
+      }
+
+      // Services
+      if (siteData.services) {
+          if (siteData.services.heading) document.getElementById("services-heading").textContent = siteData.services.heading;
+          const container = document.getElementById("services-list");
+          if (container && Array.isArray(siteData.services.services)) {
+              container.innerHTML = "";
+              siteData.services.services.forEach(s => {
+                  const p = document.createElement("p");
+                  p.textContent = s.description;
+                  const h3 = document.createElement("h3");
+                  h3.textContent = s.title;
+                  const div = document.createElement("div");
+                  div.className = "service-card";
+                  div.appendChild(h3);
+                  div.appendChild(p);
+                  container.appendChild(div);
+              });
+          }
+      }
+
+      // Gallery Homepage Section
+      if (siteData.gallery) {
+          const gh = document.getElementById("gallery-heading");
+          if (gh && siteData.gallery.homepage_heading) gh.textContent = siteData.gallery.homepage_heading;
+
+          const gb = document.getElementById("gallery-btn-primary");
+          if (gb && siteData.gallery.homepage_button) gb.textContent = siteData.gallery.homepage_button;
+
+          // Homepage Photo Grid (up to 6)
+          const homeGrid = document.getElementById("photo-grid");
+          if (homeGrid && Array.isArray(siteData.gallery.categories)) {
+              homeGrid.innerHTML = "";
+              let rendered = 0;
+              for (const cat of siteData.gallery.categories) {
+                  if (!cat.show_on_homepage || !Array.isArray(cat.photos)) continue;
+                  for (const photo of cat.photos) {
+                      if (rendered >= 6) break;
+                      if (!photo.image) continue;
+
+                      const div = document.createElement("figure");
+                      div.className = "photo-tile";
+                      if (photo.tag) {
+                          const tag = document.createElement("span");
+                          tag.className = "tag-badge";
+                          tag.textContent = photo.tag;
+                          div.appendChild(tag);
+                      }
+                      const img = document.createElement("img");
+                      img.src = photo.image;
+                      if (photo.alt) img.alt = photo.alt;
+                      img.loading = "lazy";
+
+                      div.onclick = () => {
+                          const lightbox = document.getElementById("lightbox");
+                          const lbImg = document.getElementById("lightbox-img");
+                          const lbTxt = document.getElementById("lightbox-caption");
+                          if (lightbox && lbImg) {
+                              lbImg.src = photo.image;
+                              if (lbTxt) lbTxt.textContent = photo.alt || "";
+                              lightbox.hidden = false;
+                          }
+                      };
+
+                      div.appendChild(img);
+                      homeGrid.appendChild(div);
+                      rendered++;
+                  }
+                  if (rendered >= 6) break;
+              }
+          }
+      }
+
+    } catch (e) {
+      console.error("Error loading CMS data:", e);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('year-copy').textContent = new Date().getFullYear();
+    loadData();
+  });
+</script>
 </body>
 </html>

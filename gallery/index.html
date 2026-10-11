@@ -73,5 +73,165 @@
     </footer>
 
     <script src="/js/site.js"></script>
+
+<script>
+  async function loadData() {
+    try {
+      const [settingsRes, galleryRes] = await Promise.all([
+        fetch('../data/settings.json'),
+        fetch('../data/gallery.json')
+      ]);
+
+      const siteData = {
+        settings: await settingsRes.json(),
+        gallery: await galleryRes.json()
+      };
+
+      // --- RENDER LOGIC ---
+      // Business Name & Logo
+      const name = siteData.settings.business_name || "Krueger Painting";
+      document.getElementById("header-business-name").textContent = name;
+      document.title = name + " | Photo Gallery";
+
+      if (siteData.settings.logo) {
+          const topLogo = document.getElementById("admin-top-logo");
+          if(topLogo) { topLogo.src = siteData.settings.logo; topLogo.hidden = false; }
+          const topFb = document.getElementById("admin-top-fallback");
+          if(topFb) topFb.hidden = true;
+
+          const circs = document.querySelectorAll(".logo-circle");
+          circs.forEach(c => {
+              c.style.backgroundImage = `url(${siteData.settings.logo})`;
+              c.style.backgroundSize = "cover";
+              c.style.backgroundPosition = "center";
+          });
+      }
+
+      // Contact Details
+      if (siteData.settings.phone) {
+          document.querySelectorAll(".btn-call").forEach(btn => {
+              btn.textContent = "Call " + siteData.settings.phone;
+              btn.href = "tel:" + siteData.settings.phone;
+          });
+      }
+      if (siteData.settings.facebook_url) {
+          const btn = document.getElementById("btn-facebook");
+          if (btn) {
+              btn.href = siteData.settings.facebook_url;
+              btn.hidden = false;
+          }
+      }
+      if (siteData.settings.footer_text) {
+          const ft = document.getElementById("footer-text");
+          if (ft) ft.textContent = siteData.settings.footer_text;
+      }
+
+      // Gallery Page Filter Logic
+      if (siteData.gallery) {
+          const filterBar = document.getElementById("filter-bar");
+          const fullGrid = document.getElementById("photo-grid");
+          const lightbox = document.getElementById("lightbox");
+          const lbImg = document.getElementById("lightbox-img");
+          const lbTxt = document.getElementById("lightbox-caption");
+          const lbClose = document.getElementById("lb-close");
+
+          if (siteData.gallery.page_heading) {
+              const ph = document.getElementById("gallery-page-heading");
+              if (ph) ph.textContent = siteData.gallery.page_heading;
+          }
+          if (siteData.gallery.page_intro) {
+              const pi = document.getElementById("gallery-page-intro");
+              if (pi) pi.textContent = siteData.gallery.page_intro;
+          }
+
+          if (filterBar && fullGrid && Array.isArray(siteData.gallery.categories)) {
+              let currentFilter = 'All';
+
+              function renderGalleryPage() {
+                  filterBar.innerHTML = "";
+                  fullGrid.innerHTML = "";
+
+                  // Filter buttons
+                  const allBtn = document.createElement("button");
+                  allBtn.className = "filter-btn " + (currentFilter === 'All' ? 'active' : '');
+                  allBtn.textContent = "All";
+                  allBtn.onclick = () => { currentFilter = 'All'; renderGalleryPage(); };
+                  filterBar.appendChild(allBtn);
+
+                  siteData.gallery.categories.forEach(cat => {
+                      const btn = document.createElement("button");
+                      btn.className = "filter-btn " + (currentFilter === cat.title ? 'active' : '');
+                      btn.textContent = cat.title;
+                      btn.onclick = () => { currentFilter = cat.title; renderGalleryPage(); };
+                      filterBar.appendChild(btn);
+                  });
+
+                  // Photos
+                  let empty = true;
+                  siteData.gallery.categories.forEach(cat => {
+                      if (currentFilter !== 'All' && currentFilter !== cat.title) return;
+                      if (!Array.isArray(cat.photos)) return;
+
+                      cat.photos.forEach(photo => {
+                          if (!photo.image) return;
+                          empty = false;
+                          const div = document.createElement("div");
+                          div.className = "photo-tile";
+
+                          if (photo.tag) {
+                              const tag = document.createElement("span");
+                              tag.className = "tag-badge";
+                              tag.textContent = photo.tag;
+                              div.appendChild(tag);
+                          }
+
+                          const img = document.createElement("img");
+                          img.src = photo.image;
+                          if (photo.alt) img.alt = photo.alt;
+                          img.loading = "lazy";
+
+                          div.onclick = () => {
+                              if (!lightbox) return;
+                              lbImg.src = photo.image;
+                              lbTxt.textContent = photo.alt || "";
+                              lightbox.hidden = false;
+                          };
+
+                          div.appendChild(img);
+                          fullGrid.appendChild(div);
+                      });
+                  });
+
+                  if (empty) {
+                      const em = document.createElement("p");
+                      em.className = "empty-note";
+                      em.textContent = "No photos added to this category yet.";
+                      fullGrid.appendChild(em);
+                  }
+              }
+
+              if (lbClose) {
+                  lbClose.onclick = () => lightbox.hidden = true;
+              }
+              if (lightbox) {
+                  lightbox.onclick = (e) => {
+                      if (e.target === lightbox) lightbox.hidden = true;
+                  };
+              }
+
+              renderGalleryPage();
+          }
+      }
+
+    } catch (e) {
+      console.error("Error loading CMS data:", e);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('year-copy').textContent = new Date().getFullYear();
+    loadData();
+  });
+</script>
 </body>
 </html>
