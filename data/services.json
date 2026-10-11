@@ -1,17 +1,14 @@
-{
-  "heading": "What We Do",
-  "services": [
-    {
-      "title": "Interior Painting",
-      "description": "Professional surface preparation, priming, and precision painting using premium finishes like Sherwin-Williams Emerald enamel for doors, trim, walls, and ceilings."
-    },
-    {
-      "title": "Decks & Exterior Finishing",
-      "description": "Comprehensive exterior protection including wood staining, deck restoration, sealing, and pressure washing to withstand Wisconsin weather elements."
-    },
-    {
-      "title": "Wall Repair & Drywall",
-      "description": "Expert drywall hanging, professional tape compound layering, mudding, and smooth plaster sanding to establish seamless surfaces ready for paint."
-    }
-  ]
-}
+[
+  {
+    "id": "interior",
+    "title": "Interior Painting",
+    "description": "Full room repaints, trim work, and detailed surface prep.",
+    "imageName": "34342.jpg"
+  },
+  {
+    "id": "exterior",
+    "title": "Exterior Painting",
+    "description": "Weather-resistant coatings for siding, decks, and fences.",
+    "imageName": "3095.jpg"
+  }
+]

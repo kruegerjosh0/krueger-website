@@ -1,41 +1,7 @@
-{
-  "homepage_heading": "Our Recent Projects",
-  "homepage_button": "View Full Photo Library",
-  "page_heading": "Photo Gallery",
-  "page_intro": "Browse our interior painting, drywall repairs, and exterior finish projects.",
-  "categories": [
-    {
-      "title": "Kitchen Painting",
-      "show_on_homepage": true,
-      "photos": [
-        {
-          "image": "/images/kitchen-cabinets.svg",
-          "tag": "AFTER",
-          "alt": "Cabinet paint refinishing with Sherwin-Williams enamel finish"
-        }
-      ]
-    },
-    {
-      "title": "Drywall & Wall Repair",
-      "show_on_homepage": true,
-      "photos": [
-        {
-          "image": "/images/drywall-repair.svg",
-          "tag": "DURING (MUD & TAPE)",
-          "alt": "Drywall compound taping and seamless plaster finish"
-        }
-      ]
-    },
-    {
-      "title": "Decks & Exterior Finishes",
-      "show_on_homepage": true,
-      "photos": [
-        {
-          "image": "/images/deck-stain.svg",
-          "tag": "AFTER (SEALED)",
-          "alt": "Exterior deck power washed and stained"
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "id": "1791746306624",
+    "title": "",
+    "imageName": ""
+  }
+]

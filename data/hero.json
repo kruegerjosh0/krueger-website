@@ -1,9 +1,6 @@
 {
-  "headline_white": "Quality Craftsmanship.",
-  "headline_yellow": "Flawless Finishes.",
-  "description": "Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.",
-  "primary_button": "Tap for Free Estimate",
-  "secondary_button": "View Gallery",
-  "background_image": "/images/hero-bg.svg",
-  "overlay_opacity": 0.82
+  "headline": "Professional interior and exterior painting",
+  "subheadline": "For all of your painting needs!",
+  "ctaText": "Get a Free Estimate",
+  "heroImageName": "81fe2fa2-22a0-4718-a854-ce263cf021b2-1_all_116.jpg"
 }
