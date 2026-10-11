@@ -133,7 +133,7 @@
           const lightbox = document.getElementById("lightbox");
           const lbImg = document.getElementById("lightbox-img");
           const lbTxt = document.getElementById("lightbox-caption");
-          const lbClose = document.getElementById("lightbox-close-btn");
+          const lbClose = document.getElementById("lb-close");
 
           if (siteData.gallery.page_heading) {
               const ph = document.getElementById("gallery-page-heading");
@@ -229,8 +229,8 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('year-copy').textContent = new Date().getFullYear();
-      loadData();
+    document.getElementById('year-copy').textContent = new Date().getFullYear();
+    loadData();
   });
 </script>
 </body>
