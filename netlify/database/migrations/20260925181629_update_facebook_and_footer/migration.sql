@@ -1,0 +1,2 @@
+ALTER TABLE "site_settings" ALTER COLUMN "facebook_url" SET DEFAULT 'https://www.facebook.com/share/1EySXfm7FM/';--> statement-breakpoint
+ALTER TABLE "site_settings" ALTER COLUMN "footer_text" SET DEFAULT '';

@@ -1,0 +1,451 @@
+{
+  "version": "8",
+  "dialect": "postgres",
+  "id": "e0003951-5816-4ebe-90b4-52a5a4e787b4",
+  "prevIds": [
+    "574710cf-7783-4297-979f-44ea72153a83"
+  ],
+  "ddl": [
+    {
+      "isRlsEnabled": false,
+      "name": "gallery_categories",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "gallery_photos",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "isRlsEnabled": false,
+      "name": "site_settings",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "type": "serial",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_categories"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "title",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_categories"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "true",
+      "generated": null,
+      "identity": null,
+      "name": "show_on_homepage",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_categories"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "0",
+      "generated": null,
+      "identity": null,
+      "name": "sort_order",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_categories"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_categories"
+    },
+    {
+      "type": "serial",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_photos"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "category_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_photos"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "image_url",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_photos"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": "''",
+      "generated": null,
+      "identity": null,
+      "name": "tag",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_photos"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": "''",
+      "generated": null,
+      "identity": null,
+      "name": "alt_text",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_photos"
+    },
+    {
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "0",
+      "generated": null,
+      "identity": null,
+      "name": "sort_order",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_photos"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "gallery_photos"
+    },
+    {
+      "type": "serial",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "key",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'Krueger Painting'",
+      "generated": null,
+      "identity": null,
+      "name": "business_name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'262-443-1199'",
+      "generated": null,
+      "identity": null,
+      "name": "phone",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'https://www.facebook.com/share/1EySXfm7FM/'",
+      "generated": null,
+      "identity": null,
+      "name": "facebook_url",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "''",
+      "generated": null,
+      "identity": null,
+      "name": "logo_url",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "''",
+      "generated": null,
+      "identity": null,
+      "name": "footer_text",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'Quality Craftsmanship.'",
+      "generated": null,
+      "identity": null,
+      "name": "hero_headline_white",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'Flawless Finishes.'",
+      "generated": null,
+      "identity": null,
+      "name": "hero_headline_yellow",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.'",
+      "generated": null,
+      "identity": null,
+      "name": "hero_description",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'Tap for Free Estimate'",
+      "generated": null,
+      "identity": null,
+      "name": "hero_primary_button",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'View Gallery'",
+      "generated": null,
+      "identity": null,
+      "name": "hero_secondary_button",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'What We Do'",
+      "generated": null,
+      "identity": null,
+      "name": "services_heading",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'Request an Estimate'",
+      "generated": null,
+      "identity": null,
+      "name": "estimate_heading",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'Submit Request'",
+      "generated": null,
+      "identity": null,
+      "name": "estimate_button_text",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "type": "timestamp",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updated_at",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "site_settings"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "category_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "gallery_categories",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "name": "gallery_photos_category_id_gallery_categories_id_fkey",
+      "entityType": "fks",
+      "schema": "public",
+      "table": "gallery_photos"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "gallery_categories_pkey",
+      "schema": "public",
+      "table": "gallery_categories",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "gallery_photos_pkey",
+      "schema": "public",
+      "table": "gallery_photos",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "site_settings_pkey",
+      "schema": "public",
+      "table": "site_settings",
+      "entityType": "pks"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "key"
+      ],
+      "nullsNotDistinct": false,
+      "name": "site_settings_key_key",
+      "schema": "public",
+      "table": "site_settings",
+      "entityType": "uniques"
+    }
+  ],
+  "renames": []
+}

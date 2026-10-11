@@ -1,0 +1,1 @@
+ALTER TABLE "site_settings" ALTER COLUMN "hero_description" SET DEFAULT 'Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.';
