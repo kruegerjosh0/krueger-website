@@ -374,6 +374,14 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
           const gb = document.getElementById("gallery-btn-primary");
           if (gb && siteData.gallery.homepage_button) gb.textContent = siteData.gallery.homepage_button;
+      }
+
+      if (siteData.estimate) {
+          const eh = document.getElementById("estimate-heading");
+          if (eh && siteData.estimate.heading) eh.textContent = siteData.estimate.heading;
+
+          const eb = document.getElementById("estimate-btn");
+          if (eb && siteData.estimate.button_text) eb.textContent = siteData.estimate.button_text;
 
           // Homepage Photo Grid (up to 6)
           const homeGrid = document.getElementById("photo-grid");
