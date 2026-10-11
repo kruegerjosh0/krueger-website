@@ -270,6 +270,674 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 .photo-grid .empty-note { grid-column: 1 / -1; }
 
 
+/* ADMIN PANEL & MODAL STYLES */
+.admin-modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 12, 16, 0.96);
+    z-index: 1000;
+    overflow-y: auto;
+    backdrop-filter: blur(8px);
+}
+.admin-modal-backdrop.open {
+    display: flex;
+    flex-direction: column;
+}
+.admin-header-bar {
+    background: #181c20;
+    border-bottom: 1px solid #2a313a;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1010;
+}
+.admin-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    color: var(--primary);
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.admin-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.btn-admin-close {
+    background: #2a313a;
+    color: #eee;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-admin-close:hover {
+    background: #3c4654;
+    color: #fff;
+}
+.btn-export-html {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.btn-export-html:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+.admin-login-card {
+    max-width: 440px;
+    width: 90%;
+    margin: 60px auto;
+    text-align: center;
+    padding: 32px 24px;
+    background: #1b2026;
+    border: 1px solid #2d3540;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.admin-tabs-nav {
+    display: flex;
+    background: #181c20;
+    border-bottom: 2px solid #2a313a;
+    overflow-x: auto;
+    padding: 0 16px;
+    gap: 6px;
+}
+.admin-tab-btn {
+    background: transparent;
+    border: none;
+    color: #99a2ad;
+    font-weight: 800;
+    font-size: 0.88rem;
+    padding: 14px 18px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+.admin-tab-btn:hover {
+    color: #fff;
+}
+.admin-tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+.admin-body-container {
+    max-width: 900px;
+    width: 100%;
+    margin: 24px auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+    flex: 1;
+}
+.admin-card-box {
+    background: #1b2026;
+    border: 1px solid #2d3540;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.admin-card-title {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    color: var(--primary);
+    font-weight: 900;
+}
+.admin-card-desc {
+    margin: 0 0 20px 0;
+    color: #a0abb6;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+.upload-dropzone-box {
+    border: 2px dashed #404c5c;
+    border-radius: 8px;
+    padding: 28px 20px;
+    text-align: center;
+    background: #15191e;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.upload-dropzone-box:hover {
+    border-color: var(--primary);
+    background: #1c222a;
+}
+.admin-alert-banner {
+    display: none;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+.admin-alert-success {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid #22c55e;
+    color: #22c55e;
+}
+.admin-alert-error {
+    background: rgba(255, 82, 82, 0.15);
+    border: 1px solid #ff5252;
+    color: #ff5252;
+}
+.btn-outline-danger {
+    background: transparent;
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-outline-danger:hover {
+    background: rgba(255, 107, 107, 0.15);
+}
+.photo-grid-manage {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.photo-item-card {
+    background: #15191e;
+    border: 1px solid #2d3642;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.photo-item-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    background: #000;
+}
+.photo-item-details {
+    padding: 10px;
+}
+.photo-item-tag {
+    display: inline-block;
+    background: var(--primary);
+    color: #000;
+    font-size: 0.72rem;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+.quick-tag-chip {
+    background: #252c34;
+    border: 1px solid #3c4654;
+    color: #eee;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+.quick-tag-chip:hover {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+.admin-tab-section {
+    display: none;
+}
+.admin-tab-section.active {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="logo-row">
+            <a href="#top">
+                <div class="logo-circle" id="header-logo-circle">
+                    <img src="" alt="Krueger Painting logo" class="logo-img" id="header-logo-img" hidden>
+                    <div class="logo-fallback" id="header-logo-fallback" aria-label="Krueger Painting">
+                        <span class="logo-monogram">KP</span>
+                    </div>
+                </div>
+                <h1 id="header-business-name">Krueger Painting</h1>
+            </a>
+        </div>
+        <nav class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#estimate">Request Estimate</a>
+        </nav>
+        <div class="action-buttons">
+            <a href="tel:262-443-1199" class="btn-call" id="header-call-btn" aria-label="Call Krueger Painting">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                <span>Call Now</span>
+            </a>
+            <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-fb" id="header-fb-btn" aria-label="Krueger Painting on Facebook">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <span>Facebook</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="top">
+        <h2><span class="hero-white" id="hero-headline-white">Quality Craftsmanship.</span><br><span class="hero-yellow" id="hero-headline-yellow">Flawless Finishes.</span></h2>
+        <p id="hero-description">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</p>
+        <div class="hero-btns">
+            <a href="#estimate" class="btn-primary" id="hero-btn-primary">Tap for Free Estimate</a>
+            <a href="#gallery" class="btn-secondary" id="hero-btn-secondary">View Gallery</a>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="container">
+        <div class="section-title">
+            <h3 id="services-heading">What We Do</h3>
+            <div class="underline"></div>
+        </div>
+
+        <div id="services-list">
+            <!-- Dynamically rendered -->
+        </div>
+    </section>
+
+    <!-- PHOTO GALLERY SECTION -->
+    <section id="gallery" class="container">
+        <div class="section-title">
+            <h3 id="gallery-heading">Photo Gallery</h3>
+            <div class="underline"></div>
+        </div>
+        <p class="page-intro" id="gallery-intro">Browse our interior painting, drywall repairs, and exterior finish projects.</p>
+
+        <!-- Category Filter Buttons -->
+        <div id="filter-bar" class="filter-bar"></div>
+
+        <!-- Filterable Grid -->
+        <div id="photo-grid" class="photo-grid"></div>
+
+        <div style="text-align: center; margin-top: 36px;">
+            <a href="#estimate" class="btn-primary" style="margin: 0 auto;">Tap for Free Estimate</a>
+        </div>
+    </section>
+
+    <!-- ESTIMATE REQUEST SECTION -->
+    <section id="estimate" class="estimate-section">
+        <div class="container" style="padding-top: 20px;">
+            <div class="section-title">
+                <h3 id="estimate-heading">Request an Estimate</h3>
+                <div class="underline"></div>
+            </div>
+            <form action="https://formspree.io/f/xvzyorqq" method="POST">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" class="form-control" name="phone" placeholder="Your Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <label>Project Details</label>
+                    <textarea name="details" class="form-control" placeholder="Describe your painting or drywall project..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" id="estimate-submit-btn" style="max-width: 100%; border: none; cursor: pointer;">Submit Request</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p class="footer-address" id="footer-address"><strong>Mailing Address:</strong> N630 Moraine Dr., Campbellsport, WI 53010</p>
+        <p class="footer-phone" id="footer-phone-wrap"><strong>Phone:</strong> <a href="tel:262-443-1199" id="footer-phone-link">262-443-1199</a></p>
+        <p style="margin: 8px 0;">
+
+        </p>
+        <p style="font-size: 0.75rem; color: #555; margin-top: 16px;">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
+    </footer>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox" class="lightbox" hidden>
+        <button type="button" aria-label="Close" id="lightbox-close-btn">&times;</button>
+        <img src="" alt="" id="lightbox-img">
+        <p id="lightbox-caption"></p>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- PASSWORD-PROTECTED DEVELOPER / ADMIN PORTAL   -->
+    <!-- ============================================== -->
+    <div id="admin-modal" class="admin-modal-backdrop">
+        <!-- TOP ADMIN NAV BAR -->
+        <nav class="admin-header-bar">
+            <div class="admin-title-wrap">
+                <div class="logo-circle" style="width: 32px; height: 32px; border-width: 2px;">
+                    <img src="" id="admin-top-logo" class="logo-img" alt="Logo" hidden>
+                    <div class="logo-fallback" id="admin-top-fallback">
+                        <span class="logo-monogram" style="font-size: 0.7rem;">KP</span>
+                    </div>
+                </div>
+                <span>Krueger Painting</span>
+            </div>
+            <div class="admin-controls-right">
+                <button type="button" class="btn-admin-close" onclick="closeAdminModal()">Close ✕</button>
+            </div>
+        </nav>
+
+        <!-- ADMIN LOGIN SCREEN (LOCKED BEHIND PASSWORD) -->
+        <div id="admin-login-view" class="admin-login-card">
+            <div class="logo-circle" style="margin: 0 auto 16px auto; width: 64px; height: 64px;">
+                <div class="logo-fallback">
+                    <span class="logo-monogram" style="font-size: 1.4rem;">KP</span>
+                </div>
+            </div>
+            <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Krueger Painting</h2>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Content Manager Portal</p>
+
+            <form id="admin-login-form" style="text-align: left;">
+                <div style="margin-bottom: 16px;">
+                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Email</label>
+                    <div style="position: relative; display: flex; align-items: center; margin-bottom: 16px;">
+                        <input type="email" id="admin-email-input" class="form-control" placeholder="Enter email" required autocomplete="username" style="width: 100%;">
+                    </div>
+                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
+                    <div style="position: relative; display: flex; align-items: center;">
+                        <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter password" required style="padding-right: 42px;" autocomplete="current-password">
+                        <button type="button" id="btn-toggle-login-pw" style="position: absolute; right: 10px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 4px;" title="Show/Hide Password">👁</button>
+                    </div>
+                </div>
+                <div style="text-align: right; margin-top: 8px; margin-bottom: 16px;">
+                    <button type="button" id="btn-forgot-password" style="background: none; border: none; color: #4facfe; font-size: 0.85rem; cursor: pointer; text-decoration: underline; padding: 0;">Forgot Password?</button>
+                </div>
+                <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                <div id="login-success-alert" style="display: none; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid #51cf66; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                <button type="submit" class="btn-primary" id="btn-login-submit" style="width: 100%; border: none; cursor: pointer; max-width: 100%; justify-content: center;">Sign In to Dashboard</button>
+            </form>
+        </div>
+
+        <!-- AUTHENTICATED DASHBOARD -->
+        <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1;">
+            <!-- Tabs Navigation -->
+            <div class="admin-tabs-nav">
+                <button type="button" class="admin-tab-btn active" data-tab="tab-logo">Website Logo</button>
+                <button type="button" class="admin-tab-btn" data-tab="tab-hero">Hero Background</button>
+                <button type="button" class="admin-tab-btn" data-tab="tab-photos">Project Photos</button>
+                <button type="button" class="admin-tab-btn" data-tab="tab-contact">Business &amp; Contact</button>
+                <button type="button" class="admin-tab-btn" data-tab="tab-security">Security &amp; Password</button>
+                <button type="button" class="admin-tab-btn" data-tab="tab-export">GitHub &amp; Export</button>
+                <button type="button" class="admin-tab-btn" id="btn-admin-logout" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
+            </div>
+
+            <main class="admin-body-container">
+                <!-- Status notification -->
+                <div id="admin-status-alert" class="admin-alert-banner"></div>
+
+                <!-- TAB 1: WEBSITE LOGO -->
+                <section id="tab-logo" class="admin-tab-section active">
+                    <div class="admin-card-box">
+                        <h2 class="admin-card-title">Website Logo</h2>
+                        <p class="admin-card-desc">
+                            Upload your company logo. It automatically replaces the KP monogram inside the header circle badge on every page of your site.
+                        </p>
+
+                        <div style="background: #111417; border: 1px dashed #3a4452; border-radius: 6px; padding: 16px; margin: 16px 0 24px 0;">
+                            <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: #828d99; margin-bottom: 10px;">Header Preview</div>
+                            <div style="background: #111; border: 1px solid #333; border-radius: 6px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div class="logo-circle" id="preview-logo-circle">
+                                        <img src="" id="preview-logo-img" class="logo-img" alt="Logo" hidden>
+                                        <div class="logo-fallback" id="preview-logo-fallback">
+                                            <span class="logo-monogram">KP</span>
+                                        </div>
+                                    </div>
+                                    <h1 id="preview-biz-title" style="font-size: 1.1rem; color: var(--primary); margin: 0; font-weight: 800;">Krueger Painting</h1>
+                                </div>
+                                <span style="font-size: 0.8rem; color: #777;">(Top-left corner badge)</span>
+                            </div>
+                        </div>
+
+                        <input type="file" id="logo-file-picker" accept="image/*" style="display: none;">
+                        <div class="upload-dropzone-box" id="logo-dropzone">
+                            <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 8px;">📷</div>
+                            <div style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 4px;">Tap to Choose Logo Picture</div>
+                            <div style="font-size: 0.82rem; color: #8894a0;">Select any PNG, JPG, or WEBP. Square images look best!</div>
+                        </div>
+
+                        <div id="logo-action-bar" style="margin-top: 16px; display: none; align-items: center; gap: 12px;">
+                            <button type="button" class="btn-primary" id="btn-save-logo-file" style="max-width: 220px; border: none; cursor: pointer;">Save Logo</button>
+                            <button type="button" class="btn-outline-danger" id="btn-cancel-logo-file">Cancel</button>
+                        </div>
+
+                        <div id="logo-remove-wrap" style="margin-top: 16px;">
+                            <button type="button" class="btn-outline-danger" id="btn-remove-logo-btn" style="display: none;">Remove Uploaded Logo (Reset to Monogram)</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: HERO BACKGROUND -->
+                <section id="tab-hero" class="admin-tab-section">
+                    <div class="admin-card-box">
+                        <h2 class="admin-card-title">Homepage Hero Background Picture</h2>
+                        <p class="admin-card-desc">
+                            Customize the background image displayed behind the main header text ("Quality Craftsmanship. Flawless Finishes."). The semi-transparent dark overlay keeps your text and estimate buttons bright and easily readable.
+                        </p>
+
+                        <!-- Live Preview of Hero Background -->
+                        <div style="background: #111417; border: 1px dashed #3a4452; border-radius: 6px; padding: 16px; margin: 16px 0 24px 0;">
+                            <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: #828d99; margin-bottom: 10px;">Live Hero Banner Preview</div>
+                            <div id="modal-preview-hero-mock" style="position: relative; border-radius: 6px; padding: 40px 20px; text-align: center; background-size: cover; background-position: center; border: 1px solid #333; overflow: hidden; background-color: #111418;">
+                                <div id="modal-preview-hero-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14, 17, 21, 0.80) 0%, rgba(10, 12, 16, 0.88) 100%); pointer-events: none; z-index: 1;"></div>
+                                <div style="position: relative; z-index: 2;">
+                                    <h3 style="font-size: 1.45rem; margin: 0 0 10px 0; font-weight: 900; line-height: 1.25;">
+                                        <span style="color: #fff;">Quality Craftsmanship.</span><br>
+                                        <span style="color: var(--primary);">Flawless Finishes.</span>
+                                    </h3>
+                                    <p style="color: #ccc; font-size: 0.88rem; max-width: 480px; margin: 0 auto 16px auto; line-height: 1.45;">
+                                        Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship.
+                                    </p>
+                                    <span class="btn-primary" style="display: inline-block; padding: 8px 18px; font-size: 0.82rem; pointer-events: none; border-radius: 4px;">Tap for Free Estimate</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Darkness / Opacity Adjustment -->
+                        <div class="form-group" style="margin-bottom: 22px; background: #15191e; border: 1px solid #2a3440; border-radius: 6px; padding: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <label style="margin: 0; color: #ccc; font-weight: 700; font-size: 0.9rem;">Overlay Darkness / Opacity</label>
+                                <span id="modal-hero-opacity-val" style="font-weight: 800; color: var(--primary); font-size: 0.95rem;">80%</span>
+                            </div>
+                            <input type="range" id="modal-hero-opacity-range" min="40" max="95" value="80" step="5" style="width: 100%; accent-color: var(--primary); cursor: pointer;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #778; margin-top: 6px;">
+                                <span>Lighter (More photo visible)</span>
+                                <span>Darker (Maximum text contrast)</span>
+                            </div>
+                        </div>
+
+                        <input type="file" id="modal-hero-file-picker" accept="image/*" style="display: none;">
+                        <div class="upload-dropzone-box" id="modal-hero-dropzone">
+                            <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 8px;">🌄</div>
+                            <div style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 4px;">Tap to Choose New Hero Background Photo</div>
+                            <div style="font-size: 0.82rem; color: #8894a0;">Select any JPG, PNG, or WEBP photo from your device or camera roll. High-resolution horizontal photos look fantastic!</div>
+                        </div>
+
+                        <div id="modal-hero-action-bar" style="margin-top: 16px; display: none; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <button type="button" class="btn-primary" id="btn-modal-save-hero" style="max-width: 260px; border: none; cursor: pointer;">Save Hero Background</button>
+                            <button type="button" class="btn-outline-danger" id="btn-modal-cancel-hero">Cancel</button>
+                        </div>
+
+                        <div id="modal-hero-reset-wrap" style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" class="btn-outline-danger" id="btn-modal-reset-hero">Reset to Default Painting Texture</button>
+                            <button type="button" class="btn-outline-danger" id="btn-modal-clear-hero">Remove Background (Solid Dark)</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: PROJECT PHOTOS -->
+                <section id="tab-photos" class="admin-tab-section">
+                    <div class="admin-card-box">
+                        <h2 class="admin-card-title">Project Photo Manager</h2>
+                        <p class="admin-card-desc">
+                            Manage photos for each category. Upload directly from your camera roll or computer with BEFORE/AFTER tags.
+                        </p>
+
+
+                        <!-- Current Photos List -->
+                        <div id="manage-photos-container" class="photo-grid-manage"></div>
+
+                        <!-- Add Photo Form -->
+                        <div style="border-top: 1px solid #2d3642; padding-top: 24px; margin-top: 24px;">
+                            <h3 style="color: var(--primary); margin: 0 0 14px 0; font-size: 1.15rem;">+ Add Photo to Selected Category</h3>
+                            <form id="add-photo-form">
+                                <input type="file" id="photo-upload-input" accept="image/*" style="display: none;">
+                                <div class="upload-dropzone-box" id="photo-dropzone-trigger">
+                                    <div style="font-size: 2rem; color: var(--primary); margin-bottom: 6px;">🖼️</div>
+                                    <div style="font-size: 1rem; font-weight: 800; color: #fff;">Tap to Select Project Photo</div>
+                                    <div style="font-size: 0.8rem; color: #8894a0; margin-top: 4px;">Choose from your photo library or take a new picture</div>
+                                </div>
+
+                                <div id="new-photo-preview-wrap" style="display: none; margin-top: 16px;">
+                                    <div style="max-width: 240px; margin-bottom: 16px; border: 1px solid #3c4654; border-radius: 6px; overflow: hidden;">
+                                        <img src="" id="new-photo-preview-img" style="width: 100%; display: block;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Photo Tag (Optional)</label>
+                                        <input type="text" id="new-photo-tag" class="form-control" placeholder="e.g. BEFORE, AFTER, COMPLETED">
+                                        <div style="margin-top: 8px;">
+                                            <span style="font-size: 0.75rem; color: #889; margin-right: 6px;">Quick Tags:</span>
+                                            <button type="button" class="quick-tag-chip" onclick="setQuickTag('BEFORE')">BEFORE</button>
+                                            <button type="button" class="quick-tag-chip" onclick="setQuickTag('AFTER')">AFTER</button>
+                                            <button type="button" class="quick-tag-chip" onclick="setQuickTag('DURING (MUD & TAPE)')">DURING (MUD &amp; TAPE)</button>
+                                            <button type="button" class="quick-tag-chip" onclick="setQuickTag('AFTER (SEALED)')">AFTER (SEALED)</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Caption / Alt Description (Optional)</label>
+                                        <input type="text" id="new-photo-alt" class="form-control" placeholder="e.g. Kitchen cabinet refinishing in Fond du Lac">
+                                    </div>
+                                    <button type="submit" class="btn-primary" id="btn-save-new-photo" style="max-width: 240px; border: none; cursor: pointer;">Save Photo to Gallery</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 3: BUSINESS & CONTACT -->
+                <section id="tab-contact" class="admin-tab-section">
+                    <div class="admin-card-box">
+                        <h2 class="admin-card-title">Business &amp; Contact Settings</h2>
+                        <p class="admin-card-desc">
+                            Update your public business phone number, company name, Facebook link, and footer address.
+                        </p>
+                        <form id="business-settings-form">
+                            <div class="form-group">
+                                <label>Business Name</label>
+                                <input type="text" id="setting-biz-name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number (Tied to Call Now Button)</label>
+                                <input type="tel" id="setting-phone" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Facebook Page Link (Leave empty to hide button)</label>
+                                <input type="url" id="setting-facebook" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Footer Mailing Address</label>
+                                <input type="text" id="setting-address" class="form-control" value="N630 Moraine Dr., Campbellsport, WI 53010">
+                            </div>
+                            <button type="submit" class="btn-primary" style="max-width: 240px; border: none; cursor: pointer;">Save Business Info</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- TAB 4: SECURITY & PASSWORD -->
+                <section id="tab-security" class="admin-tab-section">
+                    <div class="admin-card-box">
+                        <h2 class="admin-card-title">Security &amp; Admin Password</h2>
+                        <p class="admin-card-desc">
+                            Change the password used to lock this developer &amp; content manager dashboard.
+                        </p>
+                        <div style="background: #151a20; border: 1px solid #2a3440; border-radius: 6px; padding: 16px; margin-bottom: 24px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="color: #22c55e; font-size: 1.3rem;">🔒</span>
+                                <div>
+                                    <strong style="color: #fff;">Dashboard is Password-Protected</strong>
+                                    <p style="margin: 4px 0 0 0; color: #889; font-size: 0.85rem;">Anyone attempting to access this dashboard must provide your admin password.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="change-pw-form" style="max-width: 480px;">
+                            <div class="form-group">
+                                <label>Current Password</label>
+                                <input type="password" id="pw-curr-input" class="form-control" required placeholder="Enter current password" autocomplete="current-password">
+                            </div>
+                            <div class="form-group">
+                                <label>New Password (minimum 6 characters)</label>
+                                <input type="password" id="pw-new-input" class="form-control" required minlength="6" placeholder="Enter new password" autocomplete="new-password">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm New Password</label>
+                                <input type="password" id="pw-confirm-input" class="form-control" required minlength="6" placeholder="Repeat new password" autocomplete="new-password">
+                            </div>
+                            <div id="pw-status-msg" style="display: none; padding: 10px 12px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                            <button type="submit" class="btn-primary" style="max-width: 240px; border: none; cursor: pointer;">Update Admin Password</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- TAB 5: GITHUB & EXPORT -->
+                <section id="tab-export" class="admin-tab-section">
+                    <div class="admin-card-box">
+                        <h2 class="admin-card-title">Single-File GitHub Deployment</h2>
+                        <p class="admin-card-desc">
+                            Your entire site — including all HTML, CSS, JavaScript, project photos, contact forms, and this password-locked admin manager — is bundled into <strong>one single standalone file</strong>!
+                        </p>
+
+                        <div style="background: #151a20; border: 1px solid #2a3440; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
+                            <h4 style="color: var(--primary); margin: 0 0 10px 0; font-size: 1.05rem;">How to Deploy to GitHub Pages in 3 Steps:</h4>
+                            <ol style="margin: 0; padding-left: 20px; color: #ccc; font-size: 0.92rem; line-height: 1.8;">
+                                <li>Click the green button below: <strong>"Download Standalone index.html"</strong>.</li>
+                                <li>In your GitHub repository (<code>krueger-website</code>), upload or commit this <code>index.html</code> directly into the root of the repo.</li>
+                                <li>Go to your GitHub repo <strong>Settings → Pages → Branch: main (root) → Save</strong>. Your site is instantly live with zero build tools!</li>
+                            </ol>
+                        </div>
+
+                        <button type="button" class="btn-export-html" id="btn-export-site-big" style="padding: 14px 28px; font-size: 1rem;">
+                            ⬇ Download Standalone index.html for GitHub
+                        </button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
 
 
 <script>
@@ -417,18 +1085,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                   if (rendered >= 6) break;
               }
           }
-
-          const lightbox = document.getElementById("lightbox");
-          const lbClose = document.getElementById("lightbox-close-btn");
-
-          if (lbClose) {
-              lbClose.onclick = () => lightbox.hidden = true;
-          }
-          if (lightbox) {
-              lightbox.onclick = (e) => {
-                  if (e.target === lightbox) lightbox.hidden = true;
-              };
-          }
       }
 
     } catch (e) {
@@ -437,8 +1093,8 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('year-copy').textContent = new Date().getFullYear();
-      loadData();
+    document.getElementById('year-copy').textContent = new Date().getFullYear();
+    loadData();
   });
 </script>
 </body>

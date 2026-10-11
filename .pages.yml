@@ -3,9 +3,9 @@ media:
   output: /images
 
 content:
-  - name: settings
-    label: Site Settings
-    description: Edit your business name, logo, phone number, and social media links.
+  - name: logo
+    label: Website Logo
+    description: Upload your business logo. It displays as a small circle in the top-left corner of the header.
     type: file
     file: data/settings.json
     fields:
@@ -13,6 +13,21 @@ content:
         name: logo
         type: image
         required: false
+      - name: business_name
+        type: hidden
+      - name: phone
+        type: hidden
+      - name: facebook_url
+        type: hidden
+
+  - name: business_info
+    label: Business & Contact Info
+    description: Edit your business name, phone number, and social media links.
+    type: file
+    file: data/settings.json
+    fields:
+      - name: logo
+        type: hidden
       - label: Business Name
         name: business_name
         type: string
@@ -23,6 +38,7 @@ content:
         name: facebook_url
         type: string
         required: false
+
   - name: banner
     label: Top Banner (Hero)
     description: Edit the main headline and buttons at the top of the homepage.
