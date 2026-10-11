@@ -1,0 +1,123 @@
+media:
+  input: images
+  output: /images
+
+content:
+  - name: settings
+    label: Site Settings
+    description: Edit your business name, logo, phone number, and social media links.
+    type: file
+    path: data/settings.json
+    fields:
+      - label: Logo Image (Top-Left Circle)
+        name: logo
+        type: image
+        required: false
+      - label: Business Name
+        name: business_name
+        type: string
+      - label: Phone Number
+        name: phone
+        type: string
+      - label: Facebook Page Link
+        name: facebook_url
+        type: string
+        required: false
+  - name: banner
+    label: Top Banner (Hero)
+    description: Edit the main headline and buttons at the top of the homepage.
+    type: file
+    path: data/hero.json
+    fields:
+      - label: Headline – White Line
+        name: headline_white
+        type: string
+      - label: Headline – Yellow Line
+        name: headline_yellow
+        type: string
+      - label: Description
+        name: description
+        type: text
+      - label: Background Image
+        name: background_image
+        type: image
+        required: false
+      - label: Overlay Opacity (0.0 to 1.0)
+        name: overlay_opacity
+        type: string
+        required: false
+      - label: Yellow Button Text
+        name: primary_button
+        type: string
+      - label: Outline Button Text
+        name: secondary_button
+        type: string
+
+  - name: services_section
+    label: Services (What We Do)
+    description: Edit the list of painting and repair services.
+    type: file
+    path: data/services.json
+    fields:
+      - label: Section Heading
+        name: heading
+        type: string
+      - label: Services
+        name: services
+        type: object
+        list: true
+        fields:
+          - label: Service Name
+            name: title
+            type: string
+          - label: Description
+            name: description
+            type: text
+
+  - name: photos
+    label: Project Photos (Gallery)
+    description: Manage project photo categories, photos, and BEFORE / AFTER tags.
+    type: file
+    path: data/gallery.json
+    fields:
+      - label: Homepage Section Heading
+        name: homepage_heading
+        type: string
+      - label: Homepage Button Text
+        name: homepage_button
+        type: string
+      - label: Gallery Page Heading
+        name: page_heading
+        type: string
+      - label: Gallery Page Intro
+        name: page_intro
+        type: text
+        required: false
+      - label: Categories
+        name: categories
+        type: object
+        list: true
+        fields:
+          - label: Category Name
+            name: title
+            type: string
+          - label: Show on homepage
+            name: show_on_homepage
+            type: boolean
+            default: true
+          - label: Photos
+            name: photos
+            type: object
+            list: true
+            fields:
+              - label: Photo
+                name: image
+                type: image
+              - label: Tag
+                name: tag
+                type: string
+                required: false
+              - label: Short Description
+                name: alt
+                type: string
+                required: false
