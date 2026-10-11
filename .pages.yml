@@ -1,11 +1,11 @@
-media:
+Media:
   input: images
   output: /images
 
 content:
-  - name: logo
-    label: Website Logo
-    description: Upload your business logo. It displays as a small circle in the top-left corner of the header.
+  - name: settings
+    label: Business & Settings
+    description: Edit your business name, phone number, logo, and social links.
     type: file
     file: data/settings.json
     fields:
@@ -13,21 +13,6 @@ content:
         name: logo
         type: image
         required: false
-      - name: business_name
-        type: hidden
-      - name: phone
-        type: hidden
-      - name: facebook_url
-        type: hidden
-
-  - name: business_info
-    label: Business & Contact Info
-    description: Edit your business name, phone number, and social media links.
-    type: file
-    file: data/settings.json
-    fields:
-      - name: logo
-        type: hidden
       - label: Business Name
         name: business_name
         type: string
@@ -58,10 +43,6 @@ content:
         name: background_image
         type: image
         required: false
-      - label: Overlay Opacity (0.0 to 1.0)
-        name: overlay_opacity
-        type: string
-        required: false
       - label: Yellow Button Text
         name: primary_button
         type: string
@@ -69,29 +50,19 @@ content:
         name: secondary_button
         type: string
 
-  - name: services_section
-    label: Services (What We Do)
-    description: Edit the list of painting and repair services.
+  - name: services
+    label: Services
+    description: Manage your painting services list.
     type: file
     file: data/services.json
     fields:
       - label: Section Heading
         name: heading
         type: string
-      - label: Services
-        name: services
-        type: list
-        fields:
-          - label: Service Name
-            name: title
-            type: string
-          - label: Description
-            name: description
-            type: text
 
-  - name: photos
-    label: Project Photos (Gallery)
-    description: Manage project photo categories, photos, and BEFORE / AFTER tags.
+  - name: gallery
+    label: Gallery & Photos
+    description: Manage your homepage and gallery headings.
     type: file
     file: data/gallery.json
     fields:
@@ -108,29 +79,3 @@ content:
         name: page_intro
         type: text
         required: false
-      - label: Categories
-        name: categories
-        type: list
-        fields:
-          - label: Category Name
-            name: title
-            type: string
-          - label: Show on homepage
-            name: show_on_homepage
-            type: boolean
-            default: true
-          - label: Photos
-            name: photos
-            type: list
-            fields:
-              - label: Photo
-                name: image
-                type: image
-              - label: Tag
-                name: tag
-                type: string
-                required: false
-              - label: Short Description
-                name: alt
-                type: string
-                required: false
