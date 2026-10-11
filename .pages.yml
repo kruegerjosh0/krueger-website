@@ -1,4 +1,4 @@
-Media:
+media:
   input: images
   output: /images
 
@@ -7,7 +7,8 @@ content:
     label: Business & Settings
     description: Edit your business name, phone number, logo, and social links.
     type: file
-    file: data/settings.json
+    path: data/settings.json
+    format: json
     fields:
       - label: Logo Image (Top-Left Circle)
         name: logo
@@ -28,7 +29,8 @@ content:
     label: Top Banner (Hero)
     description: Edit the main headline and buttons at the top of the homepage.
     type: file
-    file: data/hero.json
+    path: data/hero.json
+    format: json
     fields:
       - label: Headline – White Line
         name: headline_white
@@ -54,7 +56,8 @@ content:
     label: Services
     description: Manage your painting services list.
     type: file
-    file: data/services.json
+    path: data/services.json
+    format: json
     fields:
       - label: Section Heading
         name: heading
@@ -64,7 +67,8 @@ content:
     label: Gallery & Photos
     description: Manage your homepage and gallery headings.
     type: file
-    file: data/gallery.json
+    path: data/gallery.json
+    format: json
     fields:
       - label: Homepage Section Heading
         name: homepage_heading
@@ -79,3 +83,4 @@ content:
         name: page_intro
         type: text
         required: false
+        
