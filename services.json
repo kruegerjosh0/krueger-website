@@ -1,0 +1,14 @@
+[
+  {
+    "id": "interior",
+    "title": "Interior Painting",
+    "description": "Full room repaints, trim work, and detailed surface prep.",
+    "imageName": "34342.jpg"
+  },
+  {
+    "id": "exterior",
+    "title": "Exterior Painting",
+    "description": "Weather-resistant coatings for siding, decks, and fences.",
+    "imageName": "3095.jpg"
+  }
+]
