@@ -1,158 +1,628 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Krueger Painting OS</title>
-    <meta name="description" content="Professional contractor operating system for Krueger Painting featuring PDF estimates and bills, GPS and searchable weather hub, scheduling, client CRM, and field tools." />
-    <meta property="og:title" content="Krueger Painting OS" />
-    <meta property="og:description" content="Professional contractor operating system for Krueger Painting featuring PDF estimates and bills, GPS and searchable weather hub, scheduling, client CRM, and field tools." />
-    <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#231709" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="KruegerOS" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Krueger Painting | Professional Painting</title>
+    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing contractor with secure administrative OS backend.">
+    <meta property="og:title" content="Krueger Painting | Professional Painting">
+    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing contractor with secure administrative OS backend.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+
     <style>
-      :root {
-        --bg-main: #111418;
-        --card-bg: #1b2026;
-        --primary: #ffcc00;
-        --text-main: #ffffff;
-        --text-muted: #99a2ad;
-        --border-color: #2d3540;
-      }
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        background: var(--bg-main);
-        color: var(--text-main);
-        line-height: 1.5;
-      }
-      .os-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-      .os-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 16px;
-        margin-bottom: 24px;
-      }
-      .os-title {
-        color: var(--primary);
-        font-size: 1.4rem;
-        font-weight: 900;
-        margin: 0;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-      .os-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-      }
-      .btn-primary {
-        background: var(--primary);
-        color: #000000;
-        border: none;
-        padding: 12px 20px;
-        font-weight: 900;
-        border-radius: 4px;
-        text-transform: uppercase;
-        cursor: pointer;
-        font-size: 0.9rem;
-      }
-      .form-control {
+:root {
+    --primary: #ffcc00;
+    --bg: #111111;
+    --text: #ffffff;
+    --card-bg: #1a1a1a;
+    --os-bg: #111418;
+    --os-card: #1b2026;
+    --os-border: #2d3540;
+    --text-muted: #99a2ad;
+}
+
+body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+
+/* HEADER */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    border-bottom: 1px solid #282828;
+    background: #111111;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    gap: 16px;
+}
+.logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.logo-row a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+.logo-circle {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    background: #1c1c1c;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.25);
+}
+.logo-monogram {
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+    line-height: 1;
+}
+.logo-row h1 {
+    font-size: 1.15rem;
+    color: var(--primary);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 800;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: color 0.15s;
+}
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+/* ACTION BUTTONS */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.btn-call, .btn-fb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.btn-call {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ffffff;
+}
+.btn-call:hover {
+    background: linear-gradient(135deg, #2ecc71, #1fb355);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.45);
+}
+.btn-fb {
+    background: linear-gradient(135deg, #1877f2, #0d65d9);
+    color: #ffffff;
+}
+.btn-fb:hover {
+    background: linear-gradient(135deg, #2b84f7, #136fe6);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.45);
+}
+.btn-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        gap: 12px;
+    }
+    .logo-row {
+        flex: 1 1 auto;
+    }
+    .action-buttons {
+        gap: 10px;
+        margin-left: auto;
+    }
+    .btn-call, .btn-fb {
+        padding: 8px 14px;
+        font-size: 0.82rem;
+        gap: 6px;
+    }
+    .nav-links {
         width: 100%;
-        box-sizing: border-box;
-        padding: 12px;
-        background: #111418;
-        border: 1px solid var(--border-color);
-        color: #fff;
-        font-size: 1rem;
-        border-radius: 4px;
-        margin-bottom: 16px;
-      }
-      label {
-        color: var(--primary);
-        display: block;
-        margin-bottom: 6px;
-        font-size: 0.85rem;
-        font-weight: 800;
-        text-transform: uppercase;
-      }
+        justify-content: center;
+        gap: 20px;
+        padding-top: 10px;
+        border-top: 1px solid #222;
+        margin-top: 4px;
+        order: 3;
+    }
+}
+
+/* HERO */
+.hero {
+    position: relative;
+    text-align: center;
+    padding: 70px 20px;
+    border-bottom: 1px solid #222;
+    background-color: #111418;
+}
+.hero h2 { font-size: 1.8rem; margin: 0 0 15px 0; font-weight: 900; line-height: 1.3; }
+.hero h2 span { color: var(--primary); display: block; }
+.hero h2 span.hero-white { color: inherit; display: inline; }
+.hero p { color: #cccccc; font-size: 0.98rem; max-width: 560px; margin: 0 auto 30px auto; line-height: 1.6; }
+.hero-btns { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+.btn-primary { background: var(--primary); color: #000; padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
+.btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
+
+/* SECTIONS */
+.container { padding: 0 20px 40px 20px; max-width: 800px; margin: 0 auto; }
+.section-title { text-align: center; margin: 50px 0 30px 0; }
+.section-title h3 { font-size: 1.4rem; text-transform: uppercase; margin: 0; font-weight: 900; letter-spacing: 0.5px;}
+.section-title .underline { width: 50px; height: 3px; background: var(--primary); margin: 10px auto 0 auto; }
+
+/* SERVICES */
+.service-card { border: 2px solid var(--primary); background: var(--card-bg); padding: 20px; margin-bottom: 20px; border-radius: 6px;}
+.service-card h4 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; font-weight: 800;}
+.service-card p { margin: 0; color: #aaaaaa; font-size: 0.9rem; }
+
+/* ESTIMATE FORM */
+.estimate-section { background-color: #151515; padding: 1px 0 40px 0; border-top: 1px solid #333;}
+.form-group { margin-bottom: 20px; }
+.form-group label { color: var(--primary); display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; }
+.form-control { width: 100%; box-sizing: border-box; padding: 12px; background: #202020; border: 1px solid #444; color: #fff; font-size: 1rem; border-radius: 4px;}
+textarea.form-control { height: 120px; resize: vertical; }
+
+/* FOOTER */
+footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888; border-top: 1px solid #282828; background: var(--bg);}
+.footer-address { color: #ddd; margin: 0 0 6px 0; font-size: 0.95rem; }
+.footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #aaa; }
+.footer-phone a { color: var(--primary); text-decoration: none; font-weight: 700; }
+.admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s; cursor: pointer;}
+.admin-link:hover { color: var(--primary); }
+
+/* ADMIN PORTAL BACKDROP */
+.admin-modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 12, 16, 0.96);
+    z-index: 9999;
+    flex-direction: column;
+    overflow-y: auto;
+    backdrop-filter: blur(8px);
+}
+.admin-header-bar {
+    background: #181c20;
+    border-bottom: 1px solid #2a313a;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10010;
+}
+.admin-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    color: var(--primary);
+    font-size: 1.05rem;
+    text-transform: uppercase;
+}
+.btn-admin-close {
+    background: #2a313a;
+    color: #eee;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+.admin-login-card {
+    max-width: 440px;
+    width: 90%;
+    margin: 60px auto;
+    text-align: center;
+    padding: 32px 24px;
+    background: #1b2026;
+    border: 1px solid #2d3540;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+
+/* KRUEGER OS APP STYLING (INSIDE LOCKED ADMIN DASHBOARD) */
+.os-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+.os-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--os-border);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+.os-title {
+    color: var(--primary);
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.os-card {
+    background: var(--os-card);
+    border: 1px solid var(--os-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
     </style>
-  </head>
-  <body>
-    <div class="os-container">
-      <header class="os-header">
-        <h1 class="os-title">Krueger Painting OS</h1>
-        <div style="font-size: 0.85rem; color: var(--text-muted);">Secure Field & Estimator Hub</div>
-      </header>
-
-      <!-- ESTIMATOR & CRM DASHBOARD -->
-      <main>
-        <div class="os-card">
-          <h2 style="color: var(--primary); margin-top: 0; font-size: 1.2rem;">Quick Project Estimator & Client CRM</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
-            Manage painting specs, calculate material totals, and generate professional estimates instantly.
-          </p>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            <div>
-              <label>Client Name</label>
-              <input type="text" id="crm-client-name" class="form-control" placeholder="e.g. John Miller">
-            </div>
-            <div>
-              <label>Project Title</label>
-              <input type="text" id="crm-project-title" class="form-control" placeholder="e.g. Interior Main Floor">
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            <div>
-              <label>Wall Square Footage</label>
-              <input type="number" id="calc-sqft" class="form-control" placeholder="Enter total sq ft">
-            </div>
-            <div>
-              <label>Paint Product Rate ($/gal)</label>
-              <input type="number" id="calc-rate" class="form-control" value="65">
-            </div>
-          </div>
-
-          <button type="button" class="btn-primary" onclick="runQuickEstimate()">Calculate Estimate Total</button>
-          
-          <div id="estimate-result-box" style="margin-top: 20px; padding: 15px; background: #111418; border-radius: 6px; display: none;">
-            <strong style="color: var(--primary);">Estimated Total:</strong> <span id="output-total" style="font-size: 1.2rem; font-weight: 800; color: #fff;">$0.00</span>
-          </div>
+</head>
+<body>
+    <!-- FRONT-FACING PUBLIC WEBSITE HEADER -->
+    <header>
+        <div class="logo-row">
+            <a href="#top">
+                <div class="logo-circle">
+                    <span class="logo-monogram">KP</span>
+                </div>
+                <h1>Krueger Painting</h1>
+            </a>
         </div>
-      </main>
+        <nav class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#estimate">Request Estimate</a>
+        </nav>
+        <div class="action-buttons">
+            <a href="tel:262-443-1199" class="btn-call" aria-label="Call Krueger Painting">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                <span>Call Now</span>
+            </a>
+            <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-fb" aria-label="Facebook">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <span>Facebook</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- FRONT-FACING PUBLIC HERO SECTION -->
+    <section class="hero" id="top">
+        <h2><span class="hero-white">Quality Craftsmanship.</span><br><span class="hero-yellow">Flawless Finishes.</span></h2>
+        <p>Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</p>
+        <div class="hero-btns">
+            <a href="#estimate" class="btn-primary">Tap for Free Estimate</a>
+            <a href="#gallery" class="btn-secondary">View Gallery</a>
+        </div>
+    </section>
+
+    <!-- FRONT-FACING PUBLIC SERVICES SECTION -->
+    <section id="services" class="container">
+        <div class="section-title">
+            <h3>What We Do</h3>
+            <div class="underline"></div>
+        </div>
+        <div id="services-list">
+            <div class="service-card">
+                <h4>Interior Painting</h4>
+                <p>Professional wall, ceiling, trim, and door painting using premium coatings for flawless, long-lasting interior finishes.</p>
+            </div>
+            <div class="service-card">
+                <h4>Exterior Painting</h4>
+                <p>Complete surface preparation, priming, and expert exterior painting for siding, trim, doors, and decks to withstand Wisconsin weather.</p>
+            </div>
+            <div class="service-card">
+                <h4>Drywall Repair & Finishing</h4>
+                <p>Expert patching, taping, mudding, and texture matching to give damaged walls and ceilings a seamless, smooth finish.</p>
+            </div>
+            <div class="service-card">
+                <h4>Pressure Washing</h4>
+                <p>Safe and effective exterior power washing for siding, gutters, driveways, and walkways to strip away grime, mold, and buildup.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FRONT-FACING PUBLIC GALLERY SECTION -->
+    <section id="gallery" class="container">
+        <div class="section-title">
+            <h3>Photo Gallery</h3>
+            <div class="underline"></div>
+        </div>
+        <p style="text-align: center; color: #aaa;">Browse our recent contracting and finish work.</p>
+        <div style="text-align: center; margin-top: 36px;">
+            <a href="#estimate" class="btn-primary" style="margin: 0 auto;">Tap for Free Estimate</a>
+        </div>
+    </section>
+
+    <!-- FRONT-FACING PUBLIC ESTIMATE FORM SECTION -->
+    <section id="estimate" class="estimate-section">
+        <div class="container" style="padding-top: 20px;">
+            <div class="section-title">
+                <h3>Request an Estimate</h3>
+                <div class="underline"></div>
+            </div>
+            <form action="https://formspree.io/f/xvzyorqq" method="POST">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" class="form-control" name="phone" placeholder="Your Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <label>Project Details</label>
+                    <textarea name="details" class="form-control" placeholder="Describe your painting or drywall project..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="max-width: 100%; border: none; cursor: pointer;">Submit Request</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FRONT-FACING PUBLIC FOOTER -->
+    <footer>
+        <p class="footer-address"><strong>Mailing Address:</strong> N630 Moraine Dr., Campbellsport, WI 53010</p>
+        <p class="footer-phone"><strong>Phone:</strong> <a href="tel:262-443-1199">262-443-1199</a></p>
+        <p style="margin: 12px 0;">
+            <span onclick="openAdminModal()" class="admin-link">⚙️ Admin Login</span>
+        </p>
+        <p style="font-size: 0.75rem; color: #555; margin-top: 16px;">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
+    </footer>
+
+    <!-- SECURE FIREBASE ADMIN MODAL (CONTAINS YOUR FULL KRUEGER OS APP) -->
+    <div id="admin-modal" class="admin-modal-backdrop">
+        <nav class="admin-header-bar">
+            <div class="admin-title-wrap">
+                <span>Krieger Command Portal</span>
+            </div>
+            <div class="admin-controls-right">
+                <button type="button" class="btn-admin-close" onclick="closeAdminModal()">Close ✕</button>
+            </div>
+        </nav>
+
+        <!-- FIREBASE LOGIN SCREEN -->
+        <div id="admin-login-view" class="admin-login-card">
+            <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Firebase Secure Sign-In</h2>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Restricted exclusively to your authorized account.</p>
+
+            <form id="admin-login-form" onsubmit="handleFirebaseLogin(event)" style="text-align: left;">
+                <div style="margin-bottom: 16px;">
+                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Email</label>
+                    <input type="email" id="admin-email-input" class="form-control" placeholder="Enter admin email" required style="width: 100%; margin-bottom: 12px;">
+                    
+                    <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
+                    <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter Firebase password" required style="width: 100%;">
+                </div>
+                <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                <div id="login-success-alert" style="display: none; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid #51cf66; border-radius: 4px; padding: 10px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; max-width: 100%; margin-bottom: 10px;">Sign In</button>
+                <button type="button" onclick="handlePasswordReset()" style="background: none; border: none; color: var(--primary); font-size: 0.8rem; cursor: pointer; text-decoration: underline; width: 100%; text-align: center;">Forgot Password? Send Reset Email</button>
+            </form>
+        </div>
+
+        <!-- AUTHENTICATED DASHBOARD (CONTAINING YOUR FULL KRUEGER PAINTING OS) -->
+        <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1; padding: 20px;">
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+                <button type="button" class="btn-primary" onclick="handleFirebaseLogout()" style="background: #ff5252; color: #fff; max-width: 160px;">Log Out</button>
+            </div>
+
+            <!-- YOUR KRUEGER PAINTING OS APP INTERFACE -->
+            <div class="os-container">
+                <header class="os-header">
+                    <h1 class="os-title">Krueger Painting OS</h1>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Secure Field & Estimator Hub</div>
+                </header>
+
+                <main>
+                    <div class="os-card">
+                        <h2 style="color: var(--primary); margin-top: 0; font-size: 1.2rem;">Quick Project Estimator & Client CRM</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
+                            Manage painting specs, calculate material totals, and generate professional estimates instantly.
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div>
+                                <label>Client Name</label>
+                                <input type="text" id="crm-client-name" class="form-control" placeholder="e.g. John Miller">
+                            </div>
+                            <div>
+                                <label>Project Title</label>
+                                <input type="text" id="crm-project-title" class="form-control" placeholder="e.g. Interior Main Floor">
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div>
+                                <label>Wall Square Footage</label>
+                                <input type="number" id="calc-sqft" class="form-control" placeholder="Enter total sq ft">
+                            </div>
+                            <div>
+                                <label>Paint Product Rate ($/gal)</label>
+                                <input type="number" id="calc-rate" class="form-control" value="65">
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn-primary" onclick="runQuickEstimate()">Calculate Estimate Total</button>
+                        
+                        <div id="estimate-result-box" style="margin-top: 20px; padding: 15px; background: #111418; border-radius: 6px; display: none;">
+                            <strong style="color: var(--primary);">Estimated Total:</strong> <span id="output-total" style="font-size: 1.2rem; font-weight: 800; color: #fff;">$0.00</span>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            
+            <!-- EXPORT BACKUP TOOL -->
+            <div class="os-card" style="margin-top: 20px;">
+                <h3 style="color: var(--primary); margin-top: 0;">GitHub Deployment Package</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Download this combined standalone file anytime to push updates to GitHub.</p>
+                <button type="button" class="btn-primary" onclick="exportSiteCode()" style="background: #22c55e; color: #fff;">⬇ Download Standalone index.html</button>
+            </div>
+        </div>
     </div>
 
+    <!-- UI MODAL CONTROLLERS -->
     <script>
-      function runQuickEstimate() {
-        const sqft = parseFloat(document.getElementById('calc-sqft').value) || 0;
-        const rate = parseFloat(document.getElementById('calc-rate').value) || 65;
-        // Standard coverage calculation approx 350 sq ft per gallon with 2 coats
-        const gallons = Math.ceil((sqft * 2) / 350);
-        const materialCost = gallons * rate;
-        const laborCost = sqft * 1.75; // Standard contractor labor estimate baseline
-        const total = materialCost + laborCost;
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year-copy').textContent = new Date().getFullYear();
+        });
 
-        const resultBox = document.getElementById('estimate-result-box');
-        const outputTotal = document.getElementById('output-total');
-        outputTotal.textContent = "$" + total.toFixed(2) + " (" + gallons + " gallons estimated)";
-        resultBox.style.display = 'block';
-      }
+        window.openAdminModal = function() {
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+        window.closeAdminModal = function() {
+            document.getElementById('admin-modal').style.display = 'none';
+        }
+
+        function runQuickEstimate() {
+            const sqft = parseFloat(document.getElementById('calc-sqft').value) || 0;
+            const rate = parseFloat(document.getElementById('calc-rate').value) || 65;
+            const gallons = Math.ceil((sqft * 2) / 350);
+            const materialCost = gallons * rate;
+            const laborCost = sqft * 1.75;
+            const total = materialCost + laborCost;
+
+            const resultBox = document.getElementById('estimate-result-box');
+            const outputTotal = document.getElementById('output-total');
+            outputTotal.textContent = "$" + total.toFixed(2) + " (" + gallons + " gallons estimated)";
+            resultBox.style.display = 'block';
+        }
+
+        function exportSiteCode() {
+            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
     </script>
-  </body>
+
+    <!-- FIREBASE AUTHENTICATION SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBBFi6XGAsdENyNGzHlIAjxlcqwGA9f0Cc",
+          authDomain: "kpwebsite-83a6b.firebaseapp.com",
+          projectId: "kpwebsite-83a6b",
+          storageBucket: "kpwebsite-83a6b.firebasestorage.app",
+          messagingSenderId: "489955386353",
+          appId: "1:489955386353:web:57ff0a92fb9dc3bd189a50",
+          measurementId: "G-PV7PNYLMB4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.handleFirebaseLogin = async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('admin-email-input').value.trim();
+            const pass = document.getElementById('admin-pass-input').value;
+            const errBox = document.getElementById('login-error-alert');
+            const successBox = document.getElementById('login-success-alert');
+            
+            try {
+                errBox.style.display = 'none';
+                await signInWithEmailAndPassword(auth, email, pass);
+                successBox.textContent = "Success! Opening dashboard...";
+                successBox.style.display = 'block';
+                
+                setTimeout(() => {
+                    document.getElementById('admin-login-view').style.display = 'none';
+                    document.getElementById('admin-dashboard-view').style.display = 'flex';
+                    successBox.style.display = 'none';
+                }, 400);
+            } catch (error) {
+                errBox.textContent = error.message;
+                errBox.style.display = 'block';
+                successBox.style.display = 'none';
+            }
+        }
+
+        window.handleFirebaseLogout = async function() {
+            await signOut(auth);
+        }
+
+        window.handlePasswordReset = async function() {
+            const email = document.getElementById('admin-email-input').value.trim();
+            const successBox = document.getElementById('login-success-alert');
+            const errBox = document.getElementById('login-error-alert');
+            
+            if (!email) {
+                errBox.textContent = "Please type your email address into the email field above first.";
+                errBox.style.display = 'block';
+                successBox.style.display = 'none';
+                return;
+            }
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                successBox.textContent = "Password reset email sent! Check your inbox/spam folder.";
+                successBox.style.display = 'block';
+                errBox.style.display = 'none';
+            } catch (error) {
+                errBox.textContent = error.message;
+                errBox.style.display = 'block';
+                successBox.style.display = 'none';
+            }
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('admin-login-view').style.display = 'none';
+                document.getElementById('admin-dashboard-view').style.display = 'flex';
+            } else {
+                document.getElementById('admin-dashboard-view').style.display = 'none';
+                document.getElementById('admin-login-view').style.display = 'block';
+                document.getElementById('admin-pass-input').value = '';
+            }
+        });
+    </script>
+</body>
 </html>
