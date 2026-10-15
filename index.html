@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krueger Painting | Professional Painting</title>
-    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing contractor with secure administrative OS backend.">
+    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure admin editor.">
     <meta property="og:title" content="Krueger Painting | Professional Painting">
-    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing contractor with secure administrative OS backend.">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure admin editor.">
 
     <style>
 :root {
@@ -15,10 +14,6 @@
     --bg: #111111;
     --text: #ffffff;
     --card-bg: #1a1a1a;
-    --os-bg: #111418;
-    --os-card: #1b2026;
-    --os-border: #2d3540;
-    --text-muted: #99a2ad;
 }
 
 body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
@@ -59,6 +54,27 @@ header {
     justify-content: center;
     flex-shrink: 0;
     box-shadow: 0 0 8px rgba(255, 204, 0, 0.25);
+}
+.logo-circle img.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+.logo-circle img[hidden] {
+    display: none;
+}
+.logo-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 30% 30%, #2a2a2a, #141414);
+}
+.logo-fallback[hidden] {
+    display: none;
 }
 .logo-monogram {
     font-size: 0.95rem;
@@ -171,12 +187,28 @@ header {
     text-align: center;
     padding: 70px 20px;
     border-bottom: 1px solid #222;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     background-color: #111418;
+    overflow: hidden;
 }
-.hero h2 { font-size: 1.8rem; margin: 0 0 15px 0; font-weight: 900; line-height: 1.3; }
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(14, 17, 21, var(--hero-overlay-alpha, 0.80)) 0%, rgba(10, 12, 16, var(--hero-overlay-alpha, 0.88)) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+.hero > * {
+    position: relative;
+    z-index: 2;
+}
+.hero h2 { font-size: 1.8rem; margin: 0 0 15px 0; font-weight: 900; line-height: 1.3; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 .hero h2 span { color: var(--primary); display: block; }
 .hero h2 span.hero-white { color: inherit; display: inline; }
-.hero p { color: #cccccc; font-size: 0.98rem; max-width: 560px; margin: 0 auto 30px auto; line-height: 1.6; }
+.hero p { color: #cccccc; font-size: 0.98rem; max-width: 560px; margin: 0 auto 30px auto; text-shadow: 0 1px 6px rgba(0,0,0,0.8); line-height: 1.6; }
 .hero-btns { display: flex; flex-direction: column; gap: 15px; align-items: center; }
 .btn-primary { background: var(--primary); color: #000; padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
 .btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
@@ -191,6 +223,17 @@ header {
 .service-card { border: 2px solid var(--primary); background: var(--card-bg); padding: 20px; margin-bottom: 20px; border-radius: 6px;}
 .service-card h4 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; font-weight: 800;}
 .service-card p { margin: 0; color: #aaaaaa; font-size: 0.9rem; }
+
+/* GALLERY GRID */
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.photo-tile { position: relative; margin: 0; cursor: zoom-in; border: 1px solid #333; background: #222; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 4px; }
+.photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-tile .tag-badge { position: absolute; top: 8px; left: 8px; background: var(--primary); color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; z-index: 10000; }
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: 100%; max-height: 80vh; object-fit: contain; }
+.lightbox p { color: #ccc; margin: 12px 0 0 0; text-align: center; }
+.lightbox button { position: absolute; top: 12px; right: 16px; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
 
 /* ESTIMATE FORM */
 .estimate-section { background-color: #151515; padding: 1px 0 40px 0; border-top: 1px solid #333;}
@@ -207,7 +250,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 .admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s; cursor: pointer;}
 .admin-link:hover { color: var(--primary); }
 
-/* ADMIN PORTAL BACKDROP */
+/* ADMIN PORTAL BACKDROP & TABS */
 .admin-modal-backdrop {
     display: none;
     position: fixed;
@@ -260,50 +303,94 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     box-shadow: 0 8px 30px rgba(0,0,0,0.5);
     box-sizing: border-box;
 }
-
-/* KRUEGER OS APP STYLING (INSIDE LOCKED ADMIN DASHBOARD) */
-.os-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-    width: 100%;
-}
-.os-header {
+.admin-tabs-nav {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--os-border);
-    padding-bottom: 16px;
-    margin-bottom: 24px;
+    background: #181c20;
+    border-bottom: 2px solid #2a313a;
+    padding: 0 16px;
+    gap: 6px;
+    overflow-x: auto;
 }
-.os-title {
+.admin-tab-btn {
+    background: transparent;
+    border: none;
+    color: #99a2ad;
+    font-weight: 800;
+    font-size: 0.88rem;
+    padding: 14px 18px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.admin-tab-btn.active {
     color: var(--primary);
-    font-size: 1.4rem;
-    font-weight: 900;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    border-bottom: 3px solid var(--primary);
 }
-.os-card {
-    background: var(--os-card);
-    border: 1px solid var(--os-border);
+.admin-body-container {
+    max-width: 900px;
+    width: 100%;
+    margin: 24px auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+    flex: 1;
+}
+.admin-card-box {
+    background: #1b2026;
+    border: 1px solid #2d3540;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    display: none;
+}
+.admin-card-box.active-tab {
+    display: block;
+}
+.admin-card-title {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    color: var(--primary);
+    font-weight: 900;
+}
+.admin-card-desc {
+    margin: 0 0 20px 0;
+    color: #a0abb6;
+    font-size: 0.92rem;
+}
+.upload-dropzone-box {
+    border: 2px dashed #404c5c;
     border-radius: 8px;
     padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    text-align: center;
+    background: #15191e;
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+.upload-dropzone-box:hover {
+    border-color: var(--primary);
+}
+.btn-export-html {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ffffff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
 }
     </style>
 </head>
 <body>
-    <!-- FRONT-FACING PUBLIC WEBSITE HEADER -->
+    <!-- HEADER -->
     <header>
         <div class="logo-row">
             <a href="#top">
-                <div class="logo-circle">
-                    <span class="logo-monogram">KP</span>
+                <div class="logo-circle" id="header-logo-circle">
+                    <img src="" alt="Logo" class="logo-img" id="header-logo-img" hidden>
+                    <div class="logo-fallback" id="header-logo-fallback">
+                        <span class="logo-monogram" id="header-logo-monogram">KP</span>
+                    </div>
                 </div>
-                <h1>Krueger Painting</h1>
+                <h1 id="header-business-name">Krueger Painting</h1>
             </a>
         </div>
         <nav class="nav-links">
@@ -312,11 +399,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <a href="#estimate">Request Estimate</a>
         </nav>
         <div class="action-buttons">
-            <a href="tel:262-443-1199" class="btn-call" aria-label="Call Krueger Painting">
+            <a href="tel:262-443-1199" class="btn-call" id="header-call-btn" aria-label="Call Krueger Painting">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
                 </svg>
-                <span>Call Now</span>
+                <span id="header-call-text">Call Now</span>
             </a>
             <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-fb" aria-label="Facebook">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -327,17 +414,17 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </header>
 
-    <!-- FRONT-FACING PUBLIC HERO SECTION -->
+    <!-- HERO SECTION -->
     <section class="hero" id="top">
-        <h2><span class="hero-white">Quality Craftsmanship.</span><br><span class="hero-yellow">Flawless Finishes.</span></h2>
-        <p>Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</p>
+        <h2><span class="hero-white" id="hero-title-white">Quality Craftsmanship.</span><br><span class="hero-yellow" id="hero-title-yellow">Flawless Finishes.</span></h2>
+        <p id="hero-desc">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</p>
         <div class="hero-btns">
             <a href="#estimate" class="btn-primary">Tap for Free Estimate</a>
             <a href="#gallery" class="btn-secondary">View Gallery</a>
         </div>
     </section>
 
-    <!-- FRONT-FACING PUBLIC SERVICES SECTION -->
+    <!-- SERVICES SECTION -->
     <section id="services" class="container">
         <div class="section-title">
             <h3>What We Do</h3>
@@ -363,19 +450,26 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </section>
 
-    <!-- FRONT-FACING PUBLIC GALLERY SECTION -->
+    <!-- PHOTO GALLERY SECTION -->
     <section id="gallery" class="container">
         <div class="section-title">
             <h3>Photo Gallery</h3>
             <div class="underline"></div>
         </div>
-        <p style="text-align: center; color: #aaa;">Browse our recent contracting and finish work.</p>
+        <p style="text-align: center; color: #aaa;" id="gallery-intro">Browse our recent contracting and finish work.</p>
+        
+        <div id="photo-grid" class="photo-grid">
+            <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">
+                No project photos added yet. Open Admin Login to add pictures.
+            </div>
+        </div>
+
         <div style="text-align: center; margin-top: 36px;">
             <a href="#estimate" class="btn-primary" style="margin: 0 auto;">Tap for Free Estimate</a>
         </div>
     </section>
 
-    <!-- FRONT-FACING PUBLIC ESTIMATE FORM SECTION -->
+    <!-- ESTIMATE REQUEST SECTION -->
     <section id="estimate" class="estimate-section">
         <div class="container" style="padding-top: 20px;">
             <div class="section-title">
@@ -400,17 +494,24 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </section>
 
-    <!-- FRONT-FACING PUBLIC FOOTER -->
+    <!-- FOOTER -->
     <footer>
         <p class="footer-address"><strong>Mailing Address:</strong> N630 Moraine Dr., Campbellsport, WI 53010</p>
-        <p class="footer-phone"><strong>Phone:</strong> <a href="tel:262-443-1199">262-443-1199</a></p>
+        <p class="footer-phone"><strong>Phone:</strong> <a href="tel:262-443-1199" id="footer-phone-text">262-443-1199</a></p>
         <p style="margin: 12px 0;">
             <span onclick="openAdminModal()" class="admin-link">⚙️ Admin Login</span>
         </p>
         <p style="font-size: 0.75rem; color: #555; margin-top: 16px;">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
     </footer>
 
-    <!-- SECURE FIREBASE ADMIN MODAL (CONTAINS YOUR FULL KRUEGER OS APP) -->
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox" class="lightbox" hidden>
+        <button type="button" aria-label="Close" onclick="document.getElementById('lightbox').hidden=true">&times;</button>
+        <img src="" alt="" id="lightbox-img">
+        <p id="lightbox-caption"></p>
+    </div>
+
+    <!-- SECURE FIREBASE ADMIN MODAL -->
     <div id="admin-modal" class="admin-modal-backdrop">
         <nav class="admin-header-bar">
             <div class="admin-title-wrap">
@@ -441,94 +542,293 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             </form>
         </div>
 
-        <!-- AUTHENTICATED DASHBOARD (CONTAINING YOUR FULL KRUEGER PAINTING OS) -->
-        <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1; padding: 20px;">
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
-                <button type="button" class="btn-primary" onclick="handleFirebaseLogout()" style="background: #ff5252; color: #fff; max-width: 160px;">Log Out</button>
+        <!-- AUTHENTICATED WEBSITE & PHOTO EDITOR -->
+        <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1;">
+            <div class="admin-tabs-nav">
+                <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website Editor</button>
+                <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-photos', event)">Photo Gallery Manager</button>
+                <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">GitHub Export</button>
+                <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
 
-            <!-- YOUR KRUEGER PAINTING OS APP INTERFACE -->
-            <div class="os-container">
-                <header class="os-header">
-                    <h1 class="os-title">Krueger Painting OS</h1>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Secure Field & Estimator Hub</div>
-                </header>
-
-                <main>
-                    <div class="os-card">
-                        <h2 style="color: var(--primary); margin-top: 0; font-size: 1.2rem;">Quick Project Estimator & Client CRM</h2>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
-                            Manage painting specs, calculate material totals, and generate professional estimates instantly.
-                        </p>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                            <div>
-                                <label>Client Name</label>
-                                <input type="text" id="crm-client-name" class="form-control" placeholder="e.g. John Miller">
-                            </div>
-                            <div>
-                                <label>Project Title</label>
-                                <input type="text" id="crm-project-title" class="form-control" placeholder="e.g. Interior Main Floor">
-                            </div>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                            <div>
-                                <label>Wall Square Footage</label>
-                                <input type="number" id="calc-sqft" class="form-control" placeholder="Enter total sq ft">
-                            </div>
-                            <div>
-                                <label>Paint Product Rate ($/gal)</label>
-                                <input type="number" id="calc-rate" class="form-control" value="65">
-                            </div>
-                        </div>
-
-                        <button type="button" class="btn-primary" onclick="runQuickEstimate()">Calculate Estimate Total</button>
-                        
-                        <div id="estimate-result-box" style="margin-top: 20px; padding: 15px; background: #111418; border-radius: 6px; display: none;">
-                            <strong style="color: var(--primary);">Estimated Total:</strong> <span id="output-total" style="font-size: 1.2rem; font-weight: 800; color: #fff;">$0.00</span>
-                        </div>
+            <main class="admin-body-container">
+                <!-- TAB 1: WEBSITE CONTENT EDITOR -->
+                <section id="tab-content" class="admin-card-box active-tab">
+                    <h2 class="admin-card-title">Live Website Editor</h2>
+                    <p class="admin-card-desc">Easily update your text, logo, and background photo. Click save to apply changes live.</p>
+                    
+                    <div class="form-group">
+                        <label>Business Name</label>
+                        <input type="text" id="edit-biz-name" class="form-control" value="Krueger Painting">
                     </div>
-                </main>
-            </div>
-            
-            <!-- EXPORT BACKUP TOOL -->
-            <div class="os-card" style="margin-top: 20px;">
-                <h3 style="color: var(--primary); margin-top: 0;">GitHub Deployment Package</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">Download this combined standalone file anytime to push updates to GitHub.</p>
-                <button type="button" class="btn-primary" onclick="exportSiteCode()" style="background: #22c55e; color: #fff;">⬇ Download Standalone index.html</button>
-            </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text" id="edit-phone" class="form-control" value="262-443-1199">
+                    </div>
+                    <div class="form-group">
+                        <label>Hero Headline Line 1</label>
+                        <input type="text" id="edit-hero-1" class="form-control" value="Quality Craftsmanship.">
+                    </div>
+                    <div class="form-group">
+                        <label>Hero Headline Line 2 (Yellow)</label>
+                        <input type="text" id="edit-hero-2" class="form-control" value="Flawless Finishes.">
+                    </div>
+                    <div class="form-group">
+                        <label>Hero Description</label>
+                        <textarea id="edit-hero-desc" class="form-control" style="height: 80px;">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</textarea>
+                    </div>
+
+                    <!-- Background Image & Opacity -->
+                    <div class="form-group">
+                        <label>Hero Background Photo (Paste Image URL or Choose File)</label>
+                        <input type="text" id="edit-hero-bg" class="form-control" placeholder="https://...">
+                    </div>
+                    <div class="upload-dropzone-box" onclick="document.getElementById('hero-img-file').click()">
+                        <div style="font-weight: 800;">🌄 Tap to Upload Background Image from Phone</div>
+                        <input type="file" id="hero-img-file" accept="image/*" style="display: none;" onchange="uploadHeroImage(this)">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hero Overlay Darkness: <span id="opacity-val">80%</span></label>
+                        <input type="range" id="edit-hero-opacity" min="40" max="95" value="80" step="5" style="width: 100%; accent-color: var(--primary);" oninput="document.getElementById('opacity-val').textContent = this.value + '%'">
+                    </div>
+
+                    <!-- Logo Upload -->
+                    <div class="form-group">
+                        <label>Company Logo Image (Paste URL or Choose File)</label>
+                        <input type="text" id="edit-logo-url" class="form-control" placeholder="https://...">
+                    </div>
+                    <div class="upload-dropzone-box" onclick="document.getElementById('logo-img-file').click()">
+                        <div style="font-weight: 800;">🖼️ Tap to Upload Company Logo from Phone</div>
+                        <input type="file" id="logo-img-file" accept="image/*" style="display: none;" onchange="uploadLogoImage(this)">
+                    </div>
+
+                    <button type="button" class="btn-primary" onclick="saveContentEdits()" style="max-width: 100%; border: none; cursor: pointer; margin-top: 10px;">Save Changes to Website</button>
+                </section>
+
+                <!-- TAB 2: PHOTO GALLERY MANAGER -->
+                <section id="tab-photos" class="admin-card-box">
+                    <h2 class="admin-card-title">Photo Gallery Manager</h2>
+                    <p class="admin-card-desc">Add or delete project photos right from your camera roll.</p>
+                    
+                    <div class="upload-dropzone-box" onclick="document.getElementById('gallery-img-file').click()">
+                        <div style="font-size: 1.8rem; margin-bottom: 4px;">📸</div>
+                        <div style="font-weight: 800;">Tap to Add Project Photo from Phone</div>
+                        <input type="file" id="gallery-img-file" accept="image/*" style="display: none;" onchange="addNewGalleryPhoto(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>Or Paste Image URL</label>
+                        <input type="text" id="new-photo-url" class="form-control" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Photo Tag (e.g. BEFORE, AFTER, COMPLETED)</label>
+                        <input type="text" id="new-photo-tag" class="form-control" value="COMPLETED">
+                    </div>
+                    <button type="button" class="btn-primary" onclick="addPhotoUrl()" style="max-width: 100%; border: none; cursor: pointer; margin-bottom: 24px;">Add Photo by URL</button>
+
+                    <h3 style="color: var(--primary); font-size: 1rem; margin: 20px 0 10px 0; text-transform: uppercase;">Current Gallery Photos</h3>
+                    <div id="admin-gallery-manager-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px;"></div>
+                </section>
+
+                <!-- TAB 3: GITHUB EXPORT -->
+                <section id="tab-export" class="admin-card-box">
+                    <h2 class="admin-card-title">GitHub Deployment Package</h2>
+                    <p class="admin-card-desc">
+                        Download your updated standalone index.html file to push straight to GitHub.
+                    </p>
+                    <button type="button" class="btn-export-html" onclick="exportSiteCode()">
+                        ⬇ Download Standalone index.html
+                    </button>
+                </section>
+            </main>
         </div>
     </div>
 
-    <!-- UI MODAL CONTROLLERS -->
+    <!-- SITE DATA STATE & EDITOR SCRIPTS -->
     <script>
+        let siteData = {
+            bizName: "Krueger Painting",
+            phone: "262-443-1199",
+            heroWhite: "Quality Craftsmanship.",
+            heroYellow: "Flawless Finishes.",
+            heroDesc: "Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.",
+            heroBg: "",
+            heroOpacity: "80%",
+            logoUrl: "",
+            photos: []
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('year-copy').textContent = new Date().getFullYear();
+            const saved = localStorage.getItem('krueger_site_data');
+            if (saved) {
+                try { siteData = JSON.parse(saved); } catch(e){}
+            }
+            renderSite();
         });
 
-        window.openAdminModal = function() {
-            document.getElementById('admin-modal').style.display = 'flex';
-        }
-        window.closeAdminModal = function() {
-            document.getElementById('admin-modal').style.display = 'none';
+        function renderSite() {
+            document.getElementById('header-business-name').textContent = siteData.bizName;
+            document.title = siteData.bizName + " | Professional Painting";
+            document.getElementById('header-call-text').textContent = "Call " + siteData.phone;
+            document.querySelector('.btn-call').href = "tel:" + siteData.phone;
+            document.getElementById('footer-phone-text').textContent = siteData.phone;
+            document.getElementById('footer-phone-text').href = "tel:" + siteData.phone;
+
+            document.getElementById('hero-title-white').textContent = siteData.heroWhite;
+            document.getElementById('hero-title-yellow').textContent = siteData.heroYellow;
+            document.getElementById('hero-desc').textContent = siteData.heroDesc;
+
+            if (siteData.heroBg) {
+                document.querySelector('.hero').style.backgroundImage = `url(${siteData.heroBg})`;
+            }
+            document.documentElement.style.setProperty('--hero-overlay-alpha', parseInt(siteData.heroOpacity) / 100);
+
+            if (siteData.logoUrl) {
+                document.getElementById('header-logo-img').src = siteData.logoUrl;
+                document.getElementById('header-logo-img').hidden = false;
+                document.getElementById('header-logo-fallback').hidden = true;
+            }
+
+            // Populate form inputs
+            document.getElementById('edit-biz-name').value = siteData.bizName;
+            document.getElementById('edit-phone').value = siteData.phone;
+            document.getElementById('edit-hero-1').value = siteData.heroWhite;
+            document.getElementById('edit-hero-2').value = siteData.heroYellow;
+            document.getElementById('edit-hero-desc').value = siteData.heroDesc;
+            document.getElementById('edit-hero-bg').value = siteData.heroBg;
+            document.getElementById('edit-logo-url').value = siteData.logoUrl;
+            document.getElementById('edit-hero-opacity').value = parseInt(siteData.heroOpacity) || 80;
+            document.getElementById('opacity-val').textContent = (siteData.heroOpacity || '80%');
+
+            // Render Public Gallery
+            const grid = document.getElementById('photo-grid');
+            if (siteData.photos && siteData.photos.length > 0) {
+                grid.innerHTML = "";
+                siteData.photos.forEach((p) => {
+                    const fig = document.createElement('figure');
+                    fig.className = 'photo-tile';
+                    fig.onclick = () => {
+                        document.getElementById('lightbox-img').src = p.url;
+                        document.getElementById('lightbox-caption').textContent = p.tag;
+                        document.getElementById('lightbox').hidden = false;
+                    };
+                    if (p.tag) {
+                        const badge = document.createElement('span');
+                        badge.className = 'tag-badge';
+                        badge.textContent = p.tag;
+                        fig.appendChild(badge);
+                    }
+                    const img = document.createElement('img');
+                    img.src = p.url;
+                    fig.appendChild(img);
+                    grid.appendChild(fig);
+                });
+            } else {
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">No project photos added yet. Open Admin Login to add pictures.</div>';
+            }
+
+            // Render Admin Manager Grid
+            const adminGrid = document.getElementById('admin-gallery-manager-grid');
+            if (adminGrid) {
+                adminGrid.innerHTML = "";
+                if (!siteData.photos || siteData.photos.length === 0) {
+                    adminGrid.innerHTML = '<p style="color:#777; font-size:0.85rem; grid-column: 1/-1;">No photos uploaded yet.</p>';
+                } else {
+                    siteData.photos.forEach((p, idx) => {
+                        const box = document.createElement('div');
+                        box.style.cssText = "background:#111; border:1px solid #333; border-radius:4px; padding:6px; text-align:center;";
+                        box.innerHTML = `<img src="${p.url}" style="width:100%; height:75px; object-fit:cover; border-radius:3px; margin-bottom:4px;">
+                                         <div style="font-size:0.65rem; color:var(--primary); font-weight:800;">${p.tag}</div>
+                                         <button type="button" onclick="deletePhoto(${idx})" style="background:#ff5252; color:#fff; border:none; padding:2px 6px; font-size:0.65rem; border-radius:3px; cursor:pointer; margin-top:4px;">Delete</button>`;
+                        adminGrid.appendChild(box);
+                    });
+                }
+            }
         }
 
-        function runQuickEstimate() {
-            const sqft = parseFloat(document.getElementById('calc-sqft').value) || 0;
-            const rate = parseFloat(document.getElementById('calc-rate').value) || 65;
-            const gallons = Math.ceil((sqft * 2) / 350);
-            const materialCost = gallons * rate;
-            const laborCost = sqft * 1.75;
-            const total = materialCost + laborCost;
-
-            const resultBox = document.getElementById('estimate-result-box');
-            const outputTotal = document.getElementById('output-total');
-            outputTotal.textContent = "$" + total.toFixed(2) + " (" + gallons + " gallons estimated)";
-            resultBox.style.display = 'block';
+        window.openAdminModal = function() { document.getElementById('admin-modal').style.display = 'flex'; }
+        window.closeAdminModal = function() { document.getElementById('admin-modal').style.display = 'none'; }
+        window.switchAdminTab = function(tabId, event) {
+            document.querySelectorAll('.admin-card-box').forEach(box => box.classList.remove('active-tab'));
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active-tab');
+            if (event && event.currentTarget) event.currentTarget.classList.add('active');
         }
 
-        function exportSiteCode() {
+        window.saveContentEdits = function() {
+            siteData.bizName = document.getElementById('edit-biz-name').value;
+            siteData.phone = document.getElementById('edit-phone').value;
+            siteData.heroWhite = document.getElementById('edit-hero-1').value;
+            siteData.heroYellow = document.getElementById('edit-hero-2').value;
+            siteData.heroDesc = document.getElementById('edit-hero-desc').value;
+            siteData.heroBg = document.getElementById('edit-hero-bg').value;
+            siteData.heroOpacity = document.getElementById('edit-hero-opacity').value + '%';
+            siteData.logoUrl = document.getElementById('edit-logo-url').value;
+
+            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+            renderSite();
+            alert("Website changes saved successfully!");
+        }
+
+        window.uploadHeroImage = function(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    siteData.heroBg = e.target.result;
+                    document.getElementById('edit-hero-bg').value = e.target.result;
+                    renderSite();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        window.uploadLogoImage = function(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    siteData.logoUrl = e.target.result;
+                    document.getElementById('edit-logo-url').value = e.target.result;
+                    renderSite();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        window.addNewGalleryPhoto = function(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const tag = document.getElementById('new-photo-tag').value.trim() || "COMPLETED";
+                    if (!siteData.photos) siteData.photos = [];
+                    siteData.photos.push({ url: e.target.result, tag: tag });
+                    localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+                    renderSite();
+                    input.value = "";
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        window.addPhotoUrl = function() {
+            const url = document.getElementById('new-photo-url').value.trim();
+            const tag = document.getElementById('new-photo-tag').value.trim() || "COMPLETED";
+            if (!url) return alert("Please enter an image URL.");
+            if (!siteData.photos) siteData.photos = [];
+            siteData.photos.push({ url: url, tag: tag });
+            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+            renderSite();
+            document.getElementById('new-photo-url').value = "";
+        }
+
+        window.deletePhoto = function(idx) {
+            siteData.photos.splice(idx, 1);
+            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+            renderSite();
+        }
+
+        window.exportSiteCode = function() {
+            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
             const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
             const blob = new Blob([htmlContent], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
