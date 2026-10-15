@@ -459,9 +459,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         <p style="text-align: center; color: #aaa;" id="gallery-intro">Browse our recent contracting and finish work.</p>
         
         <div id="photo-grid" class="photo-grid">
-            <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">
-                No project photos added yet. Open Admin Login to add pictures.
-            </div>
+            <!-- Dynamically rendered photos -->
         </div>
 
         <div style="text-align: center; margin-top: 36px;">
@@ -522,7 +520,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             </div>
         </nav>
 
-        <!-- SECURE LOGIN SCREEN (NO TECH MENTIONS) -->
+        <!-- SECURE LOGIN SCREEN (NO MENTION OF TECH STACK) -->
         <div id="admin-login-view" class="admin-login-card">
             <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Secure Sign-In</h2>
             <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Restricted exclusively to your authorized account.</p>
@@ -786,8 +784,8 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     const img = new Image();
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 1000;
-                        const MAX_HEIGHT = 1000;
+                        const MAX_WIDTH = 900;
+                        const MAX_HEIGHT = 900;
                         let width = img.width;
                         let height = img.height;
 
@@ -808,15 +806,17 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.70);
 
                         if (type === 'hero') {
                             siteData.heroBg = compressedDataUrl;
                             document.getElementById('edit-hero-bg').value = compressedDataUrl;
+                            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
                             renderSite();
                         } else if (type === 'logo') {
                             siteData.logoUrl = compressedDataUrl;
                             document.getElementById('edit-logo-url').value = compressedDataUrl;
+                            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
                             renderSite();
                         } else if (type === 'gallery') {
                             const tag = document.getElementById('new-photo-tag').value.trim() || "COMPLETED";
@@ -825,6 +825,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                             try {
                                 localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
                                 renderSite();
+                                alert("Photo added and saved successfully!");
                             } catch(err) {
                                 alert("Storage limit reached. Try deleting an older photo.");
                             }
@@ -847,6 +848,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
                 renderSite();
                 document.getElementById('new-photo-url').value = "";
+                alert("Photo URL added successfully!");
             } catch(e) {
                 alert("Storage limit reached.");
             }
@@ -873,7 +875,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         }
     </script>
 
-    <!-- FIREBASE AUTHENTICATION SCRIPT -->
+    <!-- AUTHENTICATION SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
