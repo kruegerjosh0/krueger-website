@@ -520,7 +520,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             </div>
         </nav>
 
-        <!-- SECURE LOGIN SCREEN (NO MENTION OF TECH STACK) -->
+        <!-- SECURE LOGIN SCREEN -->
         <div id="admin-login-view" class="admin-login-card">
             <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Secure Sign-In</h2>
             <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Restricted exclusively to your authorized account.</p>
@@ -607,7 +607,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 <!-- TAB 2: PHOTO GALLERY MANAGER -->
                 <section id="tab-photos" class="admin-card-box">
                     <h2 class="admin-card-title">Photo Gallery Manager</h2>
-                    <p class="admin-card-desc">Add or delete project photos right from your camera roll.</p>
+                    <p class="admin-card-desc">Add or delete project photos right from your camera roll. (Embedded directly for cross-browser stability).</p>
                     
                     <div class="upload-dropzone-box" onclick="document.getElementById('gallery-img-file').click()">
                         <div style="font-size: 1.8rem; margin-bottom: 4px;">📸</div>
@@ -632,7 +632,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 <section id="tab-export" class="admin-card-box">
                     <h2 class="admin-card-title">GitHub Deployment Package</h2>
                     <p class="admin-card-desc">
-                        Download your updated standalone index.html file to push straight to GitHub.
+                        Download your updated standalone index.html file with all photos embedded inside to push straight to GitHub.
                     </p>
                     <button type="button" class="btn-export-html" onclick="exportSiteCode()">
                         ⬇ Download Standalone index.html
@@ -642,8 +642,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </div>
 
-    <!-- SITE DATA STATE & IMAGE COMPRESSION SCRIPTS -->
+    <!-- SITE DATA STATE & EMBEDDED PERSISTENCE SCRIPTS -->
     <script>
+        // MASTER EMBEDDED DEFAULT STATE (Photos added here or via admin save permanently into the file)
         let siteData = {
             bizName: "Krueger Painting",
             phone: "262-443-1199",
@@ -770,13 +771,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             try {
                 localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
                 renderSite();
-                alert("Website changes saved successfully!");
+                alert("Website changes saved successfully! Click 'GitHub Export' to download your updated file.");
             } catch (e) {
-                alert("Storage limit reached. Please use smaller images or compressed URLs.");
+                alert("Storage limit reached.");
             }
         }
 
-        // Automatic Image Resizer & Compressor for Phone Storage Quotas
+        // Automatic Image Compression & Embedded State Update
         window.compressAndSaveImage = function(input, type) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -784,21 +785,15 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     const img = new Image();
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 900;
-                        const MAX_HEIGHT = 900;
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 800;
                         let width = img.width;
                         let height = img.height;
 
                         if (width > height) {
-                            if (width > MAX_WIDTH) {
-                                height *= MAX_WIDTH / width;
-                                width = MAX_WIDTH;
-                            }
+                            if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
                         } else {
-                            if (height > MAX_HEIGHT) {
-                                width *= MAX_HEIGHT / height;
-                                height = MAX_HEIGHT;
-                            }
+                            if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
                         }
 
                         canvas.width = width;
@@ -806,7 +801,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.70);
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.65);
 
                         if (type === 'hero') {
                             siteData.heroBg = compressedDataUrl;
@@ -825,9 +820,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                             try {
                                 localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
                                 renderSite();
-                                alert("Photo added and saved successfully!");
+                                alert("Photo added successfully! Click 'GitHub Export' to embed it into your permanent file.");
                             } catch(err) {
-                                alert("Storage limit reached. Try deleting an older photo.");
+                                alert("Storage limit reached.");
                             }
                         }
                         input.value = "";
@@ -860,9 +855,15 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             renderSite();
         }
 
+        // AUTO-EMBEDS SITE STATE DIRECTLY INTO THE DOWNLOADED HTML FILE
         window.exportSiteCode = function() {
             localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            
+            // Inject current siteData directly into the script template so it never depends on browser storage
+            let htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const stateInjectionTag = 'let siteData = ' + JSON.stringify(siteData) + ';';
+            htmlContent = htmlContent.replace(/let siteData = \{[\s\S]*?\};/, stateInjectionTag);
+
             const blob = new Blob([htmlContent], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
