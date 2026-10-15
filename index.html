@@ -199,7 +199,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 .footer-address { color: #ddd; margin: 0 0 6px 0; font-size: 0.95rem; }
 .footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #aaa; }
 .footer-phone a { color: var(--primary); text-decoration: none; font-weight: 700; }
-.admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s;}
+.admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s; cursor: pointer;}
 .admin-link:hover { color: var(--primary); }
 
 /* ADMIN MODAL STYLES */
@@ -208,13 +208,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     position: fixed;
     inset: 0;
     background: rgba(10, 12, 16, 0.96);
-    z-index: 1000;
+    z-index: 9999;
+    flex-direction: column;
     overflow-y: auto;
     backdrop-filter: blur(8px);
-}
-.admin-modal-backdrop.open {
-    display: flex;
-    flex-direction: column;
 }
 .admin-header-bar {
     background: #181c20;
@@ -225,7 +222,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     justify-content: space-between;
     position: sticky;
     top: 0;
-    z-index: 1010;
+    z-index: 10010;
 }
 .admin-title-wrap {
     display: flex;
@@ -264,6 +261,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     border-bottom: 2px solid #2a313a;
     padding: 0 16px;
     gap: 6px;
+    overflow-x: auto;
 }
 .admin-tab-btn {
     background: transparent;
@@ -273,6 +271,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     font-size: 0.88rem;
     padding: 14px 18px;
     cursor: pointer;
+    white-space: nowrap;
 }
 .admin-tab-btn.active {
     color: var(--primary);
@@ -292,6 +291,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     border-radius: 8px;
     padding: 24px;
     margin-bottom: 24px;
+    display: none;
+}
+.admin-card-box.active-tab {
+    display: block;
 }
 .admin-card-title {
     margin: 0 0 8px 0;
@@ -428,7 +431,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         <p class="footer-address"><strong>Mailing Address:</strong> N630 Moraine Dr., Campbellsport, WI 53010</p>
         <p class="footer-phone"><strong>Phone:</strong> <a href="tel:262-443-1199">262-443-1199</a></p>
         <p style="margin: 12px 0;">
-            <a href="javascript:void(0);" onclick="openAdminModal()" class="admin-link">⚙️ Admin Login</a>
+            <span onclick="openAdminModal()" class="admin-link">⚙️ Admin Login</span>
         </p>
         <p style="font-size: 0.75rem; color: #555; margin-top: 16px;">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
     </footer>
@@ -437,7 +440,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <div id="admin-modal" class="admin-modal-backdrop">
         <nav class="admin-header-bar">
             <div class="admin-title-wrap">
-                <span>Krueger Painting Portal</span>
+                <span>Krieger Command Portal</span>
             </div>
             <div class="admin-controls-right">
                 <button type="button" class="btn-admin-close" onclick="closeAdminModal()">Close ✕</button>
@@ -464,15 +467,26 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             </form>
         </div>
 
-        <!-- AUTHENTICATED DASHBOARD -->
+        <!-- AUTHENTICATED DASHBOARD (CONTAINING ESTIMATOR & EXPORT) -->
         <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1;">
             <div class="admin-tabs-nav">
-                <button type="button" class="admin-tab-btn active">GitHub Export</button>
+                <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-estimator', event)">Estimator App</button>
+                <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">GitHub Export</button>
                 <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
 
             <main class="admin-body-container">
-                <section class="admin-card-box">
+                <!-- Estimator Tab View -->
+                <section id="tab-estimator" class="admin-card-box active-tab">
+                    <h2 class="admin-card-title">Krieger Painting Estimator</h2>
+                    <p class="admin-card-desc">Your private calculation tool hosted securely inside your authenticated admin backend.</p>
+                    <div id="estimator-app-container" style="background: #111418; border: 1px solid #333; padding: 20px; border-radius: 6px;">
+                        <p style="color: #aaa; margin: 0;">Estimator interface active and ready for your calculator code.</p>
+                    </div>
+                </section>
+
+                <!-- GitHub Export Tab View -->
+                <section id="tab-export" class="admin-card-box">
                     <h2 class="admin-card-title">GitHub Deployment Package</h2>
                     <p class="admin-card-desc">
                         Authenticated successfully via Firebase Auth! Download your standalone index.html file to push updates to your GitHub repository.
@@ -485,20 +499,33 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </div>
 
-    <!-- GLOBAL FUNCTIONS & FIREBASE SETUP -->
+    <!-- DIRECT GLOBAL MODAL CONTROLLERS -->
     <script>
         window.openAdminModal = function() {
             const modal = document.getElementById('admin-modal');
-            if (modal) modal.classList.add('open');
+            if (modal) {
+                modal.style.display = 'flex';
+            }
         }
 
         window.closeAdminModal = function() {
             const modal = document.getElementById('admin-modal');
-            if (modal) modal.classList.remove('open');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        window.switchAdminTab = function(tabId, event) {
+            document.querySelectorAll('.admin-card-box').forEach(box => box.classList.remove('active-tab'));
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active-tab');
+            if (event && event.currentTarget) event.currentTarget.classList.add('active');
         }
     </script>
 
-    <!-- FIREBASE SDKs (Modular CDN) -->
+    <!-- FIREBASE AUTHENTICATION SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
