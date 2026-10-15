@@ -14,9 +14,27 @@
     --bg: #111111;
     --text: #ffffff;
     --card-bg: #1a1a1a;
+    --border-color: #ffcc00;
+    --header-bg: #111111;
+    --header-border: #282828;
 }
 
-body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; transition: background 0.3s ease; }
+
+/* ANNOUNCEMENT BANNER */
+#announcement-banner {
+    display: none;
+    background: var(--primary);
+    color: #000000;
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: 900;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 60;
+}
 
 /* HEADER */
 header {
@@ -24,12 +42,13 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 14px 28px;
-    border-bottom: 1px solid #282828;
-    background: #111111;
+    border-bottom: 1px solid var(--header-border);
+    background: var(--header-bg);
     position: sticky;
     top: 0;
     z-index: 50;
     gap: 16px;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 .logo-row {
     display: flex;
@@ -46,14 +65,14 @@ header {
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    border: 2px solid var(--primary);
+    border: 2px solid var(--border-color);
     background: #1c1c1c;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 0 8px rgba(255, 204, 0, 0.25);
+    box-shadow: 0 0 10px var(--border-color);
 }
 .logo-circle img.logo-img {
     width: 100%;
@@ -220,13 +239,13 @@ header {
 .section-title .underline { width: 50px; height: 3px; background: var(--primary); margin: 10px auto 0 auto; }
 
 /* SERVICES */
-.service-card { border: 2px solid var(--primary); background: var(--card-bg); padding: 20px; margin-bottom: 20px; border-radius: 6px;}
+.service-card { border: 2px solid var(--border-color); background: var(--card-bg); padding: 20px; margin-bottom: 20px; border-radius: 6px;}
 .service-card h4 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; font-weight: 800;}
 .service-card p { margin: 0; color: #aaaaaa; font-size: 0.9rem; }
 
 /* GALLERY GRID */
 .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-.photo-tile { position: relative; margin: 0; cursor: zoom-in; border: 1px solid #333; background: #222; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 4px; }
+.photo-tile { position: relative; margin: 0; cursor: zoom-in; border: 1px solid var(--border-color); background: #222; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 4px; }
 .photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .photo-tile .tag-badge { position: absolute; top: 8px; left: 8px; background: var(--primary); color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 .lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; z-index: 10000; }
@@ -380,6 +399,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     </style>
 </head>
 <body>
+    <!-- LIVE ANNOUNCEMENT TOP BANNER -->
+    <div id="announcement-banner"></div>
+
     <!-- HEADER -->
     <header>
         <div class="logo-row">
@@ -542,20 +564,20 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             </form>
         </div>
 
-        <!-- AUTHENTICATED WEBSITE & PHOTO EDITOR -->
+        <!-- AUTHENTICATED WEBSITE & THEME EDITOR -->
         <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1;">
             <div class="admin-tabs-nav">
-                <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website Editor</button>
+                <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website & Themes</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-photos', event)">Photo Gallery Manager</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">Cloud Status</button>
                 <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
 
             <main class="admin-body-container">
-                <!-- TAB 1: WEBSITE CONTENT EDITOR -->
+                <!-- TAB 1: WEBSITE & THEMES EDITOR -->
                 <section id="tab-content" class="admin-card-box active-tab">
-                    <h2 class="admin-card-title">Live Website Editor</h2>
-                    <p class="admin-card-desc">Easily update your text, logo, and background photo. Click save to apply changes live to the cloud database.</p>
+                    <h2 class="admin-card-title">Live Website & Seasonal Theme Engine</h2>
+                    <p class="admin-card-desc">Update your text, pick seasonal/holiday presets, or dial in custom brand colors.</p>
                     
                     <div class="form-group">
                         <label>Business Name</label>
@@ -570,7 +592,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <input type="text" id="edit-hero-1" class="form-control" value="Quality Craftsmanship.">
                     </div>
                     <div class="form-group">
-                        <label>Hero Headline Line 2 (Yellow)</label>
+                        <label>Hero Headline Line 2 (Accent)</label>
                         <input type="text" id="edit-hero-2" class="form-control" value="Flawless Finishes.">
                     </div>
                     <div class="form-group">
@@ -578,7 +600,48 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <textarea id="edit-hero-desc" class="form-control" style="height: 80px;">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</textarea>
                     </div>
 
-                    <div class="form-group">
+                    <!-- SEASONAL & HOLIDAY PRESET SELECTOR -->
+                    <div class="form-group" style="background: #15191e; padding: 15px; border-radius: 6px; border: 1px solid #2a313a; margin-top: 10px;">
+                        <label>🎄 Seasonal & Holiday Theme Presets</label>
+                        <select id="edit-seasonal-theme" class="form-control" onchange="applyThemePreset(this.value)">
+                            <option value="custom">Custom Colors (Manual)</option>
+                            <option value="spring">Spring (Fresh Green & Floral Gold)</option>
+                            <option value="summer">Summer (Bright Sun & Vibrant Sky)</option>
+                            <option value="fall">Fall / Autumn (Warm Amber & Copper)</option>
+                            <option value="winter">Winter (Cool Ice Blue & Frost White)</option>
+                            <option value="christmas">Christmas (Festive Red & Pine Green)</option>
+                            <option value="thanksgiving">Thanksgiving (Warm Harvest Orange & Brown)</option>
+                            <option value="fourthofjuly">4th of July (Patriotic Red, White & Blue)</option>
+                            <option value="halloween">Halloween (Spooky Pumpkin Orange & Black)</option>
+                            <option value="stpats">St. Patrick's Day (Irish Emerald Green)</option>
+                            <option value="easter">Easter (Pastel Spring Pink & Yellow)</option>
+                            <option value="newyear">New Year's (Gold & Midnight Sparkle)</option>
+                        </select>
+                    </div>
+
+                    <!-- STYLE TOKENS: COLORS -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="form-group">
+                            <label>Primary Brand Accent Color</label>
+                            <input type="color" id="edit-primary-color" value="#ffcc00" style="width: 100%; height: 44px; background: #202020; border: 1px solid #444; border-radius: 4px; cursor: pointer;">
+                        </div>
+                        <div class="form-group">
+                            <label>Card & Tile Border Color</label>
+                            <input type="color" id="edit-border-color" value="#ffcc00" style="width: 100%; height: 44px; background: #202020; border: 1px solid #444; border-radius: 4px; cursor: pointer;">
+                        </div>
+                    </div>
+
+                    <!-- ANNOUNCEMENT BANNER CONTROLS -->
+                    <div class="form-group" style="background: #15191e; padding: 15px; border-radius: 6px; border: 1px solid #2a313a; margin-top: 10px;">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-bottom: 12px;">
+                            <input type="checkbox" id="edit-banner-active" style="width: 18px; height: 18px; accent-color: var(--primary);">
+                            <span style="font-size: 0.95rem; color: #fff;">Enable Announcement Banner at Top of Site</span>
+                        </label>
+                        <label>Banner Text Message</label>
+                        <input type="text" id="edit-banner-text" class="form-control" placeholder="e.g. Now booking exterior painting for summer! Call today.">
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
                         <label>Hero Background Photo URL</label>
                         <input type="text" id="edit-hero-bg" class="form-control" placeholder="https://...">
                     </div>
@@ -632,7 +695,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 <section id="tab-export" class="admin-card-box">
                     <h2 class="admin-card-title">Cloud Status</h2>
                     <p class="admin-card-desc">
-                        Connected to Cloud Firestore database. All changes sync in real-time across all browser types.
+                        Connected to Cloud Firestore database. All seasonal styles, banners, and photos sync in real-time.
                     </p>
                     <button type="button" class="btn-export-html" onclick="exportSiteCode()">
                         ⬇ Download Backup index.html
@@ -642,7 +705,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </div>
 
-    <!-- CLOUD FIRESTORE INTEGRATION SCRIPT -->
+    <!-- CLOUD FIRESTORE & SEASONAL THEME ENGINE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -671,17 +734,45 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             heroBg: "",
             heroOpacity: "80%",
             logoUrl: "",
+            primaryColor: "#ffcc00",
+            borderColor: "#ffcc00",
+            bannerActive: false,
+            bannerText: "",
+            themePreset: "custom",
             photos: []
         };
 
         window.pendingBase64Image = "";
+
+        // Seasonal & Holiday Color Presets
+        const themePresets = {
+            spring: { primary: "#4ade80", border: "#22c55e", headerBg: "#0f172a" },
+            summer: { primary: "#38bdf8", border: "#0ea5e9", headerBg: "#0b1329" },
+            fall: { primary: "#fb923c", border: "#f97316", headerBg: "#1c140d" },
+            winter: { primary: "#93c5fd", border: "#60a5fa", headerBg: "#0a1128" },
+            christmas: { primary: "#ef4444", border: "#22c55e", headerBg: "#141f16" },
+            thanksgiving: { primary: "#ea580c", border: "#ca8a04", headerBg: "#1f140c" },
+            fourthofjuly: { primary: "#60a5fa", border: "#ef4444", headerBg: "#0c1428" },
+            halloween: { primary: "#f97316", border: "#a855f7", headerBg: "#18101e" },
+            stpats: { primary: "#22c55e", border: "#15803d", headerBg: "#0f1c14" },
+            easter: { primary: "#f472b6", border: "#facc15", headerBg: "#1e131d" },
+            newyear: { primary: "#facc15", border: "#eab308", headerBg: "#111111" }
+        };
+
+        window.applyThemePreset = function(presetKey) {
+            if (themePresets[presetKey]) {
+                const t = themePresets[presetKey];
+                document.getElementById('edit-primary-color').value = t.primary;
+                document.getElementById('edit-border-color').value = t.border;
+            }
+        };
 
         async function fetchSiteData() {
             try {
                 const docRef = doc(db, "content", "mainSite");
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
-                    window.siteData = docSnap.data();
+                    window.siteData = Object.assign({}, window.siteData, docSnap.data());
                 }
             } catch (e) {
                 console.error("Cloud fetch error:", e);
@@ -711,6 +802,31 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             document.getElementById('hero-title-yellow').textContent = window.siteData.heroYellow;
             document.getElementById('hero-desc').textContent = window.siteData.heroDesc;
 
+            // Apply Dynamic Style Tokens & Seasonal Presets
+            const pColor = window.siteData.primaryColor || "#ffcc00";
+            const bColor = window.siteData.borderColor || pColor;
+            const tPreset = window.siteData.themePreset || "custom";
+            
+            document.documentElement.style.setProperty('--primary', pColor);
+            document.documentElement.style.setProperty('--border-color', bColor);
+
+            if (themePresets[tPreset]) {
+                document.documentElement.style.setProperty('--header-bg', themePresets[tPreset].headerBg);
+                document.documentElement.style.setProperty('--header-border', themePresets[tPreset].primary);
+            } else {
+                document.documentElement.style.setProperty('--header-bg', '#111111');
+                document.documentElement.style.setProperty('--header-border', '#282828');
+            }
+
+            // Announcement Banner Render
+            const banner = document.getElementById('announcement-banner');
+            if (window.siteData.bannerActive && window.siteData.bannerText) {
+                banner.textContent = window.siteData.bannerText;
+                banner.style.display = 'block';
+            } else {
+                banner.style.display = 'none';
+            }
+
             if (window.siteData.heroBg) {
                 document.querySelector('.hero').style.backgroundImage = `url(${window.siteData.heroBg})`;
             }
@@ -725,6 +841,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 document.getElementById('header-logo-fallback').hidden = false;
             }
 
+            // Populate form inputs
             document.getElementById('edit-biz-name').value = window.siteData.bizName;
             document.getElementById('edit-phone').value = window.siteData.phone;
             document.getElementById('edit-hero-1').value = window.siteData.heroWhite;
@@ -734,7 +851,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             document.getElementById('edit-logo-url').value = window.siteData.logoUrl;
             document.getElementById('edit-hero-opacity').value = parseInt(window.siteData.heroOpacity) || 80;
             document.getElementById('opacity-val').textContent = (window.siteData.heroOpacity || '80%');
+            document.getElementById('edit-primary-color').value = pColor;
+            document.getElementById('edit-border-color').value = bColor;
+            document.getElementById('edit-seasonal-theme').value = tPreset;
+            document.getElementById('edit-banner-active').checked = !!window.siteData.bannerActive;
+            document.getElementById('edit-banner-text').value = window.siteData.bannerText || "";
 
+            // Render Public Gallery
             const grid = document.getElementById('photo-grid');
             if (window.siteData.photos && window.siteData.photos.length > 0) {
                 grid.innerHTML = "";
@@ -761,6 +884,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">No project photos added yet. Open Admin Login to add pictures.</div>';
             }
 
+            // Render Admin Manager Grid
             const adminGrid = document.getElementById('admin-gallery-manager-grid');
             if (adminGrid) {
                 adminGrid.innerHTML = "";
@@ -797,6 +921,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             window.siteData.heroBg = document.getElementById('edit-hero-bg').value;
             window.siteData.heroOpacity = document.getElementById('edit-hero-opacity').value + '%';
             window.siteData.logoUrl = document.getElementById('edit-logo-url').value;
+            window.siteData.primaryColor = document.getElementById('edit-primary-color').value;
+            window.siteData.borderColor = document.getElementById('edit-border-color').value;
+            window.siteData.themePreset = document.getElementById('edit-seasonal-theme').value;
+            window.siteData.bannerActive = document.getElementById('edit-banner-active').checked;
+            window.siteData.bannerText = document.getElementById('edit-banner-text').value;
 
             await window.saveSiteDataToCloud();
         }
