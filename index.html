@@ -485,6 +485,19 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </div>
 
+    <!-- GLOBAL FUNCTIONS & FIREBASE SETUP -->
+    <script>
+        window.openAdminModal = function() {
+            const modal = document.getElementById('admin-modal');
+            if (modal) modal.classList.add('open');
+        }
+
+        window.closeAdminModal = function() {
+            const modal = document.getElementById('admin-modal');
+            if (modal) modal.classList.remove('open');
+        }
+    </script>
+
     <!-- FIREBASE SDKs (Modular CDN) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -503,14 +516,88 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        window.openAdminModal = function() {
-            document.getElementById('admin-modal').classList.add('open');
-        }
-        window.closeAdminModal = function() {
-            document.getElementById('admin-modal').classList.remove('open');
-        }
-
         window.handleFirebaseLogin = async function(e) {
             e.preventDefault();
             const email = document.getElementById('admin-email-input').value.trim();
-            const pass = document.getElementById('adm
+            const pass = document.getElementById('admin-pass-input').value;
+            const errBox = document.getElementById('login-error-alert');
+            const successBox = document.getElementById('login-success-alert');
+            
+            try {
+                errBox.style.display = 'none';
+                await signInWithEmailAndPassword(auth, email, pass);
+                successBox.textContent = "Success! Opening dashboard...";
+                successBox.style.display = 'block';
+                
+                setTimeout(() => {
+                    document.getElementById('admin-login-view').style.display = 'none';
+                    document.getElementById('admin-dashboard-view').style.display = 'flex';
+                    successBox.style.display = 'none';
+                }, 400);
+            } catch (error) {
+                errBox.textContent = error.message;
+                errBox.style.display = 'block';
+                successBox.style.display = 'none';
+            }
+        }
+
+        window.handleFirebaseLogout = async function() {
+            await signOut(auth);
+        }
+
+        window.handlePasswordReset = async function() {
+            const email = document.getElementById('admin-email-input').value.trim();
+            const successBox = document.getElementById('login-success-alert');
+            const errBox = document.getElementById('login-error-alert');
+            
+            if (!email) {
+                errBox.textContent = "Please type your email address into the email field above first.";
+                errBox.style.display = 'block';
+                successBox.style.display = 'none';
+                return;
+            }
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                successBox.textContent = "Password reset email sent! Check your inbox/spam folder.";
+                successBox.style.display = 'block';
+                errBox.style.display = 'none';
+            } catch (error) {
+                errBox.textContent = error.message;
+                errBox.style.display = 'block';
+                successBox.style.display = 'none';
+            }
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('admin-login-view').style.display = 'none';
+                document.getElementById('admin-dashboard-view').style.display = 'flex';
+            } else {
+                document.getElementById('admin-dashboard-view').style.display = 'none';
+                document.getElementById('admin-login-view').style.display = 'block';
+                document.getElementById('admin-pass-input').value = '';
+            }
+        });
+    </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('year-copy').textContent = new Date().getFullYear();
+  });
+
+  function exportSiteCode() {
+      const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+  }
+</script>
+</body>
+</html>
