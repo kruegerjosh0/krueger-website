@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krueger Painting | Professional Painting</title>
-    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure admin editor.">
+    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure admin portal.">
     <meta property="og:title" content="Krueger Painting | Professional Painting">
-    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure admin editor.">
+    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure admin portal.">
 
     <style>
 :root {
@@ -511,7 +511,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         <p id="lightbox-caption"></p>
     </div>
 
-    <!-- SECURE FIREBASE ADMIN MODAL -->
+    <!-- SECURE ADMIN MODAL -->
     <div id="admin-modal" class="admin-modal-backdrop">
         <nav class="admin-header-bar">
             <div class="admin-title-wrap">
@@ -522,9 +522,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             </div>
         </nav>
 
-        <!-- FIREBASE LOGIN SCREEN -->
+        <!-- SECURE LOGIN SCREEN (NO TECH MENTIONS) -->
         <div id="admin-login-view" class="admin-login-card">
-            <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Firebase Secure Sign-In</h2>
+            <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Secure Sign-In</h2>
             <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Restricted exclusively to your authorized account.</p>
 
             <form id="admin-login-form" onsubmit="handleFirebaseLogin(event)" style="text-align: left;">
@@ -533,7 +533,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     <input type="email" id="admin-email-input" class="form-control" placeholder="Enter admin email" required style="width: 100%; margin-bottom: 12px;">
                     
                     <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
-                    <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter Firebase password" required style="width: 100%;">
+                    <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter password" required style="width: 100%;">
                 </div>
                 <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px; font-size: 0.85rem; margin-bottom: 16px;"></div>
                 <div id="login-success-alert" style="display: none; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid #51cf66; border-radius: 4px; padding: 10px; font-size: 0.85rem; margin-bottom: 16px;"></div>
@@ -585,7 +585,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     </div>
                     <div class="upload-dropzone-box" onclick="document.getElementById('hero-img-file').click()">
                         <div style="font-weight: 800;">🌄 Tap to Upload Background Image from Phone</div>
-                        <input type="file" id="hero-img-file" accept="image/*" style="display: none;" onchange="uploadHeroImage(this)">
+                        <input type="file" id="hero-img-file" accept="image/*" style="display: none;" onchange="compressAndSaveImage(this, 'hero')">
                     </div>
 
                     <div class="form-group">
@@ -600,7 +600,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     </div>
                     <div class="upload-dropzone-box" onclick="document.getElementById('logo-img-file').click()">
                         <div style="font-weight: 800;">🖼️ Tap to Upload Company Logo from Phone</div>
-                        <input type="file" id="logo-img-file" accept="image/*" style="display: none;" onchange="uploadLogoImage(this)">
+                        <input type="file" id="logo-img-file" accept="image/*" style="display: none;" onchange="compressAndSaveImage(this, 'logo')">
                     </div>
 
                     <button type="button" class="btn-primary" onclick="saveContentEdits()" style="max-width: 100%; border: none; cursor: pointer; margin-top: 10px;">Save Changes to Website</button>
@@ -614,7 +614,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     <div class="upload-dropzone-box" onclick="document.getElementById('gallery-img-file').click()">
                         <div style="font-size: 1.8rem; margin-bottom: 4px;">📸</div>
                         <div style="font-weight: 800;">Tap to Add Project Photo from Phone</div>
-                        <input type="file" id="gallery-img-file" accept="image/*" style="display: none;" onchange="addNewGalleryPhoto(this)">
+                        <input type="file" id="gallery-img-file" accept="image/*" style="display: none;" onchange="compressAndSaveImage(this, 'gallery')">
                     </div>
                     <div class="form-group">
                         <label>Or Paste Image URL</label>
@@ -644,7 +644,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </div>
 
-    <!-- SITE DATA STATE & EDITOR SCRIPTS -->
+    <!-- SITE DATA STATE & IMAGE COMPRESSION SCRIPTS -->
     <script>
         let siteData = {
             bizName: "Krueger Painting",
@@ -688,6 +688,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 document.getElementById('header-logo-img').src = siteData.logoUrl;
                 document.getElementById('header-logo-img').hidden = false;
                 document.getElementById('header-logo-fallback').hidden = true;
+            } else {
+                document.getElementById('header-logo-img').hidden = true;
+                document.getElementById('header-logo-fallback').hidden = false;
             }
 
             // Populate form inputs
@@ -766,45 +769,69 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             siteData.heroOpacity = document.getElementById('edit-hero-opacity').value + '%';
             siteData.logoUrl = document.getElementById('edit-logo-url').value;
 
-            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-            renderSite();
-            alert("Website changes saved successfully!");
-        }
-
-        window.uploadHeroImage = function(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    siteData.heroBg = e.target.result;
-                    document.getElementById('edit-hero-bg').value = e.target.result;
-                    renderSite();
-                };
-                reader.readAsDataURL(input.files[0]);
+            try {
+                localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+                renderSite();
+                alert("Website changes saved successfully!");
+            } catch (e) {
+                alert("Storage limit reached. Please use smaller images or compressed URLs.");
             }
         }
 
-        window.uploadLogoImage = function(input) {
+        // Automatic Image Resizer & Compressor for Phone Storage Quotas
+        window.compressAndSaveImage = function(input, type) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    siteData.logoUrl = e.target.result;
-                    document.getElementById('edit-logo-url').value = e.target.result;
-                    renderSite();
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 1000;
+                        const MAX_HEIGHT = 1000;
+                        let width = img.width;
+                        let height = img.height;
 
-        window.addNewGalleryPhoto = function(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const tag = document.getElementById('new-photo-tag').value.trim() || "COMPLETED";
-                    if (!siteData.photos) siteData.photos = [];
-                    siteData.photos.push({ url: e.target.result, tag: tag });
-                    localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-                    renderSite();
-                    input.value = "";
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+
+                        if (type === 'hero') {
+                            siteData.heroBg = compressedDataUrl;
+                            document.getElementById('edit-hero-bg').value = compressedDataUrl;
+                            renderSite();
+                        } else if (type === 'logo') {
+                            siteData.logoUrl = compressedDataUrl;
+                            document.getElementById('edit-logo-url').value = compressedDataUrl;
+                            renderSite();
+                        } else if (type === 'gallery') {
+                            const tag = document.getElementById('new-photo-tag').value.trim() || "COMPLETED";
+                            if (!siteData.photos) siteData.photos = [];
+                            siteData.photos.push({ url: compressedDataUrl, tag: tag });
+                            try {
+                                localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+                                renderSite();
+                            } catch(err) {
+                                alert("Storage limit reached. Try deleting an older photo.");
+                            }
+                        }
+                        input.value = "";
+                    };
+                    img.src = e.target.result;
                 };
                 reader.readAsDataURL(input.files[0]);
             }
@@ -816,9 +843,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             if (!url) return alert("Please enter an image URL.");
             if (!siteData.photos) siteData.photos = [];
             siteData.photos.push({ url: url, tag: tag });
-            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-            renderSite();
-            document.getElementById('new-photo-url').value = "";
+            try {
+                localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+                renderSite();
+                document.getElementById('new-photo-url').value = "";
+            } catch(e) {
+                alert("Storage limit reached.");
+            }
         }
 
         window.deletePhoto = function(idx) {
