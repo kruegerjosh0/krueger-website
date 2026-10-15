@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krueger Painting | Professional Painting</title>
-    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure admin portal.">
+    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure cloud admin portal.">
     <meta property="og:title" content="Krueger Painting | Professional Painting">
-    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure admin portal.">
+    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure cloud admin portal.">
 
     <style>
 :root {
@@ -459,7 +459,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         <p style="text-align: center; color: #aaa;" id="gallery-intro">Browse our recent contracting and finish work.</p>
         
         <div id="photo-grid" class="photo-grid">
-            <!-- Dynamically rendered photos -->
+            <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">
+                Loading live photos from cloud database...
+            </div>
         </div>
 
         <div style="text-align: center; margin-top: 36px;">
@@ -545,7 +547,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <div class="admin-tabs-nav">
                 <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website Editor</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-photos', event)">Photo Gallery Manager</button>
-                <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">GitHub Export</button>
+                <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">Cloud Status</button>
                 <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
 
@@ -553,7 +555,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 <!-- TAB 1: WEBSITE CONTENT EDITOR -->
                 <section id="tab-content" class="admin-card-box active-tab">
                     <h2 class="admin-card-title">Live Website Editor</h2>
-                    <p class="admin-card-desc">Easily update your text, logo, and background photo. Click save to apply changes live.</p>
+                    <p class="admin-card-desc">Easily update your text, logo, and background photo. Click save to apply changes live to the cloud database.</p>
                     
                     <div class="form-group">
                         <label>Business Name</label>
@@ -576,14 +578,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <textarea id="edit-hero-desc" class="form-control" style="height: 80px;">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</textarea>
                     </div>
 
-                    <!-- Background Image & Opacity -->
                     <div class="form-group">
-                        <label>Hero Background Photo (Paste Image URL or Choose File)</label>
+                        <label>Hero Background Photo URL</label>
                         <input type="text" id="edit-hero-bg" class="form-control" placeholder="https://...">
                     </div>
                     <div class="upload-dropzone-box" onclick="document.getElementById('hero-img-file').click()">
-                        <div style="font-weight: 800;">🌄 Tap to Upload Background Image from Phone</div>
-                        <input type="file" id="hero-img-file" accept="image/*" style="display: none;" onchange="compressAndSaveImage(this, 'hero')">
+                        <div style="font-weight: 800;">🌄 Tap to Upload Background Image</div>
+                        <input type="file" id="hero-img-file" accept="image/*" style="display: none;" onchange="window.compressAndSaveImage(this, 'hero')">
                     </div>
 
                     <div class="form-group">
@@ -591,61 +592,77 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <input type="range" id="edit-hero-opacity" min="40" max="95" value="80" step="5" style="width: 100%; accent-color: var(--primary);" oninput="document.getElementById('opacity-val').textContent = this.value + '%'">
                     </div>
 
-                    <!-- Logo Upload -->
                     <div class="form-group">
-                        <label>Company Logo Image (Paste URL or Choose File)</label>
+                        <label>Company Logo Image URL</label>
                         <input type="text" id="edit-logo-url" class="form-control" placeholder="https://...">
                     </div>
                     <div class="upload-dropzone-box" onclick="document.getElementById('logo-img-file').click()">
-                        <div style="font-weight: 800;">🖼️ Tap to Upload Company Logo from Phone</div>
-                        <input type="file" id="logo-img-file" accept="image/*" style="display: none;" onchange="compressAndSaveImage(this, 'logo')">
+                        <div style="font-weight: 800;">🖼️ Tap to Upload Company Logo</div>
+                        <input type="file" id="logo-img-file" accept="image/*" style="display: none;" onchange="window.compressAndSaveImage(this, 'logo')">
                     </div>
 
-                    <button type="button" class="btn-primary" onclick="saveContentEdits()" style="max-width: 100%; border: none; cursor: pointer; margin-top: 10px;">Save Changes to Website</button>
+                    <button type="button" class="btn-primary" onclick="window.saveContentEdits()" style="max-width: 100%; border: none; cursor: pointer; margin-top: 10px;">Save Live to Cloud Database</button>
                 </section>
 
                 <!-- TAB 2: PHOTO GALLERY MANAGER -->
                 <section id="tab-photos" class="admin-card-box">
                     <h2 class="admin-card-title">Photo Gallery Manager</h2>
-                    <p class="admin-card-desc">Add or delete project photos right from your camera roll. (Embedded directly for cross-browser stability).</p>
+                    <p class="admin-card-desc">Add or delete project photos. Changes sync instantly via Cloud Firestore.</p>
                     
                     <div class="upload-dropzone-box" onclick="document.getElementById('gallery-img-file').click()">
                         <div style="font-size: 1.8rem; margin-bottom: 4px;">📸</div>
-                        <div style="font-weight: 800;">Tap to Add Project Photo from Phone</div>
-                        <input type="file" id="gallery-img-file" accept="image/*" style="display: none;" onchange="compressAndSaveImage(this, 'gallery')">
+                        <div style="font-weight: 800;" id="upload-label-text">Tap to Select Photo from Phone</div>
+                        <input type="file" id="gallery-img-file" accept="image/*" style="display: none;" onchange="window.previewGalleryPhoto(this)">
                     </div>
-                    <div class="form-group">
-                        <label>Or Paste Image URL</label>
-                        <input type="text" id="new-photo-url" class="form-control" placeholder="https://...">
-                    </div>
-                    <div class="form-group">
-                        <label>Photo Tag (e.g. BEFORE, AFTER, COMPLETED)</label>
-                        <input type="text" id="new-photo-tag" class="form-control" value="COMPLETED">
-                    </div>
-                    <button type="button" class="btn-primary" onclick="addPhotoUrl()" style="max-width: 100%; border: none; cursor: pointer; margin-bottom: 24px;">Add Photo by URL</button>
 
-                    <h3 style="color: var(--primary); font-size: 1rem; margin: 20px 0 10px 0; text-transform: uppercase;">Current Gallery Photos</h3>
+                    <div id="pending-photo-preview-wrap" style="display: none; background: #111; border: 1px solid var(--primary); padding: 12px; border-radius: 6px; margin-bottom: 16px; text-align: center;">
+                        <img id="pending-preview-img" src="" style="max-height: 120px; border-radius: 4px; margin-bottom: 8px; display: block; margin-left: auto; margin-right: auto;">
+                        <div class="form-group" style="text-align: left; margin-bottom: 10px;">
+                            <label>Photo Tag</label>
+                            <input type="text" id="pending-photo-tag" class="form-control" value="COMPLETED">
+                        </div>
+                        <button type="button" class="btn-primary" onclick="window.confirmAndSaveGalleryPhoto()" style="max-width: 100%; border: none; cursor: pointer; background: #22c55e; color: #fff;">💾 Save Photo to Cloud Database</button>
+                    </div>
+
+                    <h3 style="color: var(--primary); font-size: 1rem; margin: 20px 0 10px 0; text-transform: uppercase;">Current Cloud Gallery Photos</h3>
                     <div id="admin-gallery-manager-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px;"></div>
                 </section>
 
                 <!-- TAB 3: GITHUB EXPORT -->
                 <section id="tab-export" class="admin-card-box">
-                    <h2 class="admin-card-title">GitHub Deployment Package</h2>
+                    <h2 class="admin-card-title">Cloud Status</h2>
                     <p class="admin-card-desc">
-                        Download your updated standalone index.html file with all photos embedded inside to push straight to GitHub.
+                        Connected to Cloud Firestore database. All changes sync in real-time across all browser types.
                     </p>
                     <button type="button" class="btn-export-html" onclick="exportSiteCode()">
-                        ⬇ Download Standalone index.html
+                        ⬇ Download Backup index.html
                     </button>
                 </section>
             </main>
         </div>
     </div>
 
-    <!-- SITE DATA STATE & EMBEDDED PERSISTENCE SCRIPTS -->
-    <script>
-        // MASTER EMBEDDED DEFAULT STATE (Photos added here or via admin save permanently into the file)
-        let siteData = {
+    <!-- CLOUD FIRESTORE INTEGRATION SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBBFi6XGAsdENyNGzHlIAjxlcqwGA9f0Cc",
+          authDomain: "kpwebsite-83a6b.firebaseapp.com",
+          projectId: "kpwebsite-83a6b",
+          storageBucket: "kpwebsite-83a6b.firebasestorage.app",
+          messagingSenderId: "489955386353",
+          appId: "1:489955386353:web:57ff0a92fb9dc3bd189a50",
+          measurementId: "G-PV7PNYLMB4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.siteData = {
             bizName: "Krueger Painting",
             phone: "262-443-1199",
             heroWhite: "Quality Craftsmanship.",
@@ -657,34 +674,50 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             photos: []
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('year-copy').textContent = new Date().getFullYear();
-            const saved = localStorage.getItem('krueger_site_data');
-            if (saved) {
-                try { siteData = JSON.parse(saved); } catch(e){}
+        window.pendingBase64Image = "";
+
+        async function fetchSiteData() {
+            try {
+                const docRef = doc(db, "content", "mainSite");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    window.siteData = docSnap.data();
+                }
+            } catch (e) {
+                console.error("Cloud fetch error:", e);
             }
             renderSite();
-        });
+        }
 
-        function renderSite() {
-            document.getElementById('header-business-name').textContent = siteData.bizName;
-            document.title = siteData.bizName + " | Professional Painting";
-            document.getElementById('header-call-text').textContent = "Call " + siteData.phone;
-            document.querySelector('.btn-call').href = "tel:" + siteData.phone;
-            document.getElementById('footer-phone-text').textContent = siteData.phone;
-            document.getElementById('footer-phone-text').href = "tel:" + siteData.phone;
-
-            document.getElementById('hero-title-white').textContent = siteData.heroWhite;
-            document.getElementById('hero-title-yellow').textContent = siteData.heroYellow;
-            document.getElementById('hero-desc').textContent = siteData.heroDesc;
-
-            if (siteData.heroBg) {
-                document.querySelector('.hero').style.backgroundImage = `url(${siteData.heroBg})`;
+        window.saveSiteDataToCloud = async function() {
+            try {
+                await setDoc(doc(db, "content", "mainSite"), window.siteData, { merge: true });
+                renderSite();
+                alert("Changes saved live to Cloud Firestore database!");
+            } catch (e) {
+                alert("Cloud save error: " + e.message);
             }
-            document.documentElement.style.setProperty('--hero-overlay-alpha', parseInt(siteData.heroOpacity) / 100);
+        }
 
-            if (siteData.logoUrl) {
-                document.getElementById('header-logo-img').src = siteData.logoUrl;
+        window.renderSite = function() {
+            document.getElementById('header-business-name').textContent = window.siteData.bizName;
+            document.title = window.siteData.bizName + " | Professional Painting";
+            document.getElementById('header-call-text').textContent = "Call " + window.siteData.phone;
+            document.querySelector('.btn-call').href = "tel:" + window.siteData.phone;
+            document.getElementById('footer-phone-text').textContent = window.siteData.phone;
+            document.getElementById('footer-phone-text').href = "tel:" + window.siteData.phone;
+
+            document.getElementById('hero-title-white').textContent = window.siteData.heroWhite;
+            document.getElementById('hero-title-yellow').textContent = window.siteData.heroYellow;
+            document.getElementById('hero-desc').textContent = window.siteData.heroDesc;
+
+            if (window.siteData.heroBg) {
+                document.querySelector('.hero').style.backgroundImage = `url(${window.siteData.heroBg})`;
+            }
+            document.documentElement.style.setProperty('--hero-overlay-alpha', parseInt(window.siteData.heroOpacity) / 100);
+
+            if (window.siteData.logoUrl) {
+                document.getElementById('header-logo-img').src = window.siteData.logoUrl;
                 document.getElementById('header-logo-img').hidden = false;
                 document.getElementById('header-logo-fallback').hidden = true;
             } else {
@@ -692,22 +725,20 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 document.getElementById('header-logo-fallback').hidden = false;
             }
 
-            // Populate form inputs
-            document.getElementById('edit-biz-name').value = siteData.bizName;
-            document.getElementById('edit-phone').value = siteData.phone;
-            document.getElementById('edit-hero-1').value = siteData.heroWhite;
-            document.getElementById('edit-hero-2').value = siteData.heroYellow;
-            document.getElementById('edit-hero-desc').value = siteData.heroDesc;
-            document.getElementById('edit-hero-bg').value = siteData.heroBg;
-            document.getElementById('edit-logo-url').value = siteData.logoUrl;
-            document.getElementById('edit-hero-opacity').value = parseInt(siteData.heroOpacity) || 80;
-            document.getElementById('opacity-val').textContent = (siteData.heroOpacity || '80%');
+            document.getElementById('edit-biz-name').value = window.siteData.bizName;
+            document.getElementById('edit-phone').value = window.siteData.phone;
+            document.getElementById('edit-hero-1').value = window.siteData.heroWhite;
+            document.getElementById('edit-hero-2').value = window.siteData.heroYellow;
+            document.getElementById('edit-hero-desc').value = window.siteData.heroDesc;
+            document.getElementById('edit-hero-bg').value = window.siteData.heroBg;
+            document.getElementById('edit-logo-url').value = window.siteData.logoUrl;
+            document.getElementById('edit-hero-opacity').value = parseInt(window.siteData.heroOpacity) || 80;
+            document.getElementById('opacity-val').textContent = (window.siteData.heroOpacity || '80%');
 
-            // Render Public Gallery
             const grid = document.getElementById('photo-grid');
-            if (siteData.photos && siteData.photos.length > 0) {
+            if (window.siteData.photos && window.siteData.photos.length > 0) {
                 grid.innerHTML = "";
-                siteData.photos.forEach((p) => {
+                window.siteData.photos.forEach((p) => {
                     const fig = document.createElement('figure');
                     fig.className = 'photo-tile';
                     fig.onclick = () => {
@@ -730,19 +761,18 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">No project photos added yet. Open Admin Login to add pictures.</div>';
             }
 
-            // Render Admin Manager Grid
             const adminGrid = document.getElementById('admin-gallery-manager-grid');
             if (adminGrid) {
                 adminGrid.innerHTML = "";
-                if (!siteData.photos || siteData.photos.length === 0) {
+                if (!window.siteData.photos || window.siteData.photos.length === 0) {
                     adminGrid.innerHTML = '<p style="color:#777; font-size:0.85rem; grid-column: 1/-1;">No photos uploaded yet.</p>';
                 } else {
-                    siteData.photos.forEach((p, idx) => {
+                    window.siteData.photos.forEach((p, idx) => {
                         const box = document.createElement('div');
                         box.style.cssText = "background:#111; border:1px solid #333; border-radius:4px; padding:6px; text-align:center;";
                         box.innerHTML = `<img src="${p.url}" style="width:100%; height:75px; object-fit:cover; border-radius:3px; margin-bottom:4px;">
                                          <div style="font-size:0.65rem; color:var(--primary); font-weight:800;">${p.tag}</div>
-                                         <button type="button" onclick="deletePhoto(${idx})" style="background:#ff5252; color:#fff; border:none; padding:2px 6px; font-size:0.65rem; border-radius:3px; cursor:pointer; margin-top:4px;">Delete</button>`;
+                                         <button type="button" onclick="window.deletePhoto(${idx})" style="background:#ff5252; color:#fff; border:none; padding:2px 6px; font-size:0.65rem; border-radius:3px; cursor:pointer; margin-top:4px;">Delete</button>`;
                         adminGrid.appendChild(box);
                     });
                 }
@@ -758,27 +788,62 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             if (event && event.currentTarget) event.currentTarget.classList.add('active');
         }
 
-        window.saveContentEdits = function() {
-            siteData.bizName = document.getElementById('edit-biz-name').value;
-            siteData.phone = document.getElementById('edit-phone').value;
-            siteData.heroWhite = document.getElementById('edit-hero-1').value;
-            siteData.heroYellow = document.getElementById('edit-hero-2').value;
-            siteData.heroDesc = document.getElementById('edit-hero-desc').value;
-            siteData.heroBg = document.getElementById('edit-hero-bg').value;
-            siteData.heroOpacity = document.getElementById('edit-hero-opacity').value + '%';
-            siteData.logoUrl = document.getElementById('edit-logo-url').value;
+        window.saveContentEdits = async function() {
+            window.siteData.bizName = document.getElementById('edit-biz-name').value;
+            window.siteData.phone = document.getElementById('edit-phone').value;
+            window.siteData.heroWhite = document.getElementById('edit-hero-1').value;
+            window.siteData.heroYellow = document.getElementById('edit-hero-2').value;
+            window.siteData.heroDesc = document.getElementById('edit-hero-desc').value;
+            window.siteData.heroBg = document.getElementById('edit-hero-bg').value;
+            window.siteData.heroOpacity = document.getElementById('edit-hero-opacity').value + '%';
+            window.siteData.logoUrl = document.getElementById('edit-logo-url').value;
 
-            try {
-                localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-                renderSite();
-                alert("Website changes saved successfully! Click 'GitHub Export' to download your updated file.");
-            } catch (e) {
-                alert("Storage limit reached.");
+            await window.saveSiteDataToCloud();
+        }
+
+        window.compressAndSaveImage = async function(input, type) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = async function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 800;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                        } else {
+                            if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.65);
+
+                        if (type === 'hero') {
+                            window.siteData.heroBg = compressedDataUrl;
+                            document.getElementById('edit-hero-bg').value = compressedDataUrl;
+                            await window.saveSiteDataToCloud();
+                        } else if (type === 'logo') {
+                            window.siteData.logoUrl = compressedDataUrl;
+                            document.getElementById('edit-logo-url').value = compressedDataUrl;
+                            await window.saveSiteDataToCloud();
+                        }
+                        input.value = "";
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
-        // Automatic Image Compression & Embedded State Update
-        window.compressAndSaveImage = function(input, type) {
+        window.previewGalleryPhoto = function(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -801,31 +866,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.65);
-
-                        if (type === 'hero') {
-                            siteData.heroBg = compressedDataUrl;
-                            document.getElementById('edit-hero-bg').value = compressedDataUrl;
-                            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-                            renderSite();
-                        } else if (type === 'logo') {
-                            siteData.logoUrl = compressedDataUrl;
-                            document.getElementById('edit-logo-url').value = compressedDataUrl;
-                            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-                            renderSite();
-                        } else if (type === 'gallery') {
-                            const tag = document.getElementById('new-photo-tag').value.trim() || "COMPLETED";
-                            if (!siteData.photos) siteData.photos = [];
-                            siteData.photos.push({ url: compressedDataUrl, tag: tag });
-                            try {
-                                localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-                                renderSite();
-                                alert("Photo added successfully! Click 'GitHub Export' to embed it into your permanent file.");
-                            } catch(err) {
-                                alert("Storage limit reached.");
-                            }
-                        }
-                        input.value = "";
+                        window.pendingBase64Image = canvas.toDataURL('image/jpeg', 0.65);
+                        
+                        document.getElementById('pending-preview-img').src = window.pendingBase64Image;
+                        document.getElementById('pending-photo-preview-wrap').style.display = 'block';
+                        document.getElementById('upload-label-text').textContent = "Change Selected Photo";
                     };
                     img.src = e.target.result;
                 };
@@ -833,37 +878,26 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             }
         }
 
-        window.addPhotoUrl = function() {
-            const url = document.getElementById('new-photo-url').value.trim();
-            const tag = document.getElementById('new-photo-tag').value.trim() || "COMPLETED";
-            if (!url) return alert("Please enter an image URL.");
-            if (!siteData.photos) siteData.photos = [];
-            siteData.photos.push({ url: url, tag: tag });
-            try {
-                localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-                renderSite();
-                document.getElementById('new-photo-url').value = "";
-                alert("Photo URL added successfully!");
-            } catch(e) {
-                alert("Storage limit reached.");
-            }
-        }
-
-        window.deletePhoto = function(idx) {
-            siteData.photos.splice(idx, 1);
-            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-            renderSite();
-        }
-
-        // AUTO-EMBEDS SITE STATE DIRECTLY INTO THE DOWNLOADED HTML FILE
-        window.exportSiteCode = function() {
-            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+        window.confirmAndSaveGalleryPhoto = async function() {
+            if (!window.pendingBase64Image) return alert("No photo selected.");
+            const tag = document.getElementById('pending-photo-tag').value.trim() || "COMPLETED";
+            if (!window.siteData.photos) window.siteData.photos = [];
             
-            // Inject current siteData directly into the script template so it never depends on browser storage
-            let htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-            const stateInjectionTag = 'let siteData = ' + JSON.stringify(siteData) + ';';
-            htmlContent = htmlContent.replace(/let siteData = \{[\s\S]*?\};/, stateInjectionTag);
+            window.siteData.photos.push({ url: window.pendingBase64Image, tag: tag });
+            await window.saveSiteDataToCloud();
 
+            window.pendingBase64Image = "";
+            document.getElementById('pending-photo-preview-wrap').style.display = 'none';
+            document.getElementById('upload-label-text').textContent = "Tap to Select Photo from Phone";
+        }
+
+        window.deletePhoto = async function(idx) {
+            window.siteData.photos.splice(idx, 1);
+            await window.saveSiteDataToCloud();
+        }
+
+        window.exportSiteCode = function() {
+            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
             const blob = new Blob([htmlContent], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -874,25 +908,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-    </script>
-
-    <!-- AUTHENTICATION SCRIPT -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-          apiKey: "AIzaSyBBFi6XGAsdENyNGzHlIAjxlcqwGA9f0Cc",
-          authDomain: "kpwebsite-83a6b.firebaseapp.com",
-          projectId: "kpwebsite-83a6b",
-          storageBucket: "kpwebsite-83a6b.firebasestorage.app",
-          messagingSenderId: "489955386353",
-          appId: "1:489955386353:web:57ff0a92fb9dc3bd189a50",
-          measurementId: "G-PV7PNYLMB4"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
 
         window.handleFirebaseLogin = async function(e) {
             e.preventDefault();
@@ -956,6 +971,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 document.getElementById('admin-login-view').style.display = 'block';
                 document.getElementById('admin-pass-input').value = '';
             }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year-copy').textContent = new Date().getFullYear();
+            fetchSiteData();
         });
     </script>
 </body>
