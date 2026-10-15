@@ -20,20 +20,20 @@
     --footer-bg: #181c20;
 }
 
-body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 70px; }
+body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
 
-/* STREAMLINED HEADER WITH INLINE BANNER */
+/* STREAMLINED CLEAN HEADER */
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 20px;
+    padding: 14px 20px;
     border-bottom: 1px solid #282828;
     background: var(--header-bg);
     position: sticky;
     top: 0;
     z-index: 50;
-    gap: 12px;
+    gap: 16px;
 }
 .logo-row {
     display: flex;
@@ -46,8 +46,8 @@ header {
     text-decoration: none;
 }
 .logo-circle {
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     border: 2px solid var(--primary);
     background: #1c1c1c;
@@ -80,7 +80,7 @@ header {
     display: none;
 }
 .logo-monogram {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 900;
     letter-spacing: 0.5px;
     color: var(--primary);
@@ -91,17 +91,17 @@ header {
 .header-center-stack {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    align-items: flex-end;
+    gap: 6px;
     flex: 1;
 }
 #header-announcement-banner {
     display: none;
     background: var(--primary);
     color: #000000;
-    padding: 3px 10px;
+    padding: 4px 12px;
     font-weight: 900;
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
     border-radius: 3px;
     letter-spacing: 0.3px;
@@ -111,8 +111,8 @@ header {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 16px;
-    font-size: 0.85rem;
+    gap: 18px;
+    font-size: 0.95rem;
     font-weight: 700;
 }
 .nav-links a {
@@ -127,56 +127,12 @@ header {
 
 @media (max-width: 580px) {
     header {
-        padding: 10px 14px;
+        padding: 12px 16px;
     }
     .nav-links {
-        gap: 12px;
-        font-size: 0.78rem;
+        gap: 14px;
+        font-size: 0.9rem;
     }
-}
-
-/* FLOATING MOBILE ACTION BAR */
-.floating-action-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(18, 22, 28, 0.95);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid #2d3540;
-    padding: 10px 16px;
-    display: flex;
-    gap: 12px;
-    z-index: 1000;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
-}
-.fab-btn-call, .fab-btn-estimate {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 900;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-.fab-btn-call {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #ffffff;
-}
-.fab-btn-estimate {
-    background: var(--primary);
-    color: #000000;
-}
-.fab-icon {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
 }
 
 /* HERO */
@@ -245,7 +201,7 @@ header {
 textarea.form-control { height: 120px; resize: vertical; }
 
 /* FOOTER */
-footer { text-align: center; padding: 36px 20px 50px 20px; font-size: 0.85rem; color: #888; border-top: 1px solid #282828; background: var(--footer-bg);}
+footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888; border-top: 1px solid #282828; background: var(--footer-bg);}
 .footer-address { color: #ddd; margin: 0 0 6px 0; font-size: 0.95rem; }
 .footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #aaa; }
 .footer-phone a { color: var(--primary); text-decoration: none; font-weight: 700; }
@@ -382,7 +338,7 @@ footer { text-align: center; padding: 36px 20px 50px 20px; font-size: 0.85rem; c
     </style>
 </head>
 <body>
-    <!-- STREAMLINED HEADER WITH LOGO & INLINE BANNER -->
+    <!-- CLEAN STATIC HEADER -->
     <header>
         <div class="logo-row">
             <a href="#top">
@@ -403,22 +359,6 @@ footer { text-align: center; padding: 36px 20px 50px 20px; font-size: 0.85rem; c
             </nav>
         </div>
     </header>
-
-    <!-- FLOATING MOBILE ACTION BAR -->
-    <div class="floating-action-bar">
-        <a href="tel:262-443-1199" class="fab-btn-call" id="fab-call-btn" aria-label="Call Krueger Painting">
-            <svg class="fab-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
-            </svg>
-            <span id="fab-call-text">Call 262-443-1199</span>
-        </a>
-        <a href="#estimate" class="fab-btn-estimate">
-            <svg class="fab-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-            </svg>
-            Free Quote
-        </a>
-    </div>
 
     <!-- HERO SECTION -->
     <section class="hero" id="top">
@@ -561,7 +501,7 @@ footer { text-align: center; padding: 36px 20px 50px 20px; font-size: 0.85rem; c
                 <!-- TAB 1: WEBSITE CONTENT EDITOR -->
                 <section id="tab-content" class="admin-card-box active-tab">
                     <h2 class="admin-card-title">Live Website Editor</h2>
-                    <p class="admin-card-desc">Update your text and toggle your inline header announcement banner.</p>
+                    <p class="admin-card-desc">Update your text and toggle your header announcement banner on the fly.</p>
                     
                     <div class="form-group">
                         <label>Business Name</label>
@@ -588,7 +528,7 @@ footer { text-align: center; padding: 36px 20px 50px 20px; font-size: 0.85rem; c
                     <div class="form-group" style="background: #15191e; padding: 15px; border-radius: 6px; border: 1px solid #2a313a; margin-top: 10px;">
                         <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-bottom: 12px;">
                             <input type="checkbox" id="edit-banner-active" style="width: 18px; height: 18px; accent-color: var(--primary);">
-                            <span style="font-size: 0.95rem; color: #fff;">Enable Inline Header Announcement Banner</span>
+                            <span style="font-size: 0.95rem; color: #fff;">Enable Header Announcement Banner</span>
                         </label>
                         <label>Banner Text Message</label>
                         <input type="text" id="edit-banner-text" class="form-control" placeholder="e.g. Now booking interior for winter 26-27!">
@@ -719,8 +659,6 @@ footer { text-align: center; padding: 36px 20px 50px 20px; font-size: 0.85rem; c
 
         window.renderSite = function() {
             document.title = (window.siteData.bizName || "Krueger Painting") + " | Professional Painting";
-            document.getElementById('fab-call-text').textContent = "Call " + window.siteData.phone;
-            document.querySelector('.fab-btn-call').href = "tel:" + window.siteData.phone;
             document.getElementById('footer-phone-text').textContent = window.siteData.phone;
             document.getElementById('footer-phone-text').href = "tel:" + window.siteData.phone;
 
@@ -728,7 +666,7 @@ footer { text-align: center; padding: 36px 20px 50px 20px; font-size: 0.85rem; c
             document.getElementById('hero-title-yellow').textContent = window.siteData.heroYellow;
             document.getElementById('hero-desc').textContent = window.siteData.heroDesc;
 
-            // Inline Header Banner Render
+            // Header Banner Render
             const headerBanner = document.getElementById('header-announcement-banner');
             if (window.siteData.bannerActive && window.siteData.bannerText) {
                 headerBanner.textContent = window.siteData.bannerText;
