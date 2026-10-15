@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krueger Painting | Professional Painting</title>
-    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure Firebase admin portal and estimator.">
-    <meta property="og:title" content="Krueger Painting | Professional Painting">
-    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure Firebase admin portal and estimator.">
+    <title>Krieger Painting | Professional Painting</title>
+    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with live cloud editor.">
+    <meta property="og:title" content="Krieger Painting | Professional Painting">
+    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with live cloud editor.">
 
     <style>
 :root {
@@ -367,17 +367,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 .upload-dropzone-box:hover {
     border-color: var(--primary);
 }
-.btn-export-html {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #ffffff;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: 800;
-    cursor: pointer;
-}
-    </style>
+</style>
 </head>
 <body>
     <!-- HEADER -->
@@ -390,7 +380,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <span class="logo-monogram" id="header-logo-monogram">KP</span>
                     </div>
                 </div>
-                <h1 id="header-business-name">Krueger Painting</h1>
+                <h1 id="header-business-name">Krieger Painting</h1>
             </a>
         </div>
         <nav class="nav-links">
@@ -399,13 +389,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <a href="#estimate">Request Estimate</a>
         </nav>
         <div class="action-buttons">
-            <a href="tel:262-443-1199" class="btn-call" id="header-call-btn" aria-label="Call Krueger Painting">
+            <a href="tel:262-443-1199" class="btn-call" id="header-call-btn" aria-label="Call Krieger Painting">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
                 </svg>
                 <span id="header-call-text">Call 262-443-1199</span>
             </a>
-            <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-fb" id="header-fb-btn" aria-label="Facebook">
+            <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-fb" aria-label="Facebook">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
@@ -458,10 +448,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
         <p style="text-align: center; color: #aaa;" id="gallery-intro">Browse our recent contracting and finish work.</p>
         
-        <!-- Rendered Gallery Grid -->
         <div id="photo-grid" class="photo-grid">
             <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">
-                No project photos uploaded yet. Open the Admin Login below to add pictures!
+                Loading live photos from cloud...
             </div>
         </div>
 
@@ -502,7 +491,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         <p style="margin: 12px 0;">
             <span onclick="openAdminModal()" class="admin-link">⚙️ Admin Login</span>
         </p>
-        <p style="font-size: 0.75rem; color: #555; margin-top: 16px;">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
+        <p style="font-size: 0.75rem; color: #555; margin-top: 16px;">&copy; <span id="year-copy"></span> Krieger Painting. All rights reserved.</p>
     </footer>
 
     <!-- LIGHTBOX MODAL -->
@@ -512,7 +501,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         <p id="lightbox-caption"></p>
     </div>
 
-    <!-- SECURE FIREBASE ADMIN MODAL & BACKEND DASHBOARD -->
+    <!-- ADMIN PORTAL & EDITOR -->
     <div id="admin-modal" class="admin-modal-backdrop">
         <nav class="admin-header-bar">
             <div class="admin-title-wrap">
@@ -523,10 +512,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             </div>
         </nav>
 
-        <!-- FIREBASE LOGIN SCREEN -->
+        <!-- LOGIN SCREEN -->
         <div id="admin-login-view" class="admin-login-card">
             <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Firebase Secure Sign-In</h2>
-            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Restricted exclusively to your authorized device/account.</p>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Restricted exclusively to your authorized account.</p>
 
             <form id="admin-login-form" onsubmit="handleFirebaseLogin(event)" style="text-align: left;">
                 <div style="margin-bottom: 16px;">
@@ -539,108 +528,79 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px; font-size: 0.85rem; margin-bottom: 16px;"></div>
                 <div id="login-success-alert" style="display: none; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid #51cf66; border-radius: 4px; padding: 10px; font-size: 0.85rem; margin-bottom: 16px;"></div>
                 <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; max-width: 100%; margin-bottom: 10px;">Sign In</button>
-                <button type="button" onclick="handlePasswordReset()" style="background: none; border: none; color: var(--primary); font-size: 0.8rem; cursor: pointer; text-decoration: underline; width: 100%; text-align: center;">Forgot Password? Send Reset Email</button>
             </form>
         </div>
 
-        <!-- AUTHENTICATED BACKEND DASHBOARD -->
+        <!-- DASHBOARD -->
         <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1;">
             <div class="admin-tabs-nav">
                 <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website Editor</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-photos', event)">Photo Album</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-estimator', event)">Estimator App</button>
-                <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">GitHub Export</button>
                 <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
 
             <main class="admin-body-container">
-                <!-- TAB 1: WEBSITE CONTENT & STYLING EDITOR -->
+                <!-- TAB 1: WEBSITE CONTENT EDITOR -->
                 <section id="tab-content" class="admin-card-box active-tab">
                     <h2 class="admin-card-title">Live Website Editor</h2>
-                    <p class="admin-card-desc">Modify your titles, hero background, logo, and contact info instantly.</p>
+                    <p class="admin-card-desc">Edit your words, background image, and phone number. Clicking save updates the live site instantly.</p>
                     
                     <div class="form-group">
                         <label>Business Name</label>
-                        <input type="text" id="edit-biz-name" class="form-control" value="Krueger Painting">
+                        <input type="text" id="edit-biz-name" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" id="edit-phone" class="form-control" value="262-443-1199">
+                        <input type="text" id="edit-phone" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Hero Title Line 1</label>
-                        <input type="text" id="edit-hero-1" class="form-control" value="Quality Craftsmanship.">
+                        <input type="text" id="edit-hero-1" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Hero Title Line 2 (Yellow)</label>
-                        <input type="text" id="edit-hero-2" class="form-control" value="Flawless Finishes.">
+                        <input type="text" id="edit-hero-2" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Hero Description</label>
-                        <textarea id="edit-hero-desc" class="form-control" style="height: 80px;">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</textarea>
+                        <textarea id="edit-hero-desc" class="form-control" style="height: 80px;"></textarea>
                     </div>
-
-                    <!-- Hero Background Image & Overlay -->
                     <div class="form-group">
-                        <label>Hero Background Image URL or Upload</label>
-                        <input type="text" id="edit-hero-bg" class="form-control" placeholder="Paste image URL or upload below">
+                        <label>Hero Background Image URL</label>
+                        <input type="text" id="edit-hero-bg" class="form-control" placeholder="Paste image URL">
                     </div>
-                    <div class="upload-dropzone-box" onclick="document.getElementById('hero-img-file').click()">
-                        <div style="font-size: 1.5rem; margin-bottom: 4px;">🌄</div>
-                        <div style="font-weight: 800;">Tap to Choose New Hero Background Photo</div>
-                        <input type="file" id="hero-img-file" accept="image/*" style="display: none;" onchange="uploadHeroImage(this)">
-                    </div>
-
                     <div class="form-group">
-                        <label>Hero Overlay Darkness: <span id="opacity-val">80%</span></label>
-                        <input type="range" id="edit-hero-opacity" min="40" max="95" value="80" step="5" style="width: 100%; accent-color: var(--primary);" oninput="document.getElementById('opacity-val').textContent = this.value + '%'">
-                    </div>
-
-                    <!-- Logo Upload -->
-                    <div class="form-group">
-                        <label>Company Logo Image</label>
+                        <label>Company Logo Image URL</label>
                         <input type="text" id="edit-logo-url" class="form-control" placeholder="Paste logo image URL">
                     </div>
-                    <div class="upload-dropzone-box" onclick="document.getElementById('logo-img-file').click()">
-                        <div style="font-size: 1.5rem; margin-bottom: 4px;">🖼️</div>
-                        <div style="font-weight: 800;">Tap to Choose Company Logo Picture</div>
-                        <input type="file" id="logo-img-file" accept="image/*" style="display: none;" onchange="uploadLogoImage(this)">
-                    </div>
 
-                    <button type="button" class="btn-primary" onclick="saveContentEdits()" style="max-width: 100%; border: none; cursor: pointer; margin-top: 20px;">Apply Content Changes to Site</button>
+                    <button type="button" class="btn-primary" onclick="saveContentEdits()" style="max-width: 100%; border: none; cursor: pointer; margin-top: 10px;">Save Live Changes to Cloud</button>
                 </section>
 
-                <!-- TAB 2: PHOTO GALLERY ALBUM MANAGER -->
+                <!-- TAB 2: PHOTO ALBUM MANAGER -->
                 <section id="tab-photos" class="admin-card-box">
                     <h2 class="admin-card-title">Photo Album Manager</h2>
-                    <p class="admin-card-desc">Dump and manage project photos here. Tag them as Before, After, or Completed.</p>
+                    <p class="admin-card-desc">Add or remove project photos. Changes show up instantly on your public gallery.</p>
                     
-                    <div class="upload-dropzone-box" onclick="document.getElementById('gallery-img-file').click()">
-                        <div style="font-size: 2rem; margin-bottom: 6px;">📸</div>
-                        <div style="font-weight: 800; font-size: 1.05rem;">Tap to Add Project Photo to Gallery</div>
-                        <div style="font-size: 0.8rem; color: #888; margin-top: 4px;">Select pictures directly from your phone camera roll</div>
-                        <input type="file" id="gallery-img-file" accept="image/*" style="display: none;" onchange="addNewGalleryPhoto(this)">
-                    </div>
-
                     <div class="form-group">
-                        <label>Photo Tag (e.g. BEFORE, AFTER)</label>
+                        <label>Photo Image URL</label>
+                        <input type="text" id="new-photo-url" class="form-control" placeholder="Paste image link">
+                    </div>
+                    <div class="form-group">
+                        <label>Photo Tag (e.g. BEFORE, AFTER, COMPLETED)</label>
                         <input type="text" id="new-photo-tag" class="form-control" value="COMPLETED">
                     </div>
-                    <div class="form-group">
-                        <label>Photo Description / Alt Text</label>
-                        <input type="text" id="new-photo-desc" class="form-control" placeholder="e.g. Interior trim painting in West Bend">
-                    </div>
+                    <button type="button" class="btn-primary" onclick="addNewPhoto()" style="max-width: 100%; border: none; cursor: pointer; margin-bottom: 20px;">Add Photo to Gallery</button>
 
-                    <h3 style="color: var(--primary); font-size: 1rem; margin: 20px 0 10px 0; text-transform: uppercase;">Current Gallery Photos</h3>
-                    <div id="admin-gallery-manager-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;">
-                        <!-- Dynamically populated -->
-                    </div>
+                    <h3 style="color: var(--primary); font-size: 1rem; margin: 20px 0 10px 0; text-transform: uppercase;">Current Photos</h3>
+                    <div id="admin-gallery-manager-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;"></div>
                 </section>
 
                 <!-- TAB 3: ESTIMATOR APP -->
                 <section id="tab-estimator" class="admin-card-box">
                     <h2 class="admin-card-title">Krieger Painting Estimator App</h2>
-                    <p class="admin-card-desc">Your private calculation tool hosted securely inside your backend.</p>
+                    <p class="admin-card-desc">Your private calculation tool hosted securely inside your cloud backend.</p>
                     <div style="background: #111418; border: 1px solid #333; padding: 20px; border-radius: 6px;">
                         <p style="color: #aaa; margin: 0 0 15px 0;">Estimator calculator active and ready for your workflow.</p>
                         <div class="form-group">
@@ -650,47 +610,64 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <button type="button" class="btn-primary" onclick="alert('Sq Ft Calculator Ready!')" style="max-width: 100%; border: none; cursor: pointer;">Calculate Estimate</button>
                     </div>
                 </section>
-
-                <!-- TAB 4: GITHUB EXPORT -->
-                <section id="tab-export" class="admin-card-box">
-                    <h2 class="admin-card-title">GitHub Deployment Package</h2>
-                    <p class="admin-card-desc">
-                        Authenticated successfully via Firebase Auth! Download your standalone index.html file with all your saved edits to push directly into your GitHub repository.
-                    </p>
-                    <button type="button" class="btn-export-html" onclick="exportSiteCode()">
-                        ⬇ Download Standalone index.html
-                    </button>
-                </section>
             </main>
         </div>
     </div>
 
-    <!-- CORE SITE DATA & CONTROLLERS SCRIPT -->
-    <script>
-        // Website Data State (Stored locally in browser and bundled upon export)
+    <!-- FIREBASE & FIRESTORE INTEGRATION SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBBFi6XGAsdENyNGzHlIAjxlcqwGA9f0Cc",
+          authDomain: "kpwebsite-83a6b.firebaseapp.com",
+          projectId: "kpwebsite-83a6b",
+          storageBucket: "kpwebsite-83a6b.firebasestorage.app",
+          messagingSenderId: "489955386353",
+          appId: "1:489955386353:web:57ff0a92fb9dc3bd189a50",
+          measurementId: "G-PV7PNYLMB4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
         let siteData = {
-            bizName: "Krueger Painting",
+            bizName: "Krieger Painting",
             phone: "262-443-1199",
             heroWhite: "Quality Craftsmanship.",
             heroYellow: "Flawless Finishes.",
             heroDesc: "Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.",
             heroBg: "",
-            heroOpacity: "80%",
             logoUrl: "",
             photos: []
         };
 
-        // Load saved state from localStorage if available
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('year-copy').textContent = new Date().getFullYear();
-            const saved = localStorage.getItem('krueger_site_data');
-            if (saved) {
-                try { siteData = JSON.parse(saved); } catch(e){}
+        async function fetchSiteData() {
+            try {
+                const docRef = doc(db, "content", "mainSite");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    siteData = docSnap.data();
+                }
+            } catch (e) {
+                console.error("Error loading:", e);
             }
             renderSite();
-        });
+        }
 
-        function renderSite() {
+        window.saveSiteDataToCloud = async function() {
+            try {
+                await setDoc(doc(db, "content", "mainSite"), siteData);
+                alert("Changes saved live to cloud database!");
+            } catch (e) {
+                alert("Error saving: " + e.message);
+            }
+        }
+
+        window.renderSite = function() {
             document.getElementById('header-business-name').textContent = siteData.bizName;
             document.title = siteData.bizName + " | Professional Painting";
             document.getElementById('header-call-text').textContent = "Call " + siteData.phone;
@@ -705,167 +682,103 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             if (siteData.heroBg) {
                 document.querySelector('.hero').style.backgroundImage = `url(${siteData.heroBg})`;
             }
-            document.documentElement.style.setProperty('--hero-overlay-alpha', parseInt(siteData.heroOpacity) / 100);
-
             if (siteData.logoUrl) {
                 document.getElementById('header-logo-img').src = siteData.logoUrl;
                 document.getElementById('header-logo-img').hidden = false;
                 document.getElementById('header-logo-fallback').hidden = true;
             }
 
+            // Populate form fields
+            document.getElementById('edit-biz-name').value = siteData.bizName;
+            document.getElementById('edit-phone').value = siteData.phone;
+            document.getElementById('edit-hero-1').value = siteData.heroWhite;
+            document.getElementById('edit-hero-2').value = siteData.heroYellow;
+            document.getElementById('edit-hero-desc').value = siteData.heroDesc;
+            document.getElementById('edit-hero-bg').value = siteData.heroBg;
+            document.getElementById('edit-logo-url').value = siteData.logoUrl;
+
             // Render Public Gallery
             const grid = document.getElementById('photo-grid');
             if (siteData.photos && siteData.photos.length > 0) {
                 grid.innerHTML = "";
-                siteData.photos.forEach((p, index) => {
+                siteData.photos.forEach((p) => {
                     const fig = document.createElement('figure');
                     fig.className = 'photo-tile';
                     fig.onclick = () => {
                         document.getElementById('lightbox-img').src = p.url;
-                        document.getElementById('lightbox-caption').textContent = p.desc || p.tag;
+                        document.getElementById('lightbox-caption').textContent = p.tag;
                         document.getElementById('lightbox').hidden = false;
                     };
-                    if (p.tag) {
-                        const badge = document.createElement('span');
-                        badge.className = 'tag-badge';
-                        badge.textContent = p.tag;
-                        fig.appendChild(badge);
-                    }
+                    const badge = document.createElement('span');
+                    badge.className = 'tag-badge';
+                    badge.textContent = p.tag;
+                    fig.appendChild(badge);
                     const img = document.createElement('img');
                     img.src = p.url;
-                    img.alt = p.desc || "Project Photo";
                     fig.appendChild(img);
                     grid.appendChild(fig);
                 });
+            } else {
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">No photos yet. Log in to add pictures!</div>';
             }
 
-            // Render Admin Photo Manager Grid
+            // Render Admin Manager Grid
             const adminGrid = document.getElementById('admin-gallery-manager-grid');
             if (adminGrid) {
                 adminGrid.innerHTML = "";
-                if (siteData.photos.length === 0) {
-                    adminGrid.innerHTML = '<p style="color:#777; font-size:0.85rem;">No photos uploaded yet.</p>';
+                if (!siteData.photos || siteData.photos.length === 0) {
+                    adminGrid.innerHTML = '<p style="color:#777; font-size:0.85rem;">No photos.</p>';
                 } else {
                     siteData.photos.forEach((p, idx) => {
                         const box = document.createElement('div');
                         box.style.cssText = "background:#111; border:1px solid #333; border-radius:4px; padding:6px; text-align:center;";
-                        box.innerHTML = `<img src="${p.url}" style="width:100%; height:90px; object-fit:cover; border-radius:3px; margin-bottom:4px;">
-                                         <div style="font-size:0.7rem; color:var(--primary); font-weight:800;">${p.tag || 'PHOTO'}</div>
-                                         <button type="button" onclick="deletePhoto(${idx})" style="background:#ff5252; color:#fff; border:none; padding:2px 6px; font-size:0.7rem; border-radius:3px; cursor:pointer; margin-top:4px;">Delete</button>`;
+                        box.innerHTML = `<img src="${p.url}" style="width:100%; height:80px; object-fit:cover; border-radius:3px; margin-bottom:4px;">
+                                         <div style="font-size:0.7rem; color:var(--primary); font-weight:800;">${p.tag}</div>
+                                         <button type="button" onclick="window.deletePhoto(${idx})" style="background:#ff5252; color:#fff; border:none; padding:2px 6px; font-size:0.7rem; border-radius:3px; cursor:pointer; margin-top:4px;">Delete</button>`;
                         adminGrid.appendChild(box);
                     });
                 }
             }
         }
 
-        // Modal Controllers
-        window.openAdminModal = function() {
-            document.getElementById('admin-modal').style.display = 'flex';
-        }
-        window.closeAdminModal = function() {
-            document.getElementById('admin-modal').style.display = 'none';
-        }
+        window.openAdminModal = function() { document.getElementById('admin-modal').style.display = 'flex'; }
+        window.closeAdminModal = function() { document.getElementById('admin-modal').style.display = 'none'; }
         window.switchAdminTab = function(tabId, event) {
             document.querySelectorAll('.admin-card-box').forEach(box => box.classList.remove('active-tab'));
             document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('active'));
-            const target = document.getElementById(tabId);
-            if (target) target.classList.add('active-tab');
+            document.getElementById(tabId).classList.add('active-tab');
             if (event && event.currentTarget) event.currentTarget.classList.add('active');
         }
 
-        // Admin Content Editing Actions
-        window.saveContentEdits = function() {
+        window.saveContentEdits = async function() {
             siteData.bizName = document.getElementById('edit-biz-name').value;
             siteData.phone = document.getElementById('edit-phone').value;
             siteData.heroWhite = document.getElementById('edit-hero-1').value;
             siteData.heroYellow = document.getElementById('edit-hero-2').value;
             siteData.heroDesc = document.getElementById('edit-hero-desc').value;
-            siteData.heroBg = document.getElementById('edit-hero-bg').value || siteData.heroBg;
-            siteData.heroOpacity = document.getElementById('edit-hero-opacity').value + '%';
-            siteData.logoUrl = document.getElementById('edit-logo-url').value || siteData.logoUrl;
+            siteData.heroBg = document.getElementById('edit-hero-bg').value;
+            siteData.logoUrl = document.getElementById('edit-logo-url').value;
 
-            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+            await window.saveSiteDataToCloud();
             renderSite();
-            alert("Website content updated successfully!");
         }
 
-        window.uploadHeroImage = function(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    siteData.heroBg = e.target.result;
-                    document.getElementById('edit-hero-bg').value = e.target.result;
-                    renderSite();
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
+        window.addNewPhoto = async function() {
+            const url = document.getElementById('new-photo-url').value.trim();
+            const tag = document.getElementById('new-photo-tag').value.trim() || "COMPLETED";
+            if (!url) return alert("Please enter an image URL.");
+            if (!siteData.photos) siteData.photos = [];
+            siteData.photos.push({ url: url, tag: tag });
+            await window.saveSiteDataToCloud();
+            renderSite();
+            document.getElementById('new-photo-url').value = "";
         }
 
-        window.uploadLogoImage = function(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    siteData.logoUrl = e.target.result;
-                    document.getElementById('edit-logo-url').value = e.target.result;
-                    renderSite();
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        window.addNewGalleryPhoto = function(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const tag = document.getElementById('new-photo-tag').value.trim() || "COMPLETED";
-                    const desc = document.getElementById('new-photo-desc').value.trim() || "";
-                    siteData.photos.push({ url: e.target.result, tag: tag, desc: desc });
-                    localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-                    renderSite();
-                    input.value = "";
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        window.deletePhoto = function(idx) {
+        window.deletePhoto = async function(idx) {
             siteData.photos.splice(idx, 1);
-            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
+            await window.saveSiteDataToCloud();
             renderSite();
         }
-
-        window.exportSiteCode = function() {
-            localStorage.setItem('krueger_site_data', JSON.stringify(siteData));
-            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'index.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-    </script>
-
-    <!-- FIREBASE AUTHENTICATION SCRIPT -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-          apiKey: "AIzaSyBBFi6XGAsdENyNGzHlIAjxlcqwGA9f0Cc",
-          authDomain: "kpwebsite-83a6b.firebaseapp.com",
-          projectId: "kpwebsite-83a6b",
-          storageBucket: "kpwebsite-83a6b.firebasestorage.app",
-          messagingSenderId: "489955386353",
-          appId: "1:489955386353:web:57ff0a92fb9dc3bd189a50",
-          measurementId: "G-PV7PNYLMB4"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
 
         window.handleFirebaseLogin = async function(e) {
             e.preventDefault();
@@ -873,13 +786,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             const pass = document.getElementById('admin-pass-input').value;
             const errBox = document.getElementById('login-error-alert');
             const successBox = document.getElementById('login-success-alert');
-            
             try {
                 errBox.style.display = 'none';
                 await signInWithEmailAndPassword(auth, email, pass);
                 successBox.textContent = "Success! Opening dashboard...";
                 successBox.style.display = 'block';
-                
                 setTimeout(() => {
                     document.getElementById('admin-login-view').style.display = 'none';
                     document.getElementById('admin-dashboard-view').style.display = 'flex';
@@ -888,37 +799,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             } catch (error) {
                 errBox.textContent = error.message;
                 errBox.style.display = 'block';
-                successBox.style.display = 'none';
             }
         }
 
-        window.handleFirebaseLogout = async function() {
-            await signOut(auth);
-        }
-
-        window.handlePasswordReset = async function() {
-            const email = document.getElementById('admin-email-input').value.trim();
-            const successBox = document.getElementById('login-success-alert');
-            const errBox = document.getElementById('login-error-alert');
-            
-            if (!email) {
-                errBox.textContent = "Please type your email address into the email field above first.";
-                errBox.style.display = 'block';
-                successBox.style.display = 'none';
-                return;
-            }
-
-            try {
-                await sendPasswordResetEmail(auth, email);
-                successBox.textContent = "Password reset email sent! Check your inbox/spam folder.";
-                successBox.style.display = 'block';
-                errBox.style.display = 'none';
-            } catch (error) {
-                errBox.textContent = error.message;
-                errBox.style.display = 'block';
-                successBox.style.display = 'none';
-            }
-        }
+        window.handleFirebaseLogout = async function() { await signOut(auth); }
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -929,6 +813,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 document.getElementById('admin-login-view').style.display = 'block';
                 document.getElementById('admin-pass-input').value = '';
             }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year-copy').textContent = new Date().getFullYear();
+            fetchSiteData();
         });
     </script>
 </body>
