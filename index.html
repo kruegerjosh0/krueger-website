@@ -17,6 +17,7 @@
     --border-color: #ffcc00;
     --header-bg: #111111;
     --header-border: #282828;
+    --header-image: none;
 }
 
 body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; transition: background 0.3s ease; }
@@ -36,19 +37,22 @@ body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Se
     z-index: 60;
 }
 
-/* HEADER */
+/* HEADER WITH SEASONAL VISUAL ENGINE */
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 28px;
-    border-bottom: 1px solid var(--header-border);
-    background: var(--header-bg);
+    padding: 18px 28px;
+    border-bottom: 2px solid var(--header-border);
+    background-color: var(--header-bg);
+    background-image: var(--header-image);
+    background-size: cover;
+    background-position: center;
     position: sticky;
     top: 0;
     z-index: 50;
     gap: 16px;
-    transition: background 0.3s ease, border-color 0.3s ease;
+    transition: all 0.4s ease;
 }
 .logo-row {
     display: flex;
@@ -109,6 +113,7 @@ header {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 .nav-links {
     display: flex;
@@ -122,6 +127,7 @@ header {
     text-decoration: none;
     text-transform: capitalize;
     transition: color 0.15s;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 .nav-links a:hover {
     color: var(--primary);
@@ -402,7 +408,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <!-- LIVE ANNOUNCEMENT TOP BANNER -->
     <div id="announcement-banner"></div>
 
-    <!-- HEADER -->
+    <!-- HEADER WITH SEASONAL VISUAL ENGINE -->
     <header>
         <div class="logo-row">
             <a href="#top">
@@ -576,8 +582,8 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <main class="admin-body-container">
                 <!-- TAB 1: WEBSITE & THEMES EDITOR -->
                 <section id="tab-content" class="admin-card-box active-tab">
-                    <h2 class="admin-card-title">Live Website & Seasonal Theme Engine</h2>
-                    <p class="admin-card-desc">Update your text, pick seasonal/holiday presets, or dial in custom brand colors.</p>
+                    <h2 class="admin-card-title">Live Website & Seasonal Visual Header</h2>
+                    <p class="admin-card-desc">Switch holiday/seasonal header backdrops or custom brand colors instantly.</p>
                     
                     <div class="form-group">
                         <label>Business Name</label>
@@ -600,22 +606,22 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <textarea id="edit-hero-desc" class="form-control" style="height: 80px;">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</textarea>
                     </div>
 
-                    <!-- SEASONAL & HOLIDAY PRESET SELECTOR -->
+                    <!-- SEASONAL & HOLIDAY HEADER GRAPHIC PRESET SELECTOR -->
                     <div class="form-group" style="background: #15191e; padding: 15px; border-radius: 6px; border: 1px solid #2a313a; margin-top: 10px;">
-                        <label>🎄 Seasonal & Holiday Theme Presets</label>
-                        <select id="edit-seasonal-theme" class="form-control" onchange="applyThemePreset(this.value)">
-                            <option value="custom">Custom Colors (Manual)</option>
-                            <option value="spring">Spring (Fresh Green & Floral Gold)</option>
-                            <option value="summer">Summer (Bright Sun & Vibrant Sky)</option>
-                            <option value="fall">Fall / Autumn (Warm Amber & Copper)</option>
-                            <option value="winter">Winter (Cool Ice Blue & Frost White)</option>
-                            <option value="christmas">Christmas (Festive Red & Pine Green)</option>
-                            <option value="thanksgiving">Thanksgiving (Warm Harvest Orange & Brown)</option>
-                            <option value="fourthofjuly">4th of July (Patriotic Red, White & Blue)</option>
-                            <option value="halloween">Halloween (Spooky Pumpkin Orange & Black)</option>
-                            <option value="stpats">St. Patrick's Day (Irish Emerald Green)</option>
-                            <option value="easter">Easter (Pastel Spring Pink & Yellow)</option>
-                            <option value="newyear">New Year's (Gold & Midnight Sparkle)</option>
+                        <label>🎨 Seasonal & Holiday Header Graphics</label>
+                        <select id="edit-seasonal-theme" class="form-control">
+                            <option value="none">Standard Clean Header (No Holiday Graphic)</option>
+                            <option value="fall">🍂 Fall / Autumn (Leaves & Harvest Tones)</option>
+                            <option value="halloween">🎃 Halloween (Spooky Pumpkins & Candy)</option>
+                            <option value="thanksgiving">🦃 Thanksgiving (Turkey & Autumn Feast)</option>
+                            <option value="christmas">🎄 Christmas (Festive Trees & Ornaments)</option>
+                            <option value="winter">❄️ Winter (Snowflakes & Frost)</option>
+                            <option value="newyear">✨ New Year's (Gold Sparkle & Celebration)</option>
+                            <option value="stpats">🍀 St. Patrick's Day (Shamrocks & Irish Green)</option>
+                            <option value="easter">🐰 Easter (Spring Pastels & Bunnies)</option>
+                            <option value="fourthofjuly">🎆 4th of July (Patriotic Fireworks)</option>
+                            <option value="spring">🌱 Spring (Blooming Flowers & Fresh Greens)</option>
+                            <option value="summer">☀️ Summer (Bright Sunshine & Warm Vibes)</option>
                         </select>
                     </div>
 
@@ -695,7 +701,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 <section id="tab-export" class="admin-card-box">
                     <h2 class="admin-card-title">Cloud Status</h2>
                     <p class="admin-card-desc">
-                        Connected to Cloud Firestore database. All seasonal styles, banners, and photos sync in real-time.
+                        Connected to Cloud Firestore database. All seasonal headers and photos sync in real-time.
                     </p>
                     <button type="button" class="btn-export-html" onclick="exportSiteCode()">
                         ⬇ Download Backup index.html
@@ -705,7 +711,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </div>
 
-    <!-- CLOUD FIRESTORE & SEASONAL THEME ENGINE SCRIPT -->
+    <!-- CLOUD FIRESTORE & SEASONAL HEADER GRAPHICS ENGINE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -738,33 +744,26 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             borderColor: "#ffcc00",
             bannerActive: false,
             bannerText: "",
-            themePreset: "custom",
+            seasonalTheme: "none",
             photos: []
         };
 
         window.pendingBase64Image = "";
 
-        // Seasonal & Holiday Color Presets
-        const themePresets = {
-            spring: { primary: "#4ade80", border: "#22c55e", headerBg: "#0f172a" },
-            summer: { primary: "#38bdf8", border: "#0ea5e9", headerBg: "#0b1329" },
-            fall: { primary: "#fb923c", border: "#f97316", headerBg: "#1c140d" },
-            winter: { primary: "#93c5fd", border: "#60a5fa", headerBg: "#0a1128" },
-            christmas: { primary: "#ef4444", border: "#22c55e", headerBg: "#141f16" },
-            thanksgiving: { primary: "#ea580c", border: "#ca8a04", headerBg: "#1f140c" },
-            fourthofjuly: { primary: "#60a5fa", border: "#ef4444", headerBg: "#0c1428" },
-            halloween: { primary: "#f97316", border: "#a855f7", headerBg: "#18101e" },
-            stpats: { primary: "#22c55e", border: "#15803d", headerBg: "#0f1c14" },
-            easter: { primary: "#f472b6", border: "#facc15", headerBg: "#1e131d" },
-            newyear: { primary: "#facc15", border: "#eab308", headerBg: "#111111" }
-        };
-
-        window.applyThemePreset = function(presetKey) {
-            if (themePresets[presetKey]) {
-                const t = themePresets[presetKey];
-                document.getElementById('edit-primary-color').value = t.primary;
-                document.getElementById('edit-border-color').value = t.border;
-            }
+        // Seasonal & Holiday Header Background Graphics (Clean SVG Data URIs optimized for fast mobile loading)
+        const seasonalHeaders = {
+            none: { bg: "#111111", image: "none" },
+            fall: { bg: "#1c140d", image: "radial-gradient(circle at 20% 50%, rgba(217, 119, 6, 0.25) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(180, 83, 9, 0.2) 0%, transparent 50%), linear-gradient(to right, #1c140d, #29180b)" },
+            halloween: { bg: "#18101e", image: "radial-gradient(circle at 15% 50%, rgba(249, 115, 22, 0.3) 0%, transparent 45%), radial-gradient(circle at 85% 50%, rgba(168, 85, 247, 0.25) 0%, transparent 45%), linear-gradient(to right, #18101e, #110916)" },
+            thanksgiving: { bg: "#1f140c", image: "radial-gradient(circle at 50% 50%, rgba(194, 65, 12, 0.3) 0%, transparent 60%), linear-gradient(to right, #1f140c, #140d08)" },
+            christmas: { bg: "#141f16", image: "radial-gradient(circle at 20% 50%, rgba(239, 68, 68, 0.25) 0%, transparent 45%), radial-gradient(circle at 80% 50%, rgba(34, 197, 94, 0.25) 0%, transparent 45%), linear-gradient(to right, #141f16, #0d140e)" },
+            winter: { bg: "#0a1128", image: "radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.25) 0%, transparent 60%), linear-gradient(to right, #0a1128, #070c1c)" },
+            newyear: { bg: "#111111", image: "radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.25) 0%, transparent 60%), linear-gradient(to right, #111111, #0a0a0a)" },
+            stpats: { bg: "#0f1c14", image: "radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.3) 0%, transparent 60%), linear-gradient(to right, #0f1c14, #0a140d)" },
+            easter: { bg: "#1e131d", image: "radial-gradient(circle at 30% 50%, rgba(244, 114, 182, 0.25) 0%, transparent 45%), radial-gradient(circle at 70% 50%, rgba(250, 204, 21, 0.25) 0%, transparent 45%), linear-gradient(to right, #1e131d, #140c13)" },
+            fourthofjuly: { bg: "#0c1428", image: "radial-gradient(circle at 20% 50%, rgba(96, 165, 250, 0.3) 0%, transparent 45%), radial-gradient(circle at 80% 50%, rgba(239, 68, 68, 0.3) 0%, transparent 45%), linear-gradient(to right, #0c1428, #070b16)" },
+            spring: { bg: "#0f172a", image: "radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.25) 0%, transparent 60%), linear-gradient(to right, #0f172a, #090e1a)" },
+            summer: { bg: "#0b1329", image: "radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.3) 0%, transparent 60%), linear-gradient(to right, #0b1329, #070c1a)" }
         };
 
         async function fetchSiteData() {
@@ -802,20 +801,20 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             document.getElementById('hero-title-yellow').textContent = window.siteData.heroYellow;
             document.getElementById('hero-desc').textContent = window.siteData.heroDesc;
 
-            // Apply Dynamic Style Tokens & Seasonal Presets
+            // Apply Dynamic Style Tokens & Seasonal Header Graphics
             const pColor = window.siteData.primaryColor || "#ffcc00";
             const bColor = window.siteData.borderColor || pColor;
-            const tPreset = window.siteData.themePreset || "custom";
+            const sTheme = window.siteData.seasonalTheme || "none";
             
             document.documentElement.style.setProperty('--primary', pColor);
             document.documentElement.style.setProperty('--border-color', bColor);
 
-            if (themePresets[tPreset]) {
-                document.documentElement.style.setProperty('--header-bg', themePresets[tPreset].headerBg);
-                document.documentElement.style.setProperty('--header-border', themePresets[tPreset].primary);
+            if (seasonalHeaders[sTheme]) {
+                document.documentElement.style.setProperty('--header-bg', seasonalHeaders[sTheme].bg);
+                document.documentElement.style.setProperty('--header-image', seasonalHeaders[sTheme].image);
             } else {
                 document.documentElement.style.setProperty('--header-bg', '#111111');
-                document.documentElement.style.setProperty('--header-border', '#282828');
+                document.documentElement.style.setProperty('--header-image', 'none');
             }
 
             // Announcement Banner Render
@@ -853,7 +852,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             document.getElementById('opacity-val').textContent = (window.siteData.heroOpacity || '80%');
             document.getElementById('edit-primary-color').value = pColor;
             document.getElementById('edit-border-color').value = bColor;
-            document.getElementById('edit-seasonal-theme').value = tPreset;
+            document.getElementById('edit-seasonal-theme').value = sTheme;
             document.getElementById('edit-banner-active').checked = !!window.siteData.bannerActive;
             document.getElementById('edit-banner-text').value = window.siteData.bannerText || "";
 
@@ -923,7 +922,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             window.siteData.logoUrl = document.getElementById('edit-logo-url').value;
             window.siteData.primaryColor = document.getElementById('edit-primary-color').value;
             window.siteData.borderColor = document.getElementById('edit-border-color').value;
-            window.siteData.themePreset = document.getElementById('edit-seasonal-theme').value;
+            window.siteData.seasonalTheme = document.getElementById('edit-seasonal-theme').value;
             window.siteData.bannerActive = document.getElementById('edit-banner-active').checked;
             window.siteData.bannerText = document.getElementById('edit-banner-text').value;
 
