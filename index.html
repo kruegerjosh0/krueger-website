@@ -11,45 +11,29 @@
     <style>
 :root {
     --primary: #ffcc00;
+    --accent-blue: #38bdf8;
     --bg: #111111;
     --text: #ffffff;
     --card-bg: #1a1a1a;
-    --border-color: #ffcc00;
-    --header-gradient: linear-gradient(135deg, #181c20 0%, #2a1b3d 100%);
-    --footer-gradient: linear-gradient(135deg, #181c20 0%, #2a1b3d 100%);
+    --border-color: #2d3540;
+    --header-bg: #181c20;
+    --footer-bg: #181c20;
 }
 
-body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; transition: background 0.3s ease; }
+body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 70px; }
 
-/* ANNOUNCEMENT BANNER */
-#announcement-banner {
-    display: none;
-    background: var(--primary);
-    color: #000000;
-    text-align: center;
-    padding: 10px 20px;
-    font-weight: 900;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    position: relative;
-    z-index: 60;
-}
-
-/* HEADER WITH CUSTOM OMBRE GRADIENT */
+/* STREAMLINED HEADER WITH INLINE BANNER */
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 28px;
-    border-bottom: 2px solid rgba(255, 204, 0, 0.2);
-    background-image: var(--header-gradient);
-    background-color: #111111;
+    padding: 12px 20px;
+    border-bottom: 1px solid #282828;
+    background: var(--header-bg);
     position: sticky;
     top: 0;
     z-index: 50;
-    gap: 16px;
-    transition: background-image 0.4s ease;
+    gap: 12px;
 }
 .logo-row {
     display: flex;
@@ -59,21 +43,20 @@ header {
 .logo-row a {
     display: flex;
     align-items: center;
-    gap: 12px;
     text-decoration: none;
 }
 .logo-circle {
-    width: 46px;
-    height: 46px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    border: 2px solid var(--border-color);
+    border: 2px solid var(--primary);
     background: #1c1c1c;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 0 10px var(--border-color);
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.25);
 }
 .logo-circle img.logo-img {
     width: 100%;
@@ -97,26 +80,39 @@ header {
     display: none;
 }
 .logo-monogram {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 900;
     letter-spacing: 0.5px;
     color: var(--primary);
     line-height: 1;
 }
-.logo-row h1 {
-    font-size: 1.15rem;
-    color: var(--primary);
-    margin: 0;
+
+/* HEADER CENTER/RIGHT STACK */
+.header-center-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+}
+#header-announcement-banner {
+    display: none;
+    background: var(--primary);
+    color: #000000;
+    padding: 3px 10px;
+    font-weight: 900;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 800;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+    text-align: center;
+    max-width: 100%;
 }
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 22px;
-    font-size: 0.9rem;
+    gap: 16px;
+    font-size: 0.85rem;
     font-weight: 700;
 }
 .nav-links a {
@@ -124,83 +120,63 @@ header {
     text-decoration: none;
     text-transform: capitalize;
     transition: color 0.15s;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 .nav-links a:hover {
-    color: var(--primary);
+    color: var(--accent-blue);
 }
 
-/* ACTION BUTTONS */
-.action-buttons {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+@media (max-width: 580px) {
+    header {
+        padding: 10px 14px;
+    }
+    .nav-links {
+        gap: 12px;
+        font-size: 0.78rem;
+    }
 }
-.btn-call, .btn-fb {
+
+/* FLOATING MOBILE ACTION BAR */
+.floating-action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(18, 22, 28, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #2d3540;
+    padding: 10px 16px;
+    display: flex;
+    gap: 12px;
+    z-index: 1000;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+}
+.fab-btn-call, .fab-btn-estimate {
+    flex: 1;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    padding: 9px 18px;
+    padding: 12px;
     border-radius: 6px;
     text-decoration: none;
-    font-weight: 800;
+    font-weight: 900;
     font-size: 0.9rem;
+    text-transform: uppercase;
     letter-spacing: 0.3px;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
-.btn-call {
+.fab-btn-call {
     background: linear-gradient(135deg, #22c55e, #16a34a);
     color: #ffffff;
 }
-.btn-call:hover {
-    background: linear-gradient(135deg, #2ecc71, #1fb355);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.45);
+.fab-btn-estimate {
+    background: var(--primary);
+    color: #000000;
 }
-.btn-fb {
-    background: linear-gradient(135deg, #1877f2, #0d65d9);
-    color: #ffffff;
-}
-.btn-fb:hover {
-    background: linear-gradient(135deg, #2b84f7, #136fe6);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.45);
-}
-.btn-icon {
-    width: 16px;
-    height: 16px;
+.fab-icon {
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
-}
-
-@media (max-width: 768px) {
-    header {
-        flex-wrap: wrap;
-        padding: 12px 16px;
-        gap: 12px;
-    }
-    .logo-row {
-        flex: 1 1 auto;
-    }
-    .action-buttons {
-        gap: 10px;
-        margin-left: auto;
-    }
-    .btn-call, .btn-fb {
-        padding: 8px 14px;
-        font-size: 0.82rem;
-        gap: 6px;
-    }
-    .nav-links {
-        width: 100%;
-        justify-content: center;
-        gap: 20px;
-        padding-top: 10px;
-        border-top: 1px solid #222;
-        margin-top: 4px;
-        order: 3;
-    }
 }
 
 /* HERO */
@@ -232,25 +208,29 @@ header {
 .hero h2 span.hero-white { color: inherit; display: inline; }
 .hero p { color: #cccccc; font-size: 0.98rem; max-width: 560px; margin: 0 auto 30px auto; text-shadow: 0 1px 6px rgba(0,0,0,0.8); line-height: 1.6; }
 .hero-btns { display: flex; flex-direction: column; gap: 15px; align-items: center; }
-.btn-primary { background: var(--primary); color: #000; padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
-.btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
+.btn-primary { background: var(--primary); color: #000; padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center; transition: all 0.2s; }
+.btn-primary:hover { background: var(--accent-blue); box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+.btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center; transition: all 0.2s; }
+.btn-secondary:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
 
 /* SECTIONS */
 .container { padding: 0 20px 40px 20px; max-width: 800px; margin: 0 auto; }
 .section-title { text-align: center; margin: 50px 0 30px 0; }
 .section-title h3 { font-size: 1.4rem; text-transform: uppercase; margin: 0; font-weight: 900; letter-spacing: 0.5px;}
-.section-title .underline { width: 50px; height: 3px; background: var(--primary); margin: 10px auto 0 auto; }
+.section-title .underline { width: 50px; height: 3px; background: linear-gradient(90deg, var(--primary), var(--accent-blue)); margin: 10px auto 0 auto; border-radius: 2px; }
 
 /* SERVICES */
-.service-card { border: 2px solid var(--primary); background: var(--card-bg); padding: 20px; margin-bottom: 20px; border-radius: 6px;}
+.service-card { border: 1px solid var(--border-color); background: var(--card-bg); padding: 20px; margin-bottom: 20px; border-radius: 6px; transition: border-color 0.2s, transform 0.2s; }
+.service-card:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
 .service-card h4 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; font-weight: 800;}
 .service-card p { margin: 0; color: #aaaaaa; font-size: 0.9rem; }
 
 /* GALLERY GRID */
 .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-.photo-tile { position: relative; margin: 0; cursor: zoom-in; border: 1px solid var(--primary); background: #222; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 4px; }
+.photo-tile { position: relative; margin: 0; cursor: zoom-in; border: 1px solid var(--border-color); background: #222; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 4px; transition: border-color 0.2s; }
+.photo-tile:hover { border-color: var(--accent-blue); }
 .photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo-tile .tag-badge { position: absolute; top: 8px; left: 8px; background: var(--primary); color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.photo-tile .tag-badge { position: absolute; top: 8px; left: 8px; background: var(--accent-blue); color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 .lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; z-index: 10000; }
 .lightbox[hidden] { display: none; }
 .lightbox img { max-width: 100%; max-height: 80vh; object-fit: contain; }
@@ -264,13 +244,13 @@ header {
 .form-control { width: 100%; box-sizing: border-box; padding: 12px; background: #202020; border: 1px solid #444; color: #fff; font-size: 1rem; border-radius: 4px;}
 textarea.form-control { height: 120px; resize: vertical; }
 
-/* FOOTER WITH OMBRE GRADIENT */
-footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc; border-top: 2px solid rgba(255, 204, 0, 0.2); background-image: var(--footer-gradient); background-color: var(--bg); transition: background-image 0.4s ease; }
-.footer-address { color: #fff; margin: 0 0 6px 0; font-size: 0.95rem; }
-.footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #ddd; }
+/* FOOTER */
+footer { text-align: center; padding: 36px 20px 50px 20px; font-size: 0.85rem; color: #888; border-top: 1px solid #282828; background: var(--footer-bg);}
+.footer-address { color: #ddd; margin: 0 0 6px 0; font-size: 0.95rem; }
+.footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #aaa; }
 .footer-phone a { color: var(--primary); text-decoration: none; font-weight: 700; }
-.admin-link { color: #aaa; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s; cursor: pointer;}
-.admin-link:hover { color: var(--primary); }
+.admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s; cursor: pointer;}
+.admin-link:hover { color: var(--accent-blue); }
 
 /* ADMIN PORTAL BACKDROP & TABS */
 .admin-modal-backdrop {
@@ -402,10 +382,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
     </style>
 </head>
 <body>
-    <!-- LIVE ANNOUNCEMENT TOP BANNER -->
-    <div id="announcement-banner"></div>
-
-    <!-- HEADER -->
+    <!-- STREAMLINED HEADER WITH LOGO & INLINE BANNER -->
     <header>
         <div class="logo-row">
             <a href="#top">
@@ -415,29 +392,33 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
                         <span class="logo-monogram" id="header-logo-monogram">KP</span>
                     </div>
                 </div>
-                <h1 id="header-business-name">Krueger Painting</h1>
             </a>
         </div>
-        <nav class="nav-links">
-            <a href="#services">Services</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#estimate">Request Estimate</a>
-        </nav>
-        <div class="action-buttons">
-            <a href="tel:262-443-1199" class="btn-call" id="header-call-btn" aria-label="Call Krueger Painting">
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
-                </svg>
-                <span id="header-call-text">Call Now</span>
-            </a>
-            <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-fb" aria-label="Facebook">
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                <span>Facebook</span>
-            </a>
+        <div class="header-center-stack">
+            <div id="header-announcement-banner"></div>
+            <nav class="nav-links">
+                <a href="#services">Services</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#estimate">Estimate</a>
+            </nav>
         </div>
     </header>
+
+    <!-- FLOATING MOBILE ACTION BAR -->
+    <div class="floating-action-bar">
+        <a href="tel:262-443-1199" class="fab-btn-call" id="fab-call-btn" aria-label="Call Krueger Painting">
+            <svg class="fab-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
+            </svg>
+            <span id="fab-call-text">Call 262-443-1199</span>
+        </a>
+        <a href="#estimate" class="fab-btn-estimate">
+            <svg class="fab-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+            </svg>
+            Free Quote
+        </a>
+    </div>
 
     <!-- HERO SECTION -->
     <section class="hero" id="top">
@@ -567,20 +548,20 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
             </form>
         </div>
 
-        <!-- AUTHENTICATED WEBSITE & OMBRE MIXER EDITOR -->
+        <!-- AUTHENTICATED WEBSITE EDITOR -->
         <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1;">
             <div class="admin-tabs-nav">
-                <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website & Ombre Mixer</button>
+                <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website Editor</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-photos', event)">Photo Gallery Manager</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">Cloud Status</button>
                 <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
 
             <main class="admin-body-container">
-                <!-- TAB 1: WEBSITE & OMBRE MIXER EDITOR -->
+                <!-- TAB 1: WEBSITE CONTENT EDITOR -->
                 <section id="tab-content" class="admin-card-box active-tab">
-                    <h2 class="admin-card-title">Live Website & Header/Footer Ombre Mixer</h2>
-                    <p class="admin-card-desc">Mix any two custom colors together to create a custom gradient ombre for your header and footer.</p>
+                    <h2 class="admin-card-title">Live Website Editor</h2>
+                    <p class="admin-card-desc">Update your text and toggle your inline header announcement banner.</p>
                     
                     <div class="form-group">
                         <label>Business Name</label>
@@ -603,29 +584,14 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
                         <textarea id="edit-hero-desc" class="form-control" style="height: 80px;">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</textarea>
                     </div>
 
-                    <!-- HEADER & FOOTER OMBRE COLOR MIXER -->
-                    <div class="form-group" style="background: #15191e; padding: 15px; border-radius: 6px; border: 1px solid #2a313a; margin-top: 10px;">
-                        <label style="color: var(--primary); margin-bottom: 10px;">🎨 Header & Footer Ombre Color Mixer</label>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px;">
-                            <div>
-                                <label style="font-size: 0.75rem;">Gradient Color Start</label>
-                                <input type="color" id="edit-color-one" value="#181c20" style="width: 100%; height: 44px; background: #202020; border: 1px solid #444; border-radius: 4px; cursor: pointer;">
-                            </div>
-                            <div>
-                                <label style="font-size: 0.75rem;">Gradient Color End</label>
-                                <input type="color" id="edit-color-two" value="#2a1b3d" style="width: 100%; height: 44px; background: #202020; border: 1px solid #444; border-radius: 4px; cursor: pointer;">
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- ANNOUNCEMENT BANNER CONTROLS -->
                     <div class="form-group" style="background: #15191e; padding: 15px; border-radius: 6px; border: 1px solid #2a313a; margin-top: 10px;">
                         <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-bottom: 12px;">
                             <input type="checkbox" id="edit-banner-active" style="width: 18px; height: 18px; accent-color: var(--primary);">
-                            <span style="font-size: 0.95rem; color: #fff;">Enable Announcement Banner at Top of Site</span>
+                            <span style="font-size: 0.95rem; color: #fff;">Enable Inline Header Announcement Banner</span>
                         </label>
                         <label>Banner Text Message</label>
-                        <input type="text" id="edit-banner-text" class="form-control" placeholder="e.g. Now booking exterior painting for summer! Call today.">
+                        <input type="text" id="edit-banner-text" class="form-control" placeholder="e.g. Now booking interior for winter 26-27!">
                     </div>
 
                     <div class="form-group" style="margin-top: 15px;">
@@ -682,7 +648,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
                 <section id="tab-export" class="admin-card-box">
                     <h2 class="admin-card-title">Cloud Status</h2>
                     <p class="admin-card-desc">
-                        Connected to Cloud Firestore database. All ombre gradients and photos sync in real-time.
+                        Connected to Cloud Firestore database. All updates sync in real-time.
                     </p>
                     <button type="button" class="btn-export-html" onclick="exportSiteCode()">
                         ⬇ Download Backup index.html
@@ -692,7 +658,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
         </div>
     </div>
 
-    <!-- CLOUD FIRESTORE & OMBRE MIXER SCRIPT -->
+    <!-- CLOUD FIRESTORE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -721,8 +687,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
             heroBg: "",
             heroOpacity: "80%",
             logoUrl: "",
-            colorOne: "#181c20",
-            colorTwo: "#2a1b3d",
             bannerActive: false,
             bannerText: "",
             photos: []
@@ -754,10 +718,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
         }
 
         window.renderSite = function() {
-            document.getElementById('header-business-name').textContent = window.siteData.bizName;
-            document.title = window.siteData.bizName + " | Professional Painting";
-            document.getElementById('header-call-text').textContent = "Call " + window.siteData.phone;
-            document.querySelector('.btn-call').href = "tel:" + window.siteData.phone;
+            document.title = (window.siteData.bizName || "Krueger Painting") + " | Professional Painting";
+            document.getElementById('fab-call-text').textContent = "Call " + window.siteData.phone;
+            document.querySelector('.fab-btn-call').href = "tel:" + window.siteData.phone;
             document.getElementById('footer-phone-text').textContent = window.siteData.phone;
             document.getElementById('footer-phone-text').href = "tel:" + window.siteData.phone;
 
@@ -765,21 +728,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
             document.getElementById('hero-title-yellow').textContent = window.siteData.heroYellow;
             document.getElementById('hero-desc').textContent = window.siteData.heroDesc;
 
-            // Apply Ombre Gradient to Header and Footer
-            const c1 = window.siteData.colorOne || "#181c20";
-            const c2 = window.siteData.colorTwo || "#2a1b3d";
-            const ombreString = `linear-gradient(135deg, ${c1} 0%, ${c2} 100%)`;
-            
-            document.documentElement.style.setProperty('--header-gradient', ombreString);
-            document.documentElement.style.setProperty('--footer-gradient', ombreString);
-
-            // Announcement Banner Render
-            const banner = document.getElementById('announcement-banner');
+            // Inline Header Banner Render
+            const headerBanner = document.getElementById('header-announcement-banner');
             if (window.siteData.bannerActive && window.siteData.bannerText) {
-                banner.textContent = window.siteData.bannerText;
-                banner.style.display = 'block';
+                headerBanner.textContent = window.siteData.bannerText;
+                headerBanner.style.display = 'block';
             } else {
-                banner.style.display = 'none';
+                headerBanner.style.display = 'none';
             }
 
             if (window.siteData.heroBg) {
@@ -806,8 +761,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
             document.getElementById('edit-logo-url').value = window.siteData.logoUrl;
             document.getElementById('edit-hero-opacity').value = parseInt(window.siteData.heroOpacity) || 80;
             document.getElementById('opacity-val').textContent = (window.siteData.heroOpacity || '80%');
-            document.getElementById('edit-color-one').value = c1;
-            document.getElementById('edit-color-two').value = c2;
             document.getElementById('edit-banner-active').checked = !!window.siteData.bannerActive;
             document.getElementById('edit-banner-text').value = window.siteData.bannerText || "";
 
@@ -875,8 +828,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc
             window.siteData.heroBg = document.getElementById('edit-hero-bg').value;
             window.siteData.heroOpacity = document.getElementById('edit-hero-opacity').value + '%';
             window.siteData.logoUrl = document.getElementById('edit-logo-url').value;
-            window.siteData.colorOne = document.getElementById('edit-color-one').value;
-            window.siteData.colorTwo = document.getElementById('edit-color-two').value;
             window.siteData.bannerActive = document.getElementById('edit-banner-active').checked;
             window.siteData.bannerText = document.getElementById('edit-banner-text').value;
 
