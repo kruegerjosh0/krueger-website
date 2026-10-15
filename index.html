@@ -15,9 +15,8 @@
     --text: #ffffff;
     --card-bg: #1a1a1a;
     --border-color: #ffcc00;
-    --header-bg: #111111;
-    --header-border: #282828;
-    --header-image: none;
+    --header-gradient: linear-gradient(135deg, #181c20 0%, #2a1b3d 100%);
+    --footer-gradient: linear-gradient(135deg, #181c20 0%, #2a1b3d 100%);
 }
 
 body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; transition: background 0.3s ease; }
@@ -37,22 +36,20 @@ body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Se
     z-index: 60;
 }
 
-/* HEADER WITH SEASONAL VISUAL ENGINE */
+/* HEADER WITH CUSTOM OMBRE GRADIENT */
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 18px 28px;
-    border-bottom: 2px solid var(--header-border);
-    background-color: var(--header-bg);
-    background-image: var(--header-image);
-    background-size: cover;
-    background-position: center;
+    border-bottom: 2px solid rgba(255, 204, 0, 0.2);
+    background-image: var(--header-gradient);
+    background-color: #111111;
     position: sticky;
     top: 0;
     z-index: 50;
     gap: 16px;
-    transition: all 0.4s ease;
+    transition: background-image 0.4s ease;
 }
 .logo-row {
     display: flex;
@@ -245,13 +242,13 @@ header {
 .section-title .underline { width: 50px; height: 3px; background: var(--primary); margin: 10px auto 0 auto; }
 
 /* SERVICES */
-.service-card { border: 2px solid var(--border-color); background: var(--card-bg); padding: 20px; margin-bottom: 20px; border-radius: 6px;}
+.service-card { border: 2px solid var(--primary); background: var(--card-bg); padding: 20px; margin-bottom: 20px; border-radius: 6px;}
 .service-card h4 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; font-weight: 800;}
 .service-card p { margin: 0; color: #aaaaaa; font-size: 0.9rem; }
 
 /* GALLERY GRID */
 .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-.photo-tile { position: relative; margin: 0; cursor: zoom-in; border: 1px solid var(--border-color); background: #222; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 4px; }
+.photo-tile { position: relative; margin: 0; cursor: zoom-in; border: 1px solid var(--primary); background: #222; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 4px; }
 .photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .photo-tile .tag-badge { position: absolute; top: 8px; left: 8px; background: var(--primary); color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 .lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; z-index: 10000; }
@@ -267,12 +264,12 @@ header {
 .form-control { width: 100%; box-sizing: border-box; padding: 12px; background: #202020; border: 1px solid #444; color: #fff; font-size: 1rem; border-radius: 4px;}
 textarea.form-control { height: 120px; resize: vertical; }
 
-/* FOOTER */
-footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888; border-top: 1px solid #282828; background: var(--bg);}
-.footer-address { color: #ddd; margin: 0 0 6px 0; font-size: 0.95rem; }
-.footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #aaa; }
+/* FOOTER WITH OMBRE GRADIENT */
+footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #ccc; border-top: 2px solid rgba(255, 204, 0, 0.2); background-image: var(--footer-gradient); background-color: var(--bg); transition: background-image 0.4s ease; }
+.footer-address { color: #fff; margin: 0 0 6px 0; font-size: 0.95rem; }
+.footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #ddd; }
 .footer-phone a { color: var(--primary); text-decoration: none; font-weight: 700; }
-.admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s; cursor: pointer;}
+.admin-link { color: #aaa; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s; cursor: pointer;}
 .admin-link:hover { color: var(--primary); }
 
 /* ADMIN PORTAL BACKDROP & TABS */
@@ -408,7 +405,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <!-- LIVE ANNOUNCEMENT TOP BANNER -->
     <div id="announcement-banner"></div>
 
-    <!-- HEADER WITH SEASONAL VISUAL ENGINE -->
+    <!-- HEADER -->
     <header>
         <div class="logo-row">
             <a href="#top">
@@ -570,20 +567,20 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             </form>
         </div>
 
-        <!-- AUTHENTICATED WEBSITE & THEME EDITOR -->
+        <!-- AUTHENTICATED WEBSITE & OMBRE MIXER EDITOR -->
         <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1;">
             <div class="admin-tabs-nav">
-                <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website & Themes</button>
+                <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website & Ombre Mixer</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-photos', event)">Photo Gallery Manager</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">Cloud Status</button>
                 <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
 
             <main class="admin-body-container">
-                <!-- TAB 1: WEBSITE & THEMES EDITOR -->
+                <!-- TAB 1: WEBSITE & OMBRE MIXER EDITOR -->
                 <section id="tab-content" class="admin-card-box active-tab">
-                    <h2 class="admin-card-title">Live Website & Seasonal Visual Header</h2>
-                    <p class="admin-card-desc">Switch holiday/seasonal header backdrops or custom brand colors instantly.</p>
+                    <h2 class="admin-card-title">Live Website & Header/Footer Ombre Mixer</h2>
+                    <p class="admin-card-desc">Mix any two custom colors together to create a custom gradient ombre for your header and footer.</p>
                     
                     <div class="form-group">
                         <label>Business Name</label>
@@ -598,7 +595,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <input type="text" id="edit-hero-1" class="form-control" value="Quality Craftsmanship.">
                     </div>
                     <div class="form-group">
-                        <label>Hero Headline Line 2 (Accent)</label>
+                        <label>Hero Headline Line 2 (Yellow)</label>
                         <input type="text" id="edit-hero-2" class="form-control" value="Flawless Finishes.">
                     </div>
                     <div class="form-group">
@@ -606,34 +603,18 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         <textarea id="edit-hero-desc" class="form-control" style="height: 80px;">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</textarea>
                     </div>
 
-                    <!-- SEASONAL & HOLIDAY HEADER GRAPHIC PRESET SELECTOR -->
+                    <!-- HEADER & FOOTER OMBRE COLOR MIXER -->
                     <div class="form-group" style="background: #15191e; padding: 15px; border-radius: 6px; border: 1px solid #2a313a; margin-top: 10px;">
-                        <label>🎨 Seasonal & Holiday Header Graphics</label>
-                        <select id="edit-seasonal-theme" class="form-control">
-                            <option value="none">Standard Clean Header (No Holiday Graphic)</option>
-                            <option value="fall">🍂 Fall / Autumn (Leaves & Harvest Tones)</option>
-                            <option value="halloween">🎃 Halloween (Spooky Pumpkins & Candy)</option>
-                            <option value="thanksgiving">🦃 Thanksgiving (Turkey & Autumn Feast)</option>
-                            <option value="christmas">🎄 Christmas (Festive Trees & Ornaments)</option>
-                            <option value="winter">❄️ Winter (Snowflakes & Frost)</option>
-                            <option value="newyear">✨ New Year's (Gold Sparkle & Celebration)</option>
-                            <option value="stpats">🍀 St. Patrick's Day (Shamrocks & Irish Green)</option>
-                            <option value="easter">🐰 Easter (Spring Pastels & Bunnies)</option>
-                            <option value="fourthofjuly">🎆 4th of July (Patriotic Fireworks)</option>
-                            <option value="spring">🌱 Spring (Blooming Flowers & Fresh Greens)</option>
-                            <option value="summer">☀️ Summer (Bright Sunshine & Warm Vibes)</option>
-                        </select>
-                    </div>
-
-                    <!-- STYLE TOKENS: COLORS -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                        <div class="form-group">
-                            <label>Primary Brand Accent Color</label>
-                            <input type="color" id="edit-primary-color" value="#ffcc00" style="width: 100%; height: 44px; background: #202020; border: 1px solid #444; border-radius: 4px; cursor: pointer;">
-                        </div>
-                        <div class="form-group">
-                            <label>Card & Tile Border Color</label>
-                            <input type="color" id="edit-border-color" value="#ffcc00" style="width: 100%; height: 44px; background: #202020; border: 1px solid #444; border-radius: 4px; cursor: pointer;">
+                        <label style="color: var(--primary); margin-bottom: 10px;">🎨 Header & Footer Ombre Color Mixer</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+                            <div>
+                                <label style="font-size: 0.75rem;">Gradient Color Start</label>
+                                <input type="color" id="edit-color-one" value="#181c20" style="width: 100%; height: 44px; background: #202020; border: 1px solid #444; border-radius: 4px; cursor: pointer;">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.75rem;">Gradient Color End</label>
+                                <input type="color" id="edit-color-two" value="#2a1b3d" style="width: 100%; height: 44px; background: #202020; border: 1px solid #444; border-radius: 4px; cursor: pointer;">
+                            </div>
                         </div>
                     </div>
 
@@ -701,7 +682,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 <section id="tab-export" class="admin-card-box">
                     <h2 class="admin-card-title">Cloud Status</h2>
                     <p class="admin-card-desc">
-                        Connected to Cloud Firestore database. All seasonal headers and photos sync in real-time.
+                        Connected to Cloud Firestore database. All ombre gradients and photos sync in real-time.
                     </p>
                     <button type="button" class="btn-export-html" onclick="exportSiteCode()">
                         ⬇ Download Backup index.html
@@ -711,7 +692,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         </div>
     </div>
 
-    <!-- CLOUD FIRESTORE & SEASONAL HEADER GRAPHICS ENGINE SCRIPT -->
+    <!-- CLOUD FIRESTORE & OMBRE MIXER SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -740,31 +721,14 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             heroBg: "",
             heroOpacity: "80%",
             logoUrl: "",
-            primaryColor: "#ffcc00",
-            borderColor: "#ffcc00",
+            colorOne: "#181c20",
+            colorTwo: "#2a1b3d",
             bannerActive: false,
             bannerText: "",
-            seasonalTheme: "none",
             photos: []
         };
 
         window.pendingBase64Image = "";
-
-        // Seasonal & Holiday Header Background Graphics (Clean SVG Data URIs optimized for fast mobile loading)
-        const seasonalHeaders = {
-            none: { bg: "#111111", image: "none" },
-            fall: { bg: "#1c140d", image: "radial-gradient(circle at 20% 50%, rgba(217, 119, 6, 0.25) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(180, 83, 9, 0.2) 0%, transparent 50%), linear-gradient(to right, #1c140d, #29180b)" },
-            halloween: { bg: "#18101e", image: "radial-gradient(circle at 15% 50%, rgba(249, 115, 22, 0.3) 0%, transparent 45%), radial-gradient(circle at 85% 50%, rgba(168, 85, 247, 0.25) 0%, transparent 45%), linear-gradient(to right, #18101e, #110916)" },
-            thanksgiving: { bg: "#1f140c", image: "radial-gradient(circle at 50% 50%, rgba(194, 65, 12, 0.3) 0%, transparent 60%), linear-gradient(to right, #1f140c, #140d08)" },
-            christmas: { bg: "#141f16", image: "radial-gradient(circle at 20% 50%, rgba(239, 68, 68, 0.25) 0%, transparent 45%), radial-gradient(circle at 80% 50%, rgba(34, 197, 94, 0.25) 0%, transparent 45%), linear-gradient(to right, #141f16, #0d140e)" },
-            winter: { bg: "#0a1128", image: "radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.25) 0%, transparent 60%), linear-gradient(to right, #0a1128, #070c1c)" },
-            newyear: { bg: "#111111", image: "radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.25) 0%, transparent 60%), linear-gradient(to right, #111111, #0a0a0a)" },
-            stpats: { bg: "#0f1c14", image: "radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.3) 0%, transparent 60%), linear-gradient(to right, #0f1c14, #0a140d)" },
-            easter: { bg: "#1e131d", image: "radial-gradient(circle at 30% 50%, rgba(244, 114, 182, 0.25) 0%, transparent 45%), radial-gradient(circle at 70% 50%, rgba(250, 204, 21, 0.25) 0%, transparent 45%), linear-gradient(to right, #1e131d, #140c13)" },
-            fourthofjuly: { bg: "#0c1428", image: "radial-gradient(circle at 20% 50%, rgba(96, 165, 250, 0.3) 0%, transparent 45%), radial-gradient(circle at 80% 50%, rgba(239, 68, 68, 0.3) 0%, transparent 45%), linear-gradient(to right, #0c1428, #070b16)" },
-            spring: { bg: "#0f172a", image: "radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.25) 0%, transparent 60%), linear-gradient(to right, #0f172a, #090e1a)" },
-            summer: { bg: "#0b1329", image: "radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.3) 0%, transparent 60%), linear-gradient(to right, #0b1329, #070c1a)" }
-        };
 
         async function fetchSiteData() {
             try {
@@ -801,21 +765,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             document.getElementById('hero-title-yellow').textContent = window.siteData.heroYellow;
             document.getElementById('hero-desc').textContent = window.siteData.heroDesc;
 
-            // Apply Dynamic Style Tokens & Seasonal Header Graphics
-            const pColor = window.siteData.primaryColor || "#ffcc00";
-            const bColor = window.siteData.borderColor || pColor;
-            const sTheme = window.siteData.seasonalTheme || "none";
+            // Apply Ombre Gradient to Header and Footer
+            const c1 = window.siteData.colorOne || "#181c20";
+            const c2 = window.siteData.colorTwo || "#2a1b3d";
+            const ombreString = `linear-gradient(135deg, ${c1} 0%, ${c2} 100%)`;
             
-            document.documentElement.style.setProperty('--primary', pColor);
-            document.documentElement.style.setProperty('--border-color', bColor);
-
-            if (seasonalHeaders[sTheme]) {
-                document.documentElement.style.setProperty('--header-bg', seasonalHeaders[sTheme].bg);
-                document.documentElement.style.setProperty('--header-image', seasonalHeaders[sTheme].image);
-            } else {
-                document.documentElement.style.setProperty('--header-bg', '#111111');
-                document.documentElement.style.setProperty('--header-image', 'none');
-            }
+            document.documentElement.style.setProperty('--header-gradient', ombreString);
+            document.documentElement.style.setProperty('--footer-gradient', ombreString);
 
             // Announcement Banner Render
             const banner = document.getElementById('announcement-banner');
@@ -850,9 +806,8 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             document.getElementById('edit-logo-url').value = window.siteData.logoUrl;
             document.getElementById('edit-hero-opacity').value = parseInt(window.siteData.heroOpacity) || 80;
             document.getElementById('opacity-val').textContent = (window.siteData.heroOpacity || '80%');
-            document.getElementById('edit-primary-color').value = pColor;
-            document.getElementById('edit-border-color').value = bColor;
-            document.getElementById('edit-seasonal-theme').value = sTheme;
+            document.getElementById('edit-color-one').value = c1;
+            document.getElementById('edit-color-two').value = c2;
             document.getElementById('edit-banner-active').checked = !!window.siteData.bannerActive;
             document.getElementById('edit-banner-text').value = window.siteData.bannerText || "";
 
@@ -920,9 +875,8 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             window.siteData.heroBg = document.getElementById('edit-hero-bg').value;
             window.siteData.heroOpacity = document.getElementById('edit-hero-opacity').value + '%';
             window.siteData.logoUrl = document.getElementById('edit-logo-url').value;
-            window.siteData.primaryColor = document.getElementById('edit-primary-color').value;
-            window.siteData.borderColor = document.getElementById('edit-border-color').value;
-            window.siteData.seasonalTheme = document.getElementById('edit-seasonal-theme').value;
+            window.siteData.colorOne = document.getElementById('edit-color-one').value;
+            window.siteData.colorTwo = document.getElementById('edit-color-two').value;
             window.siteData.bannerActive = document.getElementById('edit-banner-active').checked;
             window.siteData.bannerText = document.getElementById('edit-banner-text').value;
 
