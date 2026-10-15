@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krueger Painting | Professional Painting</title>
-    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with photo gallery and content manager.">
+    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure Firebase admin portal.">
     <meta property="og:title" content="Krueger Painting | Professional Painting">
-    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with photo gallery and content manager.">
-
+    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure Firebase admin portal.">
 
     <style>
 :root {
@@ -19,7 +18,7 @@
 
 body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
 
-/* HEADER - LOGO IN TOP-LEFT CORNER */
+/* HEADER */
 header {
     display: flex;
     align-items: center;
@@ -56,27 +55,6 @@ header {
     flex-shrink: 0;
     box-shadow: 0 0 8px rgba(255, 204, 0, 0.25);
 }
-.logo-circle img.logo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    display: block;
-}
-.logo-circle img[hidden] {
-    display: none;
-}
-.logo-fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle at 30% 30%, #2a2a2a, #141414);
-}
-.logo-fallback[hidden] {
-    display: none;
-}
 .logo-monogram {
     font-size: 0.95rem;
     font-weight: 900;
@@ -109,7 +87,7 @@ header {
     color: var(--primary);
 }
 
-/* ACTION BUTTONS (CALL NOW & FACEBOOK) */
+/* ACTION BUTTONS */
 .action-buttons {
     display: flex;
     align-items: center;
@@ -171,10 +149,6 @@ header {
         font-size: 0.82rem;
         gap: 6px;
     }
-    .btn-icon {
-        width: 14px;
-        height: 14px;
-    }
     .nav-links {
         width: 100%;
         justify-content: center;
@@ -192,28 +166,12 @@ header {
     text-align: center;
     padding: 70px 20px;
     border-bottom: 1px solid #222;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
     background-color: #111418;
-    overflow: hidden;
 }
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(14, 17, 21, var(--hero-overlay-alpha, 0.80)) 0%, rgba(10, 12, 16, var(--hero-overlay-alpha, 0.88)) 100%);
-    pointer-events: none;
-    z-index: 1;
-}
-.hero > * {
-    position: relative;
-    z-index: 2;
-}
-.hero h2 { font-size: 1.8rem; margin: 0 0 15px 0; font-weight: 900; line-height: 1.3; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+.hero h2 { font-size: 1.8rem; margin: 0 0 15px 0; font-weight: 900; line-height: 1.3; }
 .hero h2 span { color: var(--primary); display: block; }
 .hero h2 span.hero-white { color: inherit; display: inline; }
-.hero p { color: #cccccc; font-size: 0.98rem; max-width: 560px; margin: 0 auto 30px auto; text-shadow: 0 1px 6px rgba(0,0,0,0.8); line-height: 1.6; }
+.hero p { color: #cccccc; font-size: 0.98rem; max-width: 560px; margin: 0 auto 30px auto; line-height: 1.6; }
 .hero-btns { display: flex; flex-direction: column; gap: 15px; align-items: center; }
 .btn-primary { background: var(--primary); color: #000; padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
 .btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center;}
@@ -229,12 +187,6 @@ header {
 .service-card h4 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; font-weight: 800;}
 .service-card p { margin: 0; color: #aaaaaa; font-size: 0.9rem; }
 
-/* GALLERY */
-.project-category { margin-bottom: 40px; }
-.category-header { border-left: 4px solid var(--primary); padding-left: 10px; color: var(--primary); font-weight: 900; margin-bottom: 20px; text-transform: uppercase; font-size: 1rem; letter-spacing: 0.5px;}
-.gallery-img { width: 100%; height: auto; display: block; margin-bottom: 10px; border: 1px solid #333; background-color: #222; border-radius: 4px; }
-.tag { background: var(--primary); color: #000; text-align: center; font-weight: 900; padding: 6px 12px; margin: 15px auto; width: max-content; font-size: 0.8rem; border-radius: 3px; }
-
 /* ESTIMATE FORM */
 .estimate-section { background-color: #151515; padding: 1px 0 40px 0; border-top: 1px solid #333;}
 .form-group { margin-bottom: 20px; }
@@ -247,30 +199,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 .footer-address { color: #ddd; margin: 0 0 6px 0; font-size: 0.95rem; }
 .footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #aaa; }
 .footer-phone a { color: var(--primary); text-decoration: none; font-weight: 700; }
-.footer-phone a:hover { text-decoration: underline; }
 .admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s;}
 .admin-link:hover { color: var(--primary); }
 
-.empty-note { text-align: center; color: #888; border: 1px dashed #444; padding: 30px 20px; border-radius: 6px; }
-
-/* PHOTO GALLERY PAGE */
-.page-intro { text-align: center; color: #aaaaaa; max-width: 560px; margin: -10px auto 30px auto; font-size: 0.95rem; }
-.filter-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 30px; }
-.filter-btn { background: transparent; color: var(--text); border: 2px solid #444; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; }
-.filter-btn.active { border-color: var(--primary); color: #000; background: var(--primary); }
-.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-.photo-tile { position: relative; margin: 0; cursor: zoom-in; border: 1px solid #333; background: #222; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 4px; }
-.photo-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo-tile .tag-badge { position: absolute; top: 8px; left: 8px; background: var(--primary); color: #000; font-weight: 900; font-size: 0.7rem; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-.lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; z-index: 100; }
-.lightbox[hidden] { display: none; }
-.lightbox img { max-width: 100%; max-height: 80vh; object-fit: contain; }
-.lightbox p { color: #ccc; margin: 12px 0 0 0; text-align: center; }
-.lightbox button { position: absolute; top: 12px; right: 16px; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
-.photo-grid .empty-note { grid-column: 1 / -1; }
-
-
-/* ADMIN PANEL & MODAL STYLES */
+/* ADMIN MODAL STYLES */
 .admin-modal-backdrop {
     display: none;
     position: fixed;
@@ -303,12 +235,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     color: var(--primary);
     font-size: 1.05rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.admin-controls-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 .btn-admin-close {
     background: #2a313a;
@@ -319,27 +245,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s;
-}
-.btn-admin-close:hover {
-    background: #3c4654;
-    color: #fff;
-}
-.btn-export-html {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #ffffff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-.btn-export-html:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
 }
 .admin-login-card {
     max-width: 440px;
@@ -357,7 +262,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     display: flex;
     background: #181c20;
     border-bottom: 2px solid #2a313a;
-    overflow-x: auto;
     padding: 0 16px;
     gap: 6px;
 }
@@ -369,16 +273,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     font-size: 0.88rem;
     padding: 14px 18px;
     cursor: pointer;
-    border-bottom: 3px solid transparent;
-    white-space: nowrap;
-    transition: all 0.2s;
-}
-.admin-tab-btn:hover {
-    color: #fff;
 }
 .admin-tab-btn.active {
     color: var(--primary);
-    border-bottom-color: var(--primary);
+    border-bottom: 3px solid var(--primary);
 }
 .admin-body-container {
     max-width: 900px;
@@ -394,7 +292,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     border-radius: 8px;
     padding: 24px;
     margin-bottom: 24px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }
 .admin-card-title {
     margin: 0 0 8px 0;
@@ -406,110 +303,17 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     margin: 0 0 20px 0;
     color: #a0abb6;
     font-size: 0.92rem;
-    line-height: 1.5;
 }
-.upload-dropzone-box {
-    border: 2px dashed #404c5c;
-    border-radius: 8px;
-    padding: 28px 20px;
-    text-align: center;
-    background: #15191e;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.upload-dropzone-box:hover {
-    border-color: var(--primary);
-    background: #1c222a;
-}
-.admin-alert-banner {
-    display: none;
-    padding: 12px 16px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-}
-.admin-alert-success {
-    background: rgba(34, 197, 94, 0.15);
-    border: 1px solid #22c55e;
-    color: #22c55e;
-}
-.admin-alert-error {
-    background: rgba(255, 82, 82, 0.15);
-    border: 1px solid #ff5252;
-    color: #ff5252;
-}
-.btn-outline-danger {
-    background: transparent;
-    color: #ff6b6b;
-    border: 1px solid #ff6b6b;
-    padding: 8px 16px;
+.btn-export-html {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ffffff;
+    border: none;
+    padding: 14px 28px;
     border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.btn-outline-danger:hover {
-    background: rgba(255, 107, 107, 0.15);
-}
-.photo-grid-manage {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 16px;
-    margin-bottom: 24px;
-}
-.photo-item-card {
-    background: #15191e;
-    border: 1px solid #2d3642;
-    border-radius: 6px;
-    overflow: hidden;
-}
-.photo-item-card img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    display: block;
-    background: #000;
-}
-.photo-item-details {
-    padding: 10px;
-}
-.photo-item-tag {
-    display: inline-block;
-    background: var(--primary);
-    color: #000;
-    font-size: 0.72rem;
-    font-weight: 900;
-    padding: 2px 6px;
-    border-radius: 3px;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-}
-.quick-tag-chip {
-    background: #252c34;
-    border: 1px solid #3c4654;
-    color: #eee;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 0.78rem;
+    font-size: 1rem;
     font-weight: 800;
     cursor: pointer;
-    margin-right: 6px;
-    margin-bottom: 6px;
 }
-.quick-tag-chip:hover {
-    background: var(--primary);
-    color: #000;
-    border-color: var(--primary);
-}
-.admin-tab-section {
-    display: none;
-}
-.admin-tab-section.active {
-    display: block;
-}
-
     </style>
 </head>
 <body>
@@ -517,9 +321,8 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <header>
         <div class="logo-row">
             <a href="#top">
-                <div class="logo-circle" id="header-logo-circle">
-                    <img src="" alt="Krueger Painting logo" class="logo-img" id="header-logo-img" hidden>
-                    <div class="logo-fallback" id="header-logo-fallback" aria-label="Krueger Painting">
+                <div class="logo-circle">
+                    <div class="logo-fallback">
                         <span class="logo-monogram">KP</span>
                     </div>
                 </div>
@@ -532,13 +335,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <a href="#estimate">Request Estimate</a>
         </nav>
         <div class="action-buttons">
-            <a href="tel:262-443-1199" class="btn-call" id="header-call-btn" aria-label="Call Krueger Painting">
+            <a href="tel:262-443-1199" class="btn-call" aria-label="Call Krueger Painting">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/>
                 </svg>
                 <span>Call Now</span>
             </a>
-            <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-fb" id="header-fb-btn" aria-label="Krueger Painting on Facebook">
+            <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-fb" aria-label="Krueger Painting on Facebook">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
@@ -549,40 +352,47 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
     <!-- HERO SECTION -->
     <section class="hero" id="top">
-        <h2><span class="hero-white" id="hero-headline-white">Quality Craftsmanship.</span><br><span class="hero-yellow" id="hero-headline-yellow">Flawless Finishes.</span></h2>
-        <p id="hero-description">Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</p>
+        <h2><span class="hero-white">Quality Craftsmanship.</span><br><span class="hero-yellow">Flawless Finishes.</span></h2>
+        <p>Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship and durable finishes.</p>
         <div class="hero-btns">
-            <a href="#estimate" class="btn-primary" id="hero-btn-primary">Tap for Free Estimate</a>
-            <a href="#gallery" class="btn-secondary" id="hero-btn-secondary">View Gallery</a>
+            <a href="#estimate" class="btn-primary">Tap for Free Estimate</a>
+            <a href="#gallery" class="btn-secondary">View Gallery</a>
         </div>
     </section>
 
     <!-- SERVICES SECTION -->
     <section id="services" class="container">
         <div class="section-title">
-            <h3 id="services-heading">What We Do</h3>
+            <h3>What We Do</h3>
             <div class="underline"></div>
         </div>
-
         <div id="services-list">
-            <!-- Dynamically rendered -->
+            <div class="service-card">
+                <h4>Interior Painting</h4>
+                <p>Professional wall, ceiling, trim, and door painting using premium coatings for flawless, long-lasting interior finishes.</p>
+            </div>
+            <div class="service-card">
+                <h4>Exterior Painting</h4>
+                <p>Complete surface preparation, priming, and expert exterior painting for siding, trim, doors, and decks to withstand Wisconsin weather.</p>
+            </div>
+            <div class="service-card">
+                <h4>Drywall Repair & Finishing</h4>
+                <p>Expert patching, taping, mudding, and texture matching to give damaged walls and ceilings a seamless, smooth finish.</p>
+            </div>
+            <div class="service-card">
+                <h4>Pressure Washing</h4>
+                <p>Safe and effective exterior power washing for siding, gutters, driveways, and walkways to strip away grime, mold, and buildup.</p>
+            </div>
         </div>
     </section>
 
     <!-- PHOTO GALLERY SECTION -->
     <section id="gallery" class="container">
         <div class="section-title">
-            <h3 id="gallery-heading">Photo Gallery</h3>
+            <h3>Photo Gallery</h3>
             <div class="underline"></div>
         </div>
-        <p class="page-intro" id="gallery-intro">Browse our interior painting, drywall repairs, and exterior finish projects.</p>
-
-        <!-- Category Filter Buttons -->
-        <div id="filter-bar" class="filter-bar"></div>
-
-        <!-- Filterable Grid -->
-        <div id="photo-grid" class="photo-grid"></div>
-
+        <p style="text-align: center; color: #aaa;">Browse our recent contracting and finish work.</p>
         <div style="text-align: center; margin-top: 36px;">
             <a href="#estimate" class="btn-primary" style="margin: 0 auto;">Tap for Free Estimate</a>
         </div>
@@ -592,7 +402,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <section id="estimate" class="estimate-section">
         <div class="container" style="padding-top: 20px;">
             <div class="section-title">
-                <h3 id="estimate-heading">Request an Estimate</h3>
+                <h3>Request an Estimate</h3>
                 <div class="underline"></div>
             </div>
             <form action="https://formspree.io/f/xvzyorqq" method="POST">
@@ -608,494 +418,99 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     <label>Project Details</label>
                     <textarea name="details" class="form-control" placeholder="Describe your painting or drywall project..." required></textarea>
                 </div>
-                <button type="submit" class="btn-primary" id="estimate-submit-btn" style="max-width: 100%; border: none; cursor: pointer;">Submit Request</button>
+                <button type="submit" class="btn-primary" style="max-width: 100%; border: none; cursor: pointer;">Submit Request</button>
             </form>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <p class="footer-address" id="footer-address"><strong>Mailing Address:</strong> N630 Moraine Dr., Campbellsport, WI 53010</p>
-        <p class="footer-phone" id="footer-phone-wrap"><strong>Phone:</strong> <a href="tel:262-443-1199" id="footer-phone-link">262-443-1199</a></p>
-        <p style="margin: 8px 0;">
-
+        <p class="footer-address"><strong>Mailing Address:</strong> N630 Moraine Dr., Campbellsport, WI 53010</p>
+        <p class="footer-phone"><strong>Phone:</strong> <a href="tel:262-443-1199">262-443-1199</a></p>
+        <p style="margin: 12px 0;">
+            <a href="javascript:void(0);" onclick="openAdminModal()" class="admin-link">⚙️ Admin Login</a>
         </p>
         <p style="font-size: 0.75rem; color: #555; margin-top: 16px;">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
     </footer>
 
-    <!-- LIGHTBOX MODAL -->
-    <div id="lightbox" class="lightbox" hidden>
-        <button type="button" aria-label="Close" id="lightbox-close-btn">&times;</button>
-        <img src="" alt="" id="lightbox-img">
-        <p id="lightbox-caption"></p>
-    </div>
-
-    <!-- ============================================== -->
-    <!-- PASSWORD-PROTECTED DEVELOPER / ADMIN PORTAL   -->
-    <!-- ============================================== -->
+    <!-- SECURE FIREBASE ADMIN MODAL -->
     <div id="admin-modal" class="admin-modal-backdrop">
-        <!-- TOP ADMIN NAV BAR -->
         <nav class="admin-header-bar">
             <div class="admin-title-wrap">
-                <div class="logo-circle" style="width: 32px; height: 32px; border-width: 2px;">
-                    <img src="" id="admin-top-logo" class="logo-img" alt="Logo" hidden>
-                    <div class="logo-fallback" id="admin-top-fallback">
-                        <span class="logo-monogram" style="font-size: 0.7rem;">KP</span>
-                    </div>
-                </div>
-                <span>Krueger Painting</span>
+                <span>Krueger Painting Portal</span>
             </div>
             <div class="admin-controls-right">
                 <button type="button" class="btn-admin-close" onclick="closeAdminModal()">Close ✕</button>
             </div>
         </nav>
 
-        <!-- ADMIN LOGIN SCREEN (LOCKED BEHIND PASSWORD) -->
+        <!-- FIREBASE LOGIN SCREEN -->
         <div id="admin-login-view" class="admin-login-card">
-            <div class="logo-circle" style="margin: 0 auto 16px auto; width: 64px; height: 64px;">
-                <div class="logo-fallback">
-                    <span class="logo-monogram" style="font-size: 1.4rem;">KP</span>
-                </div>
-            </div>
-            <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Krueger Painting</h2>
-            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Content Manager Portal</p>
+            <h2 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3rem;">Firebase Secure Sign-In</h2>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 22px;">Authenticate via Google Firebase Auth.</p>
 
-            <form id="admin-login-form" style="text-align: left;">
+            <form id="admin-login-form" onsubmit="handleFirebaseLogin(event)" style="text-align: left;">
                 <div style="margin-bottom: 16px;">
                     <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Email</label>
-                    <div style="position: relative; display: flex; align-items: center; margin-bottom: 16px;">
-                        <input type="email" id="admin-email-input" class="form-control" placeholder="Enter email" required autocomplete="username" style="width: 100%;">
-                    </div>
+                    <input type="email" id="admin-email-input" class="form-control" placeholder="Enter admin email" required style="width: 100%; margin-bottom: 12px;">
+                    
                     <label style="color: #ccc; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;">Password</label>
-                    <div style="position: relative; display: flex; align-items: center;">
-                        <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter password" required style="padding-right: 42px;" autocomplete="current-password">
-                        <button type="button" id="btn-toggle-login-pw" style="position: absolute; right: 10px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 1.1rem; padding: 4px;" title="Show/Hide Password">👁</button>
-                    </div>
+                    <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter Firebase password" required style="width: 100%;">
                 </div>
-                <div style="text-align: right; margin-top: 8px; margin-bottom: 16px;">
-                    <button type="button" id="btn-forgot-password" style="background: none; border: none; color: #4facfe; font-size: 0.85rem; cursor: pointer; text-decoration: underline; padding: 0;">Forgot Password?</button>
-                </div>
-                <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
-                <div id="login-success-alert" style="display: none; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid #51cf66; border-radius: 4px; padding: 10px 12px; font-size: 0.85rem; margin-bottom: 16px;"></div>
-                <button type="submit" class="btn-primary" id="btn-login-submit" style="width: 100%; border: none; cursor: pointer; max-width: 100%; justify-content: center;">Sign In to Dashboard</button>
+                <div id="login-error-alert" style="display: none; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid #ff6b6b; border-radius: 4px; padding: 10px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                <div id="login-success-alert" style="display: none; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid #51cf66; border-radius: 4px; padding: 10px; font-size: 0.85rem; margin-bottom: 16px;"></div>
+                <button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; max-width: 100%; margin-bottom: 10px;">Sign In</button>
+                <button type="button" onclick="handlePasswordReset()" style="background: none; border: none; color: var(--primary); font-size: 0.8rem; cursor: pointer; text-decoration: underline; width: 100%; text-align: center;">Forgot Password? Send Reset Email</button>
             </form>
         </div>
 
         <!-- AUTHENTICATED DASHBOARD -->
         <div id="admin-dashboard-view" style="display: none; flex-direction: column; flex: 1;">
-            <!-- Tabs Navigation -->
             <div class="admin-tabs-nav">
-                <button type="button" class="admin-tab-btn active" data-tab="tab-logo">Website Logo</button>
-                <button type="button" class="admin-tab-btn" data-tab="tab-hero">Hero Background</button>
-                <button type="button" class="admin-tab-btn" data-tab="tab-photos">Project Photos</button>
-                <button type="button" class="admin-tab-btn" data-tab="tab-contact">Business &amp; Contact</button>
-                <button type="button" class="admin-tab-btn" data-tab="tab-security">Security &amp; Password</button>
-                <button type="button" class="admin-tab-btn" data-tab="tab-export">GitHub &amp; Export</button>
-                <button type="button" class="admin-tab-btn" id="btn-admin-logout" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
+                <button type="button" class="admin-tab-btn active">GitHub Export</button>
+                <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
 
             <main class="admin-body-container">
-                <!-- Status notification -->
-                <div id="admin-status-alert" class="admin-alert-banner"></div>
-
-                <!-- TAB 1: WEBSITE LOGO -->
-                <section id="tab-logo" class="admin-tab-section active">
-                    <div class="admin-card-box">
-                        <h2 class="admin-card-title">Website Logo</h2>
-                        <p class="admin-card-desc">
-                            Upload your company logo. It automatically replaces the KP monogram inside the header circle badge on every page of your site.
-                        </p>
-
-                        <div style="background: #111417; border: 1px dashed #3a4452; border-radius: 6px; padding: 16px; margin: 16px 0 24px 0;">
-                            <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: #828d99; margin-bottom: 10px;">Header Preview</div>
-                            <div style="background: #111; border: 1px solid #333; border-radius: 6px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between;">
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <div class="logo-circle" id="preview-logo-circle">
-                                        <img src="" id="preview-logo-img" class="logo-img" alt="Logo" hidden>
-                                        <div class="logo-fallback" id="preview-logo-fallback">
-                                            <span class="logo-monogram">KP</span>
-                                        </div>
-                                    </div>
-                                    <h1 id="preview-biz-title" style="font-size: 1.1rem; color: var(--primary); margin: 0; font-weight: 800;">Krueger Painting</h1>
-                                </div>
-                                <span style="font-size: 0.8rem; color: #777;">(Top-left corner badge)</span>
-                            </div>
-                        </div>
-
-                        <input type="file" id="logo-file-picker" accept="image/*" style="display: none;">
-                        <div class="upload-dropzone-box" id="logo-dropzone">
-                            <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 8px;">📷</div>
-                            <div style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 4px;">Tap to Choose Logo Picture</div>
-                            <div style="font-size: 0.82rem; color: #8894a0;">Select any PNG, JPG, or WEBP. Square images look best!</div>
-                        </div>
-
-                        <div id="logo-action-bar" style="margin-top: 16px; display: none; align-items: center; gap: 12px;">
-                            <button type="button" class="btn-primary" id="btn-save-logo-file" style="max-width: 220px; border: none; cursor: pointer;">Save Logo</button>
-                            <button type="button" class="btn-outline-danger" id="btn-cancel-logo-file">Cancel</button>
-                        </div>
-
-                        <div id="logo-remove-wrap" style="margin-top: 16px;">
-                            <button type="button" class="btn-outline-danger" id="btn-remove-logo-btn" style="display: none;">Remove Uploaded Logo (Reset to Monogram)</button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- TAB 2: HERO BACKGROUND -->
-                <section id="tab-hero" class="admin-tab-section">
-                    <div class="admin-card-box">
-                        <h2 class="admin-card-title">Homepage Hero Background Picture</h2>
-                        <p class="admin-card-desc">
-                            Customize the background image displayed behind the main header text ("Quality Craftsmanship. Flawless Finishes."). The semi-transparent dark overlay keeps your text and estimate buttons bright and easily readable.
-                        </p>
-
-                        <!-- Live Preview of Hero Background -->
-                        <div style="background: #111417; border: 1px dashed #3a4452; border-radius: 6px; padding: 16px; margin: 16px 0 24px 0;">
-                            <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: #828d99; margin-bottom: 10px;">Live Hero Banner Preview</div>
-                            <div id="modal-preview-hero-mock" style="position: relative; border-radius: 6px; padding: 40px 20px; text-align: center; background-size: cover; background-position: center; border: 1px solid #333; overflow: hidden; background-color: #111418;">
-                                <div id="modal-preview-hero-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14, 17, 21, 0.80) 0%, rgba(10, 12, 16, 0.88) 100%); pointer-events: none; z-index: 1;"></div>
-                                <div style="position: relative; z-index: 2;">
-                                    <h3 style="font-size: 1.45rem; margin: 0 0 10px 0; font-weight: 900; line-height: 1.25;">
-                                        <span style="color: #fff;">Quality Craftsmanship.</span><br>
-                                        <span style="color: var(--primary);">Flawless Finishes.</span>
-                                    </h3>
-                                    <p style="color: #ccc; font-size: 0.88rem; max-width: 480px; margin: 0 auto 16px auto; line-height: 1.45;">
-                                        Professional interior and exterior painting, drywall repair, and pressure washing with quality craftsmanship.
-                                    </p>
-                                    <span class="btn-primary" style="display: inline-block; padding: 8px 18px; font-size: 0.82rem; pointer-events: none; border-radius: 4px;">Tap for Free Estimate</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Darkness / Opacity Adjustment -->
-                        <div class="form-group" style="margin-bottom: 22px; background: #15191e; border: 1px solid #2a3440; border-radius: 6px; padding: 16px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                <label style="margin: 0; color: #ccc; font-weight: 700; font-size: 0.9rem;">Overlay Darkness / Opacity</label>
-                                <span id="modal-hero-opacity-val" style="font-weight: 800; color: var(--primary); font-size: 0.95rem;">80%</span>
-                            </div>
-                            <input type="range" id="modal-hero-opacity-range" min="40" max="95" value="80" step="5" style="width: 100%; accent-color: var(--primary); cursor: pointer;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #778; margin-top: 6px;">
-                                <span>Lighter (More photo visible)</span>
-                                <span>Darker (Maximum text contrast)</span>
-                            </div>
-                        </div>
-
-                        <input type="file" id="modal-hero-file-picker" accept="image/*" style="display: none;">
-                        <div class="upload-dropzone-box" id="modal-hero-dropzone">
-                            <div style="font-size: 2.2rem; color: var(--primary); margin-bottom: 8px;">🌄</div>
-                            <div style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 4px;">Tap to Choose New Hero Background Photo</div>
-                            <div style="font-size: 0.82rem; color: #8894a0;">Select any JPG, PNG, or WEBP photo from your device or camera roll. High-resolution horizontal photos look fantastic!</div>
-                        </div>
-
-                        <div id="modal-hero-action-bar" style="margin-top: 16px; display: none; align-items: center; gap: 12px; flex-wrap: wrap;">
-                            <button type="button" class="btn-primary" id="btn-modal-save-hero" style="max-width: 260px; border: none; cursor: pointer;">Save Hero Background</button>
-                            <button type="button" class="btn-outline-danger" id="btn-modal-cancel-hero">Cancel</button>
-                        </div>
-
-                        <div id="modal-hero-reset-wrap" style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button type="button" class="btn-outline-danger" id="btn-modal-reset-hero">Reset to Default Painting Texture</button>
-                            <button type="button" class="btn-outline-danger" id="btn-modal-clear-hero">Remove Background (Solid Dark)</button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- TAB 2: PROJECT PHOTOS -->
-                <section id="tab-photos" class="admin-tab-section">
-                    <div class="admin-card-box">
-                        <h2 class="admin-card-title">Project Photo Manager</h2>
-                        <p class="admin-card-desc">
-                            Manage photos for each category. Upload directly from your camera roll or computer with BEFORE/AFTER tags.
-                        </p>
-
-
-                        <!-- Current Photos List -->
-                        <div id="manage-photos-container" class="photo-grid-manage"></div>
-
-                        <!-- Add Photo Form -->
-                        <div style="border-top: 1px solid #2d3642; padding-top: 24px; margin-top: 24px;">
-                            <h3 style="color: var(--primary); margin: 0 0 14px 0; font-size: 1.15rem;">+ Add Photo to Selected Category</h3>
-                            <form id="add-photo-form">
-                                <input type="file" id="photo-upload-input" accept="image/*" style="display: none;">
-                                <div class="upload-dropzone-box" id="photo-dropzone-trigger">
-                                    <div style="font-size: 2rem; color: var(--primary); margin-bottom: 6px;">🖼️</div>
-                                    <div style="font-size: 1rem; font-weight: 800; color: #fff;">Tap to Select Project Photo</div>
-                                    <div style="font-size: 0.8rem; color: #8894a0; margin-top: 4px;">Choose from your photo library or take a new picture</div>
-                                </div>
-
-                                <div id="new-photo-preview-wrap" style="display: none; margin-top: 16px;">
-                                    <div style="max-width: 240px; margin-bottom: 16px; border: 1px solid #3c4654; border-radius: 6px; overflow: hidden;">
-                                        <img src="" id="new-photo-preview-img" style="width: 100%; display: block;">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Photo Tag (Optional)</label>
-                                        <input type="text" id="new-photo-tag" class="form-control" placeholder="e.g. BEFORE, AFTER, COMPLETED">
-                                        <div style="margin-top: 8px;">
-                                            <span style="font-size: 0.75rem; color: #889; margin-right: 6px;">Quick Tags:</span>
-                                            <button type="button" class="quick-tag-chip" onclick="setQuickTag('BEFORE')">BEFORE</button>
-                                            <button type="button" class="quick-tag-chip" onclick="setQuickTag('AFTER')">AFTER</button>
-                                            <button type="button" class="quick-tag-chip" onclick="setQuickTag('DURING (MUD & TAPE)')">DURING (MUD &amp; TAPE)</button>
-                                            <button type="button" class="quick-tag-chip" onclick="setQuickTag('AFTER (SEALED)')">AFTER (SEALED)</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Caption / Alt Description (Optional)</label>
-                                        <input type="text" id="new-photo-alt" class="form-control" placeholder="e.g. Kitchen cabinet refinishing in Fond du Lac">
-                                    </div>
-                                    <button type="submit" class="btn-primary" id="btn-save-new-photo" style="max-width: 240px; border: none; cursor: pointer;">Save Photo to Gallery</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- TAB 3: BUSINESS & CONTACT -->
-                <section id="tab-contact" class="admin-tab-section">
-                    <div class="admin-card-box">
-                        <h2 class="admin-card-title">Business &amp; Contact Settings</h2>
-                        <p class="admin-card-desc">
-                            Update your public business phone number, company name, Facebook link, and footer address.
-                        </p>
-                        <form id="business-settings-form">
-                            <div class="form-group">
-                                <label>Business Name</label>
-                                <input type="text" id="setting-biz-name" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Phone Number (Tied to Call Now Button)</label>
-                                <input type="tel" id="setting-phone" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Facebook Page Link (Leave empty to hide button)</label>
-                                <input type="url" id="setting-facebook" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Footer Mailing Address</label>
-                                <input type="text" id="setting-address" class="form-control" value="N630 Moraine Dr., Campbellsport, WI 53010">
-                            </div>
-                            <button type="submit" class="btn-primary" style="max-width: 240px; border: none; cursor: pointer;">Save Business Info</button>
-                        </form>
-                    </div>
-                </section>
-
-                <!-- TAB 4: SECURITY & PASSWORD -->
-                <section id="tab-security" class="admin-tab-section">
-                    <div class="admin-card-box">
-                        <h2 class="admin-card-title">Security &amp; Admin Password</h2>
-                        <p class="admin-card-desc">
-                            Change the password used to lock this developer &amp; content manager dashboard.
-                        </p>
-                        <div style="background: #151a20; border: 1px solid #2a3440; border-radius: 6px; padding: 16px; margin-bottom: 24px;">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span style="color: #22c55e; font-size: 1.3rem;">🔒</span>
-                                <div>
-                                    <strong style="color: #fff;">Dashboard is Password-Protected</strong>
-                                    <p style="margin: 4px 0 0 0; color: #889; font-size: 0.85rem;">Anyone attempting to access this dashboard must provide your admin password.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <form id="change-pw-form" style="max-width: 480px;">
-                            <div class="form-group">
-                                <label>Current Password</label>
-                                <input type="password" id="pw-curr-input" class="form-control" required placeholder="Enter current password" autocomplete="current-password">
-                            </div>
-                            <div class="form-group">
-                                <label>New Password (minimum 6 characters)</label>
-                                <input type="password" id="pw-new-input" class="form-control" required minlength="6" placeholder="Enter new password" autocomplete="new-password">
-                            </div>
-                            <div class="form-group">
-                                <label>Confirm New Password</label>
-                                <input type="password" id="pw-confirm-input" class="form-control" required minlength="6" placeholder="Repeat new password" autocomplete="new-password">
-                            </div>
-                            <div id="pw-status-msg" style="display: none; padding: 10px 12px; border-radius: 4px; font-size: 0.85rem; margin-bottom: 16px;"></div>
-                            <button type="submit" class="btn-primary" style="max-width: 240px; border: none; cursor: pointer;">Update Admin Password</button>
-                        </form>
-                    </div>
-                </section>
-
-                <!-- TAB 5: GITHUB & EXPORT -->
-                <section id="tab-export" class="admin-tab-section">
-                    <div class="admin-card-box">
-                        <h2 class="admin-card-title">Single-File GitHub Deployment</h2>
-                        <p class="admin-card-desc">
-                            Your entire site — including all HTML, CSS, JavaScript, project photos, contact forms, and this password-locked admin manager — is bundled into <strong>one single standalone file</strong>!
-                        </p>
-
-                        <div style="background: #151a20; border: 1px solid #2a3440; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
-                            <h4 style="color: var(--primary); margin: 0 0 10px 0; font-size: 1.05rem;">How to Deploy to GitHub Pages in 3 Steps:</h4>
-                            <ol style="margin: 0; padding-left: 20px; color: #ccc; font-size: 0.92rem; line-height: 1.8;">
-                                <li>Click the green button below: <strong>"Download Standalone index.html"</strong>.</li>
-                                <li>In your GitHub repository (<code>krueger-website</code>), upload or commit this <code>index.html</code> directly into the root of the repo.</li>
-                                <li>Go to your GitHub repo <strong>Settings → Pages → Branch: main (root) → Save</strong>. Your site is instantly live with zero build tools!</li>
-                            </ol>
-                        </div>
-
-                        <button type="button" class="btn-export-html" id="btn-export-site-big" style="padding: 14px 28px; font-size: 1rem;">
-                            ⬇ Download Standalone index.html for GitHub
-                        </button>
-                    </div>
+                <section class="admin-card-box">
+                    <h2 class="admin-card-title">GitHub Deployment Package</h2>
+                    <p class="admin-card-desc">
+                        Authenticated successfully via Firebase Auth! Download your standalone index.html file to push updates to your GitHub repository.
+                    </p>
+                    <button type="button" class="btn-export-html" onclick="exportSiteCode()">
+                        ⬇ Download Standalone index.html
+                    </button>
                 </section>
             </main>
         </div>
     </div>
 
+    <!-- FIREBASE SDKs (Modular CDN) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
+        const firebaseConfig = {
+          apiKey: "AIzaSyBBFi6XGAsdENyNGzHlIAjxlcqwGA9f0Cc",
+          authDomain: "kpwebsite-83a6b.firebaseapp.com",
+          projectId: "kpwebsite-83a6b",
+          storageBucket: "kpwebsite-83a6b.firebasestorage.app",
+          messagingSenderId: "489955386353",
+          appId: "1:489955386353:web:57ff0a92fb9dc3bd189a50",
+          measurementId: "G-PV7PNYLMB4"
+        };
 
-<script>
-  async function loadData() {
-    try {
-      const [settingsRes, heroRes, servicesRes, galleryRes] = await Promise.all([
-        fetch('data/settings.json'),
-        fetch('data/hero.json'),
-        fetch('data/services.json'),
-        fetch('data/gallery.json')
-      ]);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-      const siteData = {
-        settings: await settingsRes.json(),
-        hero: await heroRes.json(),
-        services: await servicesRes.json(),
-        gallery: await galleryRes.json()
-      };
+        window.openAdminModal = function() {
+            document.getElementById('admin-modal').classList.add('open');
+        }
+        window.closeAdminModal = function() {
+            document.getElementById('admin-modal').classList.remove('open');
+        }
 
-      // --- RENDER LOGIC ---
-      // Business Name & Logo
-      const name = siteData.settings.business_name || "Krueger Painting";
-      document.getElementById("header-business-name").textContent = name;
-      document.title = name + " | Professional Painting";
-
-      if (siteData.settings.logo) {
-          const topLogo = document.getElementById("admin-top-logo");
-          if(topLogo) { topLogo.src = siteData.settings.logo; topLogo.hidden = false; }
-          const topFb = document.getElementById("admin-top-fallback");
-          if(topFb) topFb.hidden = true;
-
-          const circs = document.querySelectorAll(".logo-circle");
-          circs.forEach(c => {
-              c.style.backgroundImage = `url(${siteData.settings.logo})`;
-              c.style.backgroundSize = "cover";
-              c.style.backgroundPosition = "center";
-          });
-      }
-
-      // Contact Details
-      if (siteData.settings.phone) {
-          document.querySelectorAll(".btn-call").forEach(btn => {
-              btn.textContent = "Call " + siteData.settings.phone;
-              btn.href = "tel:" + siteData.settings.phone;
-          });
-      }
-      if (siteData.settings.facebook_url) {
-          const btn = document.getElementById("btn-facebook");
-          if (btn) {
-              btn.href = siteData.settings.facebook_url;
-              btn.hidden = false;
-          }
-      }
-      if (siteData.settings.footer_text) {
-          const ft = document.getElementById("footer-text");
-          if (ft) ft.textContent = siteData.settings.footer_text;
-      }
-
-      // Hero
-      if (siteData.hero) {
-          if (siteData.hero.headline_white) document.getElementById("hero-headline-white").textContent = siteData.hero.headline_white;
-          if (siteData.hero.headline_yellow) document.getElementById("hero-headline-yellow").textContent = siteData.hero.headline_yellow;
-          if (siteData.hero.description) document.getElementById("hero-description").textContent = siteData.hero.description;
-          if (siteData.hero.primary_button) document.getElementById("hero-btn-primary").textContent = siteData.hero.primary_button;
-          if (siteData.hero.secondary_button) document.getElementById("hero-btn-secondary").textContent = siteData.hero.secondary_button;
-
-          if (siteData.hero.background_image) {
-              const heroSection = document.querySelector(".hero");
-              if (heroSection) {
-                  heroSection.style.backgroundImage = `url(${siteData.hero.background_image})`;
-              }
-          }
-          if (siteData.hero.overlay_opacity !== undefined) {
-              document.documentElement.style.setProperty('--hero-overlay-alpha', siteData.hero.overlay_opacity);
-          }
-      }
-
-      // Services
-      if (siteData.services) {
-          if (siteData.services.heading) document.getElementById("services-heading").textContent = siteData.services.heading;
-          const container = document.getElementById("services-list");
-          if (container && Array.isArray(siteData.services.services)) {
-              container.innerHTML = "";
-              siteData.services.services.forEach(s => {
-                  const p = document.createElement("p");
-                  p.textContent = s.description;
-                  const h3 = document.createElement("h3");
-                  h3.textContent = s.title;
-                  const div = document.createElement("div");
-                  div.className = "service-card";
-                  div.appendChild(h3);
-                  div.appendChild(p);
-                  container.appendChild(div);
-              });
-          }
-      }
-
-      // Gallery Homepage Section
-      if (siteData.gallery) {
-          const gh = document.getElementById("gallery-heading");
-          if (gh && siteData.gallery.homepage_heading) gh.textContent = siteData.gallery.homepage_heading;
-
-          const gb = document.getElementById("gallery-btn-primary");
-          if (gb && siteData.gallery.homepage_button) gb.textContent = siteData.gallery.homepage_button;
-
-          // Homepage Photo Grid (up to 6)
-          const homeGrid = document.getElementById("photo-grid");
-          if (homeGrid && Array.isArray(siteData.gallery.categories)) {
-              homeGrid.innerHTML = "";
-              let rendered = 0;
-              for (const cat of siteData.gallery.categories) {
-                  if (!cat.show_on_homepage || !Array.isArray(cat.photos)) continue;
-                  for (const photo of cat.photos) {
-                      if (rendered >= 6) break;
-                      if (!photo.image) continue;
-
-                      const div = document.createElement("figure");
-                      div.className = "photo-tile";
-                      if (photo.tag) {
-                          const tag = document.createElement("span");
-                          tag.className = "tag-badge";
-                          tag.textContent = photo.tag;
-                          div.appendChild(tag);
-                      }
-                      const img = document.createElement("img");
-                      img.src = photo.image;
-                      if (photo.alt) img.alt = photo.alt;
-                      img.loading = "lazy";
-
-                      div.onclick = () => {
-                          const lightbox = document.getElementById("lightbox");
-                          const lbImg = document.getElementById("lightbox-img");
-                          const lbTxt = document.getElementById("lightbox-caption");
-                          if (lightbox && lbImg) {
-                              lbImg.src = photo.image;
-                              if (lbTxt) lbTxt.textContent = photo.alt || "";
-                              lightbox.hidden = false;
-                          }
-                      };
-
-                      div.appendChild(img);
-                      homeGrid.appendChild(div);
-                      rendered++;
-                  }
-                  if (rendered >= 6) break;
-              }
-          }
-      }
-
-    } catch (e) {
-      console.error("Error loading CMS data:", e);
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('year-copy').textContent = new Date().getFullYear();
-    loadData();
-  });
-</script>
-</body>
-</html>
+        window.handleFirebaseLogin = async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('admin-email-input').value.trim();
+            const pass = document.getElementById('adm
