@@ -22,23 +22,24 @@
 
 body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
 
-/* EXPANDED COMFORTABLE HEADER */
+/* TWO-TIER STACKED HEADER */
 header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 24px;
-    border-bottom: 1px solid #282828;
     background: var(--header-bg);
+    border-bottom: 1px solid #282828;
     position: sticky;
     top: 0;
     z-index: 50;
-    gap: 16px;
+}
+.header-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    gap: 12px;
 }
 .logo-row {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
 }
 .logo-row a {
     display: flex;
@@ -46,8 +47,8 @@ header {
     text-decoration: none;
 }
 .logo-circle {
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: 2px solid var(--primary);
     background: #1c1c1c;
@@ -56,7 +57,7 @@ header {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.25);
 }
 .logo-circle img.logo-img {
     width: 100%;
@@ -80,67 +81,48 @@ header {
     display: none;
 }
 .logo-monogram {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 900;
     letter-spacing: 0.5px;
     color: var(--primary);
     line-height: 1;
 }
 
-/* HEADER CENTER/RIGHT STACK */
-.header-center-stack {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
+/* HEADER CENTER BANNER & ACTIONS */
+.header-center-banner {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 8px;
 }
 #header-announcement-banner {
     display: none;
     background: var(--primary);
     color: #000000;
-    padding: 4px 12px;
+    padding: 5px 12px;
     font-weight: 900;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    border-radius: 3px;
+    border-radius: 4px;
     letter-spacing: 0.3px;
     text-align: center;
-    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    font-size: 1rem;
-    font-weight: 700;
-}
-.nav-links a {
-    color: var(--text);
-    text-decoration: none;
-    text-transform: capitalize;
-    transition: color 0.15s;
-    padding: 4px 2px;
-}
-.nav-links a:hover {
-    color: var(--accent-blue);
-}
-
-/* HEADER ACTION BUTTONS (PHONE & FB) */
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 .btn-header-action {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
     border-radius: 6px;
     text-decoration: none;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     transition: transform 0.15s ease;
 }
@@ -154,24 +136,32 @@ header {
     background: linear-gradient(135deg, #1877f2, #0d65d9);
 }
 
-@media (max-width: 768px) {
-    header {
-        padding: 12px 16px;
-        flex-wrap: wrap;
-    }
-    .header-center-stack {
-        order: 3;
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-between;
-        margin-top: 8px;
-        padding-top: 8px;
-        border-top: 1px solid #282828;
-    }
-    .nav-links {
-        gap: 14px;
-        font-size: 0.95rem;
-    }
+/* SECONDARY NAV ROW FOR PAGES */
+.header-nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    border-top: 1px solid #222;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: color 0.15s;
+    padding: 2px 4px;
+}
+.nav-links a:hover {
+    color: var(--accent-blue);
 }
 
 /* HERO */
@@ -377,33 +367,37 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     </style>
 </head>
 <body>
-    <!-- CLEAN EXPANDED HEADER WITH RESTORED TOP ACTIONS -->
+    <!-- TWO-TIER STACKED HEADER -->
     <header>
-        <div class="logo-row">
-            <a href="#top">
-                <div class="logo-circle" id="header-logo-circle">
-                    <img src="" alt="Logo" class="logo-img" id="header-logo-img" hidden>
-                    <div class="logo-fallback" id="header-logo-fallback">
-                        <span class="logo-monogram" id="header-logo-monogram">KP</span>
+        <div class="header-top-row">
+            <div class="logo-row">
+                <a href="#top">
+                    <div class="logo-circle" id="header-logo-circle">
+                        <img src="" alt="Logo" class="logo-img" id="header-logo-img" hidden>
+                        <div class="logo-fallback" id="header-logo-fallback">
+                            <span class="logo-monogram" id="header-logo-monogram">KP</span>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
+            <div class="header-center-banner">
+                <div id="header-announcement-banner"></div>
+            </div>
+            <div class="header-actions">
+                <a href="tel:262-443-1199" class="btn-header-action btn-header-phone" id="header-phone-link" aria-label="Call Now">
+                    📞
+                </a>
+                <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-header-action btn-header-fb" aria-label="Facebook">
+                    📘
+                </a>
+            </div>
         </div>
-        <div class="header-center-stack">
-            <div id="header-announcement-banner"></div>
+        <div class="header-nav-row">
             <nav class="nav-links">
                 <a href="#services">Services</a>
                 <a href="#gallery">Gallery</a>
                 <a href="#estimate">Free Estimate</a>
             </nav>
-        </div>
-        <div class="header-actions">
-            <a href="tel:262-443-1199" class="btn-header-action btn-header-phone" id="header-phone-link" aria-label="Call Now">
-                📞
-            </a>
-            <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-header-action btn-header-fb" aria-label="Facebook">
-                📘
-            </a>
         </div>
     </header>
 
