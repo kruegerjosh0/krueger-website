@@ -132,6 +132,9 @@ header {
 .btn-header-phone {
     background: linear-gradient(135deg, #22c55e, #16a34a);
 }
+.btn-header-sms {
+    background: linear-gradient(135deg, #38bdf8, #0284c7);
+}
 .btn-header-fb {
     background: linear-gradient(135deg, #1877f2, #0d65d9);
 }
@@ -231,9 +234,10 @@ textarea.form-control { height: 120px; resize: vertical; }
 
 /* FOOTER */
 footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888; border-top: 1px solid #282828; background: var(--footer-bg);}
-.footer-address { color: #ddd; margin: 0 0 6px 0; font-size: 0.95rem; }
 .footer-phone { margin: 0 0 12px 0; font-size: 0.95rem; color: #aaa; }
 .footer-phone a { color: var(--primary); text-decoration: none; font-weight: 700; }
+.footer-review-btn { display: inline-block; background: var(--primary); color: #000; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 16px; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.footer-review-btn:hover { background: var(--accent-blue); transform: translateY(-1px); }
 .admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s; cursor: pointer;}
 .admin-link:hover { color: var(--accent-blue); }
 
@@ -387,6 +391,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 <a href="tel:262-443-1199" class="btn-header-action btn-header-phone" id="header-phone-link" aria-label="Call Now">
                     📞
                 </a>
+                <a href="sms:262-443-1199?body=Hi!%20I'm%20interested%20in%20getting%20a%20free%20estimate%20for%20a%20painting%20project." class="btn-header-action btn-header-sms" id="header-sms-link" aria-label="Text Us">
+                    💬
+                </a>
                 <a href="https://www.facebook.com/share/1EySXfm7FM/" target="_blank" rel="noopener" class="btn-header-action btn-header-fb" aria-label="Facebook">
                     📘
                 </a>
@@ -483,8 +490,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
     <!-- FOOTER -->
     <footer>
-        <p class="footer-address"><strong>Mailing Address:</strong> N630 Moraine Dr., Campbellsport, WI 53010</p>
         <p class="footer-phone"><strong>Phone:</strong> <a href="tel:262-443-1199" id="footer-phone-text">262-443-1199</a></p>
+        <p style="margin: 0 0 16px 0;">
+            <a href="https://reviews.birdeye.com/krueger-painting-156232068973275" target="_blank" rel="noopener" class="footer-review-btn">⭐ Leave a Review on Google</a>
+        </p>
         <p style="margin: 12px 0;">
             <span onclick="openAdminModal()" class="admin-link">⚙️ Admin Login</span>
         </p>
@@ -701,6 +710,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         window.renderSite = function() {
             document.title = (window.siteData.bizName || "Krueger Painting") + " | Professional Painting";
             document.getElementById('header-phone-link').href = "tel:" + window.siteData.phone;
+            document.getElementById('header-sms-link').href = `sms:${window.siteData.phone}?body=Hi!%20I'm%20interested%20in%20getting%20a%20free%20estimate%20for%20a%20painting%20project.`;
             document.getElementById('footer-phone-text').textContent = window.siteData.phone;
             document.getElementById('footer-phone-text').href = "tel:" + window.siteData.phone;
 
