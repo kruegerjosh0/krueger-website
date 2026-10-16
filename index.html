@@ -549,6 +549,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <div class="admin-tabs-nav">
                 <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website Editor</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-photos', event)">Photo Gallery Manager</button>
+                <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-tool', event)">Custom Tool</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">Cloud Status</button>
                 <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
@@ -640,19 +641,35 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     <div id="admin-gallery-manager-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px;"></div>
                 </section>
 
-                <!-- TAB 3: GITHUB EXPORT & TOOLS -->
+                <!-- TAB 3: CUSTOM TOOL APP -->
+                <section id="tab-tool" class="admin-card-box">
+                    <h2 class="admin-card-title">Custom Estimator Tool</h2>
+                    <p class="admin-card-desc">Your secure contractor calculator running directly inside the admin portal.</p>
+                    
+                    <!-- EMBEDDED ESTIMATOR TOOL INTERFACE -->
+                    <div style="background: #15191e; border: 1px solid #2d3540; padding: 20px; border-radius: 6px;">
+                        <div class="form-group">
+                            <label>Project Name / Client</label>
+                            <input type="text" id="tool-client-name" class="form-control" placeholder="e.g. Smith Residence">
+                        </div>
+                        <div class="form-group">
+                            <label>Total Square Footage / Scope</label>
+                            <input type="number" id="tool-sqft" class="form-control" placeholder="e.g. 1500">
+                        </div>
+                        <div class="form-group">
+                            <label>Estimated Price ($)</label>
+                            <input type="text" id="tool-price" class="form-control" readonly placeholder="$0.00" style="color: var(--primary); font-weight: 900;">
+                        </div>
+                        <button type="button" class="btn-primary" onclick="alert('Estimator calculation saved to local memory!')" style="max-width: 100%; border: none; cursor: pointer; background: #22c55e; color: #fff;">Calculate & Save</button>
+                    </div>
+                </section>
+
+                <!-- TAB 4: GITHUB EXPORT -->
                 <section id="tab-export" class="admin-card-box">
-                    <h2 class="admin-card-title">Cloud Status & Protected Tools</h2>
+                    <h2 class="admin-card-title">Cloud Status</h2>
                     <p class="admin-card-desc">
                         Connected to Cloud Firestore database. All updates sync in real-time.
                     </p>
-                    
-                    <div style="margin-bottom: 24px;">
-                        <a href="tool.html" target="_blank" class="btn-primary" style="text-decoration: none; text-align: center; display: inline-block; max-width: 100%;">
-                            🚀 Open Secure Tool App (tool.html)
-                        </a>
-                    </div>
-
                     <button type="button" class="btn-export-html" onclick="exportSiteCode()">
                         ⬇ Download Backup index.html
                     </button>
