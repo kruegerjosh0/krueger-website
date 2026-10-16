@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Tool App | Krueger Painting</title>
+    <style>
+        :root {
+            --primary: #ffcc00;
+            --accent-blue: #38bdf8;
+            --bg: #111111;
+            --text: #ffffff;
+            --card-bg: #1a1a1a;
+            --border-color: #2d3540;
+        }
+
+        body { 
+            margin: 0; 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.5; 
+            padding: 20px; 
+        }
+
+        .protected-content { 
+            display: none; /* Hidden by default until Firebase verifies login */
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .tool-header h1 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .btn-back {
+            background: #2a313a;
+            color: #eee;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-back:hover {
+            background: var(--accent-blue);
+            color: #000;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading screen while checking authentication status -->
+    <div id="auth-loading" style="text-align: center; margin-top: 100px; color: #888; font-weight: 700;">
+        Checking security credentials...
+    </div>
+
+    <!-- Protected App Container (Only visible to you when logged in) -->
+    <div id="protected-app" class="protected-content">
+        <div class="tool-header">
+            <h1>Secure Tool Application</h1>
+            <a href="index.html" class="btn-back">← Back to Website</a>
+        </div>
+
+        <div class="card">
+            <h3 style="color: var(--primary); margin-top: 0;">Welcome, Authorized Admin</h3>
+            <p style="color: #bbb;">This standalone file is fully protected by your Firebase login credentials. You can build, test, and run your custom utility right here.</p>
+        </div>
+    </div>
+
+    <!-- FIREBASE AUTH GUARD SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBBFi6XGAsdENyNGzHlIAjxlcqwGA9f0Cc",
+          authDomain: "kpwebsite-83a6b.firebaseapp.com",
+          projectId: "kpwebsite-83a6b",
+          storageBucket: "kpwebsite-83a6b.firebasestorage.app",
+          messagingSenderId: "489955386353",
+          appId: "1:489955386353:web:57ff0a92fb9dc3bd189a50",
+          measurementId: "G-PV7PNYLMB4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Security Guard Check
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Verified: Show the app
+                document.getElementById('auth-loading').style.display = 'none';
+                document.getElementById('protected-app').style.display = 'block';
+            } else {
+                // Unauthorized: Kick them back to index.html immediately
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+</body>
+</html>
