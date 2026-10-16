@@ -323,7 +323,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     border-bottom: 3px solid var(--primary);
 }
 .admin-body-container {
-    max-width: 950px;
+    max-width: 900px;
     width: 100%;
     margin: 24px auto;
     padding: 0 16px;
@@ -549,14 +549,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <div class="admin-tabs-nav">
                 <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('tab-content', event)">Website Editor</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-photos', event)">Photo Gallery Manager</button>
-                <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-tool', event)">Krueger OS App</button>
                 <button type="button" class="admin-tab-btn" onclick="switchAdminTab('tab-export', event)">Cloud Status</button>
                 <button type="button" class="admin-tab-btn" onclick="handleFirebaseLogout()" style="margin-left: auto; color: #ff6b6b;">Log Out</button>
             </div>
 
-            <main class="admin-body-container" style="flex: 1; display: flex; flex-direction: column; padding: 0; max-width: 100%;">
+            <main class="admin-body-container">
                 <!-- TAB 1: WEBSITE CONTENT EDITOR -->
-                <section id="tab-content" class="admin-card-box active-tab" style="padding: 24px; max-width: 900px; margin: 24px auto; width: 100%; box-sizing: border-box;">
+                <section id="tab-content" class="admin-card-box active-tab">
                     <h2 class="admin-card-title">Live Website Editor</h2>
                     <p class="admin-card-desc">Update your text and toggle your header announcement banner on the fly.</p>
                     
@@ -618,7 +617,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 </section>
 
                 <!-- TAB 2: PHOTO GALLERY MANAGER -->
-                <section id="tab-photos" class="admin-card-box" style="padding: 24px; max-width: 900px; margin: 24px auto; width: 100%; box-sizing: border-box;">
+                <section id="tab-photos" class="admin-card-box">
                     <h2 class="admin-card-title">Photo Gallery Manager</h2>
                     <p class="admin-card-desc">Add or delete project photos. Changes sync instantly via Cloud Firestore.</p>
                     
@@ -641,14 +640,8 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     <div id="admin-gallery-manager-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px;"></div>
                 </section>
 
-                <!-- TAB 3: KRUEGER OS APP (FULL-SCREEN EMBEDDED IFRAME / VIEWPORT) -->
-                <section id="tab-tool" class="admin-card-box" style="flex: 1; display: flex; flex-direction: column; padding: 0; border: none; background: #111; margin: 0;">
-                    <!-- This iframe loads your exact standalone app file (appkp.html) full screen inside the admin portal tab -->
-                    <iframe src="appkp.html" style="width: 100%; flex: 1; border: none; background: #111; min-height: 85vh;" title="Krueger OS"></iframe>
-                </section>
-
-                <!-- TAB 4: GITHUB EXPORT -->
-                <section id="tab-export" class="admin-card-box" style="padding: 24px; max-width: 900px; margin: 24px auto; width: 100%; box-sizing: border-box;">
+                <!-- TAB 3: GITHUB EXPORT -->
+                <section id="tab-export" class="admin-card-box">
                     <h2 class="admin-card-title">Cloud Status</h2>
                     <p class="admin-card-desc">
                         Connected to Cloud Firestore database. All updates sync in real-time.
@@ -771,7 +764,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             const grid = document.getElementById('photo-grid');
             if (window.siteData.photos && window.siteData.photos.length > 0) {
                 grid.innerHTML = "";
-                window.siteData.photos.photos.forEach((p) => {
+                window.siteData.photos.forEach((p) => {
                     const fig = document.createElement('figure');
                     fig.className = 'photo-tile';
                     fig.onclick = () => {
@@ -974,7 +967,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             await signOut(auth);
         }
 
-        window.handlePasswordRegen = window.handlePasswordReset = async function() {
+        window.handlePasswordReset = async function() {
             const email = document.getElementById('admin-email-input').value.trim();
             const successBox = document.getElementById('login-success-alert');
             const errBox = document.getElementById('login-error-alert');
