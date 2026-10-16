@@ -640,12 +640,19 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     <div id="admin-gallery-manager-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px;"></div>
                 </section>
 
-                <!-- TAB 3: GITHUB EXPORT -->
+                <!-- TAB 3: GITHUB EXPORT & TOOLS -->
                 <section id="tab-export" class="admin-card-box">
-                    <h2 class="admin-card-title">Cloud Status</h2>
+                    <h2 class="admin-card-title">Cloud Status & Protected Tools</h2>
                     <p class="admin-card-desc">
                         Connected to Cloud Firestore database. All updates sync in real-time.
                     </p>
+                    
+                    <div style="margin-bottom: 24px;">
+                        <a href="tool.html" target="_blank" class="btn-primary" style="text-decoration: none; text-align: center; display: inline-block; max-width: 100%;">
+                            🚀 Open Secure Tool App (tool.html)
+                        </a>
+                    </div>
+
                     <button type="button" class="btn-export-html" onclick="exportSiteCode()">
                         ⬇ Download Backup index.html
                     </button>
