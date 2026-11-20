@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /estimator-app
+Disallow: /estimator-app/
