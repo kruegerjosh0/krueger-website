@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krueger Painting | Professional Painting</title>
-    <meta name="description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure cloud admin portal.">
+    <meta name="description" content="Krueger Painting — Fully insured interior and exterior painting, deck staining, drywall repair, and pressure washing serving Washington County and Southern Fond du Lac County, WI. Free written estimates.">
     <meta property="og:title" content="Krueger Painting | Professional Painting">
-    <meta property="og:description" content="Professional interior and exterior painting, drywall repair, and pressure washing website with secure cloud admin portal.">
+    <meta property="og:description" content="Fully insured interior and exterior painting, deck staining, drywall repair, and pressure washing serving Washington County and Southern Fond du Lac County, WI.">
 
     <style>
 :root {
@@ -207,6 +207,49 @@ header {
 .btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); padding: 12px 20px; text-decoration: none; font-weight: 900; width: 100%; max-width: 280px; border-radius: 4px; text-transform: uppercase; font-size: 0.9rem; display: block; box-sizing: border-box; text-align: center; transition: all 0.2s; }
 .btn-secondary:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
 
+/* CREDIBILITY TRUST BAR */
+.trust-bar {
+    background: #161a1f;
+    border-bottom: 1px solid #262c34;
+    padding: 16px 20px;
+}
+.trust-bar-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+}
+.trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 204, 0, 0.06);
+    border: 1px solid rgba(255, 204, 0, 0.32);
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #f8fafc;
+    text-transform: uppercase;
+}
+.trust-badge-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #000000;
+    font-size: 0.78rem;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
 /* SECTIONS */
 .container { padding: 0 20px 40px 20px; max-width: 800px; margin: 0 auto; }
 .section-title { text-align: center; margin: 50px 0 30px 0; }
@@ -218,6 +261,137 @@ header {
 .service-card:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
 .service-card h4 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; font-weight: 800;}
 .service-card p { margin: 0; color: #aaaaaa; font-size: 0.9rem; }
+
+/* INTERACTIVE BEFORE & AFTER COMPARISON SLIDER */
+.ba-showcase {
+    margin: 0 0 24px 0;
+}
+.ba-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 204, 0, 0.35);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+.ba-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #14171c;
+    border-bottom: 1px solid #262c34;
+    flex-wrap: wrap;
+}
+.ba-header-title {
+    font-size: 0.86rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+}
+.ba-header-hint {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #9ca3af;
+}
+.ba-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    max-height: 480px;
+    overflow: hidden;
+    background: #0d0f12;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+    cursor: ew-resize;
+}
+.ba-img-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+}
+.ba-before-clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    clip-path: inset(0 50% 0 0);
+    pointer-events: none;
+}
+.ba-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    margin-left: -1.5px;
+    background: var(--primary);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.85);
+    pointer-events: none;
+    z-index: 4;
+}
+.ba-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #000000;
+    border: 3px solid #111111;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 900;
+    pointer-events: none;
+    z-index: 5;
+}
+.ba-label {
+    position: absolute;
+    top: 12px;
+    padding: 5px 11px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
+}
+.ba-label-before {
+    left: 12px;
+    background: rgba(17, 17, 17, 0.88);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.ba-label-after {
+    right: 12px;
+    background: var(--primary);
+    color: #000000;
+    border: 1px solid #111111;
+}
+.ba-range-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+    z-index: 6;
+    -webkit-appearance: none;
+    appearance: none;
+}
 
 /* GALLERY GRID */
 .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
@@ -231,12 +405,129 @@ header {
 .lightbox p { color: #ccc; margin: 12px 0 0 0; text-align: center; }
 .lightbox button { position: absolute; top: 12px; right: 16px; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
 
+/* LOCAL SERVICE AREA SECTION */
+.service-area-section {
+    background: #14171c;
+    border-top: 1px solid #262c34;
+    border-bottom: 1px solid #262c34;
+    padding: 1px 0 46px 0;
+}
+.service-area-intro {
+    text-align: center;
+    color: #aaaaaa;
+    font-size: 0.92rem;
+    max-width: 580px;
+    margin: -12px auto 26px auto;
+}
+.service-area-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+.service-area-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-top: 3px solid var(--primary);
+    border-radius: 8px;
+    padding: 18px 18px 20px 18px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+.service-area-card:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+.service-area-card h4 {
+    margin: 0 0 12px 0;
+    color: var(--primary);
+    font-size: 0.98rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.service-area-towns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+.area-town-chip {
+    background: #232830;
+    border: 1px solid #323a46;
+    color: #e5e7eb;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
 /* ESTIMATE FORM */
-.estimate-section { background-color: #151515; padding: 1px 0 40px 0; border-top: 1px solid #333;}
+.estimate-section { background-color: #151515; padding: 1px 0 44px 0; border-top: 1px solid #333;}
 .form-group { margin-bottom: 20px; }
 .form-group label { color: var(--primary); display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; }
 .form-control { width: 100%; box-sizing: border-box; padding: 12px; background: #202020; border: 1px solid #444; color: #fff; font-size: 1rem; border-radius: 4px;}
+.form-control:focus { outline: none; border-color: var(--primary); }
 textarea.form-control { height: 120px; resize: vertical; }
+
+/* MULTI-CHOICE SERVICE PILLS */
+.service-pills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.service-pill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin: 0 !important;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.service-pill input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+.service-pill-face {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 15px;
+    border-radius: 999px;
+    background: #202020;
+    border: 1px solid #444;
+    color: #e5e7eb;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-transform: none;
+    transition: all 0.16s ease;
+}
+.service-pill:hover .service-pill-face {
+    border-color: var(--primary);
+}
+.service-pill input[type="checkbox"]:focus-visible + .service-pill-face {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+}
+.service-pill input[type="checkbox"]:checked + .service-pill-face {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #000000;
+    font-weight: 900;
+    box-shadow: 0 2px 10px rgba(255, 204, 0, 0.25);
+}
+.service-pill-check {
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+.service-pill input[type="checkbox"]:checked + .service-pill-face .service-pill-check::before {
+    content: "✓";
+}
+.service-pill input[type="checkbox"]:not(:checked) + .service-pill-face .service-pill-check::before {
+    content: "+";
+    color: var(--primary);
+}
 
 /* FOOTER */
 footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888; border-top: 1px solid #282828; background: var(--footer-bg);}
@@ -244,8 +535,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 .footer-phone a { color: var(--primary); text-decoration: none; font-weight: 700; }
 .footer-review-btn { display: inline-block; background: var(--primary); color: #000; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 16px; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 .footer-review-btn:hover { background: var(--accent-blue); transform: translateY(-1px); }
-.admin-link { color: #777; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: color 0.15s; cursor: pointer;}
-.admin-link:hover { color: var(--accent-blue); }
+.footer-copyright { font-size: 0.75rem; color: #555; margin-top: 16px; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 
 /* ADMIN PORTAL BACKDROP & TABS */
 .admin-modal-backdrop {
@@ -381,7 +671,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <header>
         <div class="header-top-row">
             <div class="logo-row">
-                <a href="#top">
+                <a href="#top" id="header-logo-link">
                     <div class="logo-circle" id="header-logo-circle">
                         <img src="" alt="Logo" class="logo-img" id="header-logo-img" hidden>
                         <div class="logo-fallback" id="header-logo-fallback">
@@ -409,6 +699,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <nav class="nav-links">
                 <a href="#services">Services</a>
                 <a href="#gallery">Gallery</a>
+                <a href="#service-area">Service Area</a>
                 <a href="#estimate">Free Estimate</a>
             </nav>
         </div>
@@ -423,6 +714,20 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <a href="#gallery" class="btn-secondary">View Gallery</a>
         </div>
     </section>
+
+    <!-- CREDIBILITY TRUST BAR -->
+    <div class="trust-bar" aria-label="Credentials">
+        <div class="trust-bar-inner">
+            <div class="trust-badge">
+                <span class="trust-badge-icon" aria-hidden="true">✓</span>
+                <span>Fully Insured</span>
+            </div>
+            <div class="trust-badge">
+                <span class="trust-badge-icon" aria-hidden="true">✓</span>
+                <span>Free Written Estimates</span>
+            </div>
+        </div>
+    </div>
 
     <!-- SERVICES SECTION -->
     <section id="services" class="container">
@@ -440,7 +745,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 <p>Complete surface preparation, priming, and expert exterior painting for siding, trim, doors, and decks to withstand Wisconsin weather.</p>
             </div>
             <div class="service-card">
-                <h4>Drywall Repair & Finishing</h4>
+                <h4>Drywall Repair &amp; Finishing</h4>
                 <p>Expert patching, taping, mudding, and texture matching to give damaged walls and ceilings a seamless, smooth finish.</p>
             </div>
             <div class="service-card">
@@ -457,7 +762,10 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             <div class="underline"></div>
         </div>
         <p style="text-align: center; color: #aaa;" id="gallery-intro">Browse our recent contracting and finish work.</p>
-        
+
+        <!-- Interactive Before & After Comparison Slider (Auto-populated when matching Before/Completed deck photos exist) -->
+        <div id="before-after-container" class="ba-showcase" hidden></div>
+
         <div id="photo-grid" class="photo-grid">
             <div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">
                 Loading live photos from cloud database...
@@ -466,6 +774,51 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
         <div style="text-align: center; margin-top: 36px;">
             <a href="#estimate" class="btn-primary" style="margin: 0 auto;">Tap for Free Estimate</a>
+        </div>
+    </section>
+
+    <!-- PROUDLY SERVING LOCAL SERVICE AREA SECTION -->
+    <section id="service-area" class="service-area-section">
+        <div class="container" style="padding-bottom: 10px;">
+            <div class="section-title">
+                <h3>Proudly Serving</h3>
+                <div class="underline"></div>
+            </div>
+            <p class="service-area-intro">
+                Local residential and commercial painting across Washington County, Southern Fond du Lac County, and neighboring Southeast Wisconsin communities.
+            </p>
+            <div class="service-area-grid">
+                <div class="service-area-card">
+                    <h4>All of Washington County</h4>
+                    <div class="service-area-towns">
+                        <span class="area-town-chip">West Bend</span>
+                        <span class="area-town-chip">Hartford</span>
+                        <span class="area-town-chip">Slinger</span>
+                        <span class="area-town-chip">Kewaskum</span>
+                        <span class="area-town-chip">Germantown</span>
+                        <span class="area-town-chip">Jackson</span>
+                        <span class="area-town-chip">Richfield</span>
+                    </div>
+                </div>
+                <div class="service-area-card">
+                    <h4>Southern Fond du Lac County</h4>
+                    <div class="service-area-towns">
+                        <span class="area-town-chip">Campbellsport</span>
+                        <span class="area-town-chip">Eden</span>
+                        <span class="area-town-chip">Kewaskum Area</span>
+                    </div>
+                </div>
+                <div class="service-area-card">
+                    <h4>Surrounding Areas</h4>
+                    <div class="service-area-towns">
+                        <span class="area-town-chip">Grafton</span>
+                        <span class="area-town-chip">Mequon</span>
+                        <span class="area-town-chip">Cedarburg</span>
+                        <span class="area-town-chip">Lisbon</span>
+                        <span class="area-town-chip">N. Ozaukee &amp; Waukesha Counties</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -478,16 +831,53 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             </div>
             <form action="https://formspree.io/f/xvzyorqq" method="POST">
                 <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                    <label>Services Needed (Select all that apply)</label>
+                    <div class="service-pills-grid">
+                        <label class="service-pill">
+                            <input type="checkbox" name="services" value="Interior Painting">
+                            <span class="service-pill-face">
+                                <span class="service-pill-check" aria-hidden="true"></span>
+                                <span>Interior Painting</span>
+                            </span>
+                        </label>
+                        <label class="service-pill">
+                            <input type="checkbox" name="services" value="Exterior / Deck">
+                            <span class="service-pill-face">
+                                <span class="service-pill-check" aria-hidden="true"></span>
+                                <span>Exterior / Deck</span>
+                            </span>
+                        </label>
+                        <label class="service-pill">
+                            <input type="checkbox" name="services" value="Drywall Repair">
+                            <span class="service-pill-face">
+                                <span class="service-pill-check" aria-hidden="true"></span>
+                                <span>Drywall Repair</span>
+                            </span>
+                        </label>
+                        <label class="service-pill">
+                            <input type="checkbox" name="services" value="Pressure Washing">
+                            <span class="service-pill-face">
+                                <span class="service-pill-check" aria-hidden="true"></span>
+                                <span>Pressure Washing</span>
+                            </span>
+                        </label>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" class="form-control" name="phone" placeholder="Your Phone Number" required>
+                    <label for="est-name">Name</label>
+                    <input type="text" id="est-name" class="form-control" name="name" placeholder="Your Name" required>
                 </div>
                 <div class="form-group">
-                    <label>Project Details</label>
-                    <textarea name="details" class="form-control" placeholder="Describe your painting or drywall project..." required></textarea>
+                    <label for="est-phone">Phone</label>
+                    <input type="tel" id="est-phone" class="form-control" name="phone" placeholder="Your Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <label for="est-city">City / Town</label>
+                    <input type="text" id="est-city" class="form-control" name="city" placeholder="e.g. West Bend, Hartford, Campbellsport" required>
+                </div>
+                <div class="form-group">
+                    <label for="est-details">Project Details</label>
+                    <textarea id="est-details" name="details" class="form-control" placeholder="Describe your painting, deck, drywall, or pressure washing project..." required></textarea>
                 </div>
                 <button type="submit" class="btn-primary" style="max-width: 100%; border: none; cursor: pointer;">Submit Request</button>
             </form>
@@ -500,14 +890,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         <p style="margin: 0 0 16px 0;">
             <a href="https://reviews.birdeye.com/krueger-painting-156232068973275" target="_blank" rel="noopener" class="footer-review-btn">⭐ Leave a Review on Google</a>
         </p>
-        <p style="margin: 12px 0;">
-            <span onclick="openAdminModal()" class="admin-link">⚙️ Admin Login</span>
-        </p>
-        <p style="font-size: 0.75rem; color: #555; margin-top: 16px;">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
+        <p id="footer-copyright" class="footer-copyright">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
     </footer>
 
     <!-- LIGHTBOX MODAL -->
-    <div id="lightbox" class="lightbox" hidden>
+    <div id="lightbox" class="lightbox" hidden onclick="if(event.target===this)this.hidden=true">
         <button type="button" aria-label="Close" onclick="document.getElementById('lightbox').hidden=true">&times;</button>
         <img src="" alt="" id="lightbox-img">
         <p id="lightbox-caption"></p>
@@ -760,16 +1147,167 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             document.getElementById('edit-banner-active').checked = !!window.siteData.bannerActive;
             document.getElementById('edit-banner-text').value = window.siteData.bannerText || "";
 
-            // Render Public Gallery
+            function resolveBeforeAfterPair(photos) {
+                if (!Array.isArray(photos) || photos.length < 2) return null;
+
+                // Honor explicit admin selection if still valid
+                const savedPair = window.siteData.beforeAfterPair;
+                if (
+                    savedPair &&
+                    Number.isInteger(savedPair.beforeIdx) &&
+                    Number.isInteger(savedPair.afterIdx) &&
+                    savedPair.beforeIdx !== savedPair.afterIdx &&
+                    photos[savedPair.beforeIdx] &&
+                    photos[savedPair.afterIdx]
+                ) {
+                    return { beforeIdx: savedPair.beforeIdx, afterIdx: savedPair.afterIdx };
+                }
+
+                // Auto-detect matching Before and After / Completed deck photos
+                const isBeforeTag = (t) => /\bbefore\b/i.test(t || '');
+                const isAfterTag = (t) => /\bafter\b/i.test(t || '');
+                const isCompletedTag = (t) => /\bcompleted?\b/i.test(t || '');
+                const isDeckTag = (t) => /\bdeck\b/i.test(t || '');
+
+                // Prefer a "Before" photo mentioning deck if multiple exist, otherwise first "Before" photo
+                let beforeIdx = photos.findIndex((p) => isBeforeTag(p.tag) && isDeckTag(p.tag));
+                if (beforeIdx === -1) {
+                    beforeIdx = photos.findIndex((p) => isBeforeTag(p.tag));
+                }
+                if (beforeIdx === -1) return null;
+
+                // Match priority:
+                // 1. Explicit "After" photo (preferring deck match or closest index)
+                let afterIdx = photos.findIndex((p, i) => i !== beforeIdx && isAfterTag(p.tag) && isDeckTag(p.tag));
+                if (afterIdx === -1) {
+                    afterIdx = photos.findIndex((p, i) => i !== beforeIdx && isAfterTag(p.tag));
+                }
+                // 2. Deck-tagged "Completed" photo
+                if (afterIdx === -1) {
+                    afterIdx = photos.findIndex((p, i) => i !== beforeIdx && isCompletedTag(p.tag) && isDeckTag(p.tag));
+                }
+                // 3. Adjacent photo (beforeIdx + 1, then beforeIdx - 1) if it is Completed / non-Before
+                if (afterIdx === -1 && photos[beforeIdx + 1] && !isBeforeTag(photos[beforeIdx + 1].tag)) {
+                    afterIdx = beforeIdx + 1;
+                }
+                if (afterIdx === -1 && photos[beforeIdx - 1] && !isBeforeTag(photos[beforeIdx - 1].tag)) {
+                    afterIdx = beforeIdx - 1;
+                }
+                // 4. First Completed or non-Before photo
+                if (afterIdx === -1) {
+                    afterIdx = photos.findIndex((p, i) => i !== beforeIdx && isCompletedTag(p.tag));
+                }
+                if (afterIdx === -1) {
+                    afterIdx = photos.findIndex((p, i) => i !== beforeIdx && !isBeforeTag(p.tag));
+                }
+
+                return afterIdx !== -1 ? { beforeIdx, afterIdx } : null;
+            }
+
+            function renderBeforeAfterSlider(beforePhoto, afterPhoto) {
+                const container = document.getElementById('before-after-container');
+                if (!container) return;
+
+                container.innerHTML = '';
+                container.hidden = false;
+
+                const card = document.createElement('div');
+                card.className = 'ba-card';
+
+                const header = document.createElement('div');
+                header.className = 'ba-header';
+                header.innerHTML = `
+                    <span class="ba-header-title">Deck Transformation • Before &amp; After</span>
+                    <span class="ba-header-hint">◀ Drag slider to compare ▶</span>
+                `;
+                card.appendChild(header);
+
+                const stage = document.createElement('div');
+                stage.className = 'ba-stage';
+
+                const afterImg = document.createElement('img');
+                afterImg.className = 'ba-img-layer';
+                afterImg.src = afterPhoto.url;
+                afterImg.alt = afterPhoto.tag || 'Completed After Photo';
+                stage.appendChild(afterImg);
+
+                const beforeClip = document.createElement('div');
+                beforeClip.className = 'ba-before-clip';
+                const beforeImg = document.createElement('img');
+                beforeImg.className = 'ba-img-layer';
+                beforeImg.src = beforePhoto.url;
+                beforeImg.alt = beforePhoto.tag || 'Before Photo';
+                beforeClip.appendChild(beforeImg);
+                stage.appendChild(beforeClip);
+
+                const beforeBadge = document.createElement('span');
+                beforeBadge.className = 'ba-label ba-label-before';
+                beforeBadge.textContent = 'BEFORE';
+                stage.appendChild(beforeBadge);
+
+                const afterBadge = document.createElement('span');
+                afterBadge.className = 'ba-label ba-label-after';
+                afterBadge.textContent = 'AFTER';
+                stage.appendChild(afterBadge);
+
+                const divider = document.createElement('div');
+                divider.className = 'ba-divider';
+                stage.appendChild(divider);
+
+                const handle = document.createElement('div');
+                handle.className = 'ba-handle';
+                handle.setAttribute('aria-hidden', 'true');
+                handle.textContent = '↔';
+                stage.appendChild(handle);
+
+                const range = document.createElement('input');
+                range.type = 'range';
+                range.min = '0';
+                range.max = '100';
+                range.value = '50';
+                range.className = 'ba-range-input';
+                range.setAttribute('aria-label', 'Drag to compare before and after photos');
+                stage.appendChild(range);
+
+                const applySliderPosition = (pctVal) => {
+                    const pct = Math.max(0, Math.min(100, Number(pctVal)));
+                    beforeClip.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+                    divider.style.left = `${pct}%`;
+                    handle.style.left = `${pct}%`;
+                };
+
+                applySliderPosition(50);
+                range.addEventListener('input', (e) => applySliderPosition(e.target.value));
+                range.addEventListener('change', (e) => applySliderPosition(e.target.value));
+
+                card.appendChild(stage);
+                container.appendChild(card);
+            }
+
+            // Render Public Gallery (Interactive Before/After Slider + Remaining Completed Photos Grid)
             const grid = document.getElementById('photo-grid');
-            if (window.siteData.photos && window.siteData.photos.length > 0) {
+            const baContainer = document.getElementById('before-after-container');
+            const photos = Array.isArray(window.siteData.photos) ? window.siteData.photos : [];
+            const baPair = resolveBeforeAfterPair(photos);
+
+            if (baPair) {
+                renderBeforeAfterSlider(photos[baPair.beforeIdx], photos[baPair.afterIdx]);
+            } else if (baContainer) {
+                baContainer.innerHTML = '';
+                baContainer.hidden = true;
+            }
+
+            if (photos.length > 0) {
+                const remainingPhotos = photos.filter((_, idx) =>
+                    !baPair || (idx !== baPair.beforeIdx && idx !== baPair.afterIdx)
+                );
                 grid.innerHTML = "";
-                window.siteData.photos.forEach((p) => {
+                remainingPhotos.forEach((p) => {
                     const fig = document.createElement('figure');
                     fig.className = 'photo-tile';
                     fig.onclick = () => {
                         document.getElementById('lightbox-img').src = p.url;
-                        document.getElementById('lightbox-caption').textContent = p.tag;
+                        document.getElementById('lightbox-caption').textContent = p.tag || '';
                         document.getElementById('lightbox').hidden = false;
                     };
                     if (p.tag) {
@@ -780,30 +1318,47 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     }
                     const img = document.createElement('img');
                     img.src = p.url;
+                    img.alt = p.tag || 'Completed Painting Project';
                     fig.appendChild(img);
                     grid.appendChild(fig);
                 });
             } else {
-                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">No project photos added yet. Open Admin Login to add pictures.</div>';
+                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 30px; color: #777; border: 1px dashed #444;">Project photos coming soon.</div>';
             }
 
             // Render Admin Manager Grid
             const adminGrid = document.getElementById('admin-gallery-manager-grid');
             if (adminGrid) {
                 adminGrid.innerHTML = "";
-                if (!window.siteData.photos || window.siteData.photos.length === 0) {
+                if (photos.length === 0) {
                     adminGrid.innerHTML = '<p style="color:#777; font-size:0.85rem; grid-column: 1/-1;">No photos uploaded yet.</p>';
                 } else {
-                    window.siteData.photos.forEach((p, idx) => {
+                    photos.forEach((p, idx) => {
+                        const isBefore = baPair && baPair.beforeIdx === idx;
+                        const isAfter = baPair && baPair.afterIdx === idx;
                         const box = document.createElement('div');
-                        box.style.cssText = "background:#111; border:1px solid #333; border-radius:4px; padding:6px; text-align:center;";
+                        box.style.cssText = `background:#111; border:1px solid ${isBefore || isAfter ? 'var(--primary)' : '#333'}; border-radius:4px; padding:6px; text-align:center;`;
                         box.innerHTML = `<img src="${p.url}" style="width:100%; height:75px; object-fit:cover; border-radius:3px; margin-bottom:4px;">
-                                         <div style="font-size:0.65rem; color:var(--primary); font-weight:800;">${p.tag}</div>
-                                         <button type="button" onclick="window.deletePhoto(${idx})" style="background:#ff5252; color:#fff; border:none; padding:2px 6px; font-size:0.65rem; border-radius:3px; cursor:pointer; margin-top:4px;">Delete</button>`;
+                                         <div style="font-size:0.65rem; color:var(--primary); font-weight:800;">${p.tag || 'PHOTO'}${isBefore ? ' (SLIDER BEFORE)' : isAfter ? ' (SLIDER AFTER)' : ''}</div>
+                                         <div style="display:flex; gap:4px; justify-content:center; margin-top:4px; flex-wrap:wrap;">
+                                             <button type="button" onclick="window.setBeforeAfterPhoto('before', ${idx})" style="background:#2a313a; color:#fff; border:none; padding:2px 5px; font-size:0.6rem; border-radius:3px; cursor:pointer;">Before</button>
+                                             <button type="button" onclick="window.setBeforeAfterPhoto('after', ${idx})" style="background:#2a313a; color:var(--primary); border:none; padding:2px 5px; font-size:0.6rem; border-radius:3px; cursor:pointer;">After</button>
+                                             <button type="button" onclick="window.deletePhoto(${idx})" style="background:#ff5252; color:#fff; border:none; padding:2px 6px; font-size:0.6rem; border-radius:3px; cursor:pointer;">Delete</button>
+                                         </div>`;
                         adminGrid.appendChild(box);
                     });
                 }
             }
+        }
+
+        window.setBeforeAfterPhoto = async function(role, idx) {
+            const current = window.siteData.beforeAfterPair || {};
+            const next = {
+                beforeIdx: role === 'before' ? idx : (Number.isInteger(current.beforeIdx) ? current.beforeIdx : -1),
+                afterIdx: role === 'after' ? idx : (Number.isInteger(current.afterIdx) ? current.afterIdx : -1),
+            };
+            window.siteData.beforeAfterPair = next;
+            await window.saveSiteDataToCloud();
         }
 
         window.openAdminModal = function() { document.getElementById('admin-modal').style.display = 'flex'; }
@@ -896,7 +1451,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                         ctx.drawImage(img, 0, 0, width, height);
 
                         window.pendingBase64Image = canvas.toDataURL('image/jpeg', 0.65);
-                        
+
                         document.getElementById('pending-preview-img').src = window.pendingBase64Image;
                         document.getElementById('pending-photo-preview-wrap').style.display = 'block';
                         document.getElementById('upload-label-text').textContent = "Change Selected Photo";
@@ -911,7 +1466,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             if (!window.pendingBase64Image) return alert("No photo selected.");
             const tag = document.getElementById('pending-photo-tag').value.trim() || "COMPLETED";
             if (!window.siteData.photos) window.siteData.photos = [];
-            
+
             window.siteData.photos.push({ url: window.pendingBase64Image, tag: tag });
             await window.saveSiteDataToCloud();
 
@@ -922,6 +1477,9 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
         window.deletePhoto = async function(idx) {
             window.siteData.photos.splice(idx, 1);
+            if (window.siteData.beforeAfterPair) {
+                delete window.siteData.beforeAfterPair;
+            }
             await window.saveSiteDataToCloud();
         }
 
@@ -944,13 +1502,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             const pass = document.getElementById('admin-pass-input').value;
             const errBox = document.getElementById('login-error-alert');
             const successBox = document.getElementById('login-success-alert');
-            
+
             try {
                 errBox.style.display = 'none';
                 await signInWithEmailAndPassword(auth, email, pass);
                 successBox.textContent = "Success! Opening dashboard...";
                 successBox.style.display = 'block';
-                
+
                 setTimeout(() => {
                     document.getElementById('admin-login-view').style.display = 'none';
                     document.getElementById('admin-dashboard-view').style.display = 'flex';
@@ -971,7 +1529,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             const email = document.getElementById('admin-email-input').value.trim();
             const successBox = document.getElementById('login-success-alert');
             const errBox = document.getElementById('login-error-alert');
-            
+
             if (!email) {
                 errBox.textContent = "Please type your email address into the email field above first.";
                 errBox.style.display = 'block';
@@ -1002,8 +1560,62 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
             }
         });
 
+        function setupHiddenAdminTriggers() {
+            // Trigger 1: Tap Krueger Painting header logo 3 times within 2 seconds
+            const logoLink = document.getElementById('header-logo-link');
+            if (logoLink) {
+                let tapTimestamps = [];
+                logoLink.addEventListener('click', (e) => {
+                    const now = Date.now();
+                    tapTimestamps = tapTimestamps.filter((ts) => now - ts <= 2000);
+                    tapTimestamps.push(now);
+                    if (tapTimestamps.length >= 3) {
+                        e.preventDefault();
+                        tapTimestamps = [];
+                        window.openAdminModal();
+                    }
+                });
+            }
+
+            // Trigger 2: Long-press copyright text in footer for 2 seconds
+            const copyrightEl = document.getElementById('footer-copyright');
+            if (copyrightEl) {
+                let pressTimer = null;
+                const startPress = () => {
+                    if (pressTimer) clearTimeout(pressTimer);
+                    pressTimer = setTimeout(() => {
+                        pressTimer = null;
+                        window.openAdminModal();
+                    }, 2000);
+                };
+                const cancelPress = () => {
+                    if (pressTimer) {
+                        clearTimeout(pressTimer);
+                        pressTimer = null;
+                    }
+                };
+
+                copyrightEl.addEventListener('mousedown', startPress);
+                copyrightEl.addEventListener('mouseup', cancelPress);
+                copyrightEl.addEventListener('mouseleave', cancelPress);
+                copyrightEl.addEventListener('touchstart', startPress, { passive: true });
+                copyrightEl.addEventListener('touchend', cancelPress);
+                copyrightEl.addEventListener('touchcancel', cancelPress);
+                copyrightEl.addEventListener('touchmove', cancelPress);
+            }
+
+            // Close lightbox cleanly on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const lb = document.getElementById('lightbox');
+                    if (lb && !lb.hidden) lb.hidden = true;
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('year-copy').textContent = new Date().getFullYear();
+            setupHiddenAdminTriggers();
             fetchSiteData();
         });
     </script>
