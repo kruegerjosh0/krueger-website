@@ -460,10 +460,10 @@ header {
 }
 
 /* ESTIMATE FORM */
-.estimate-section { background-color: #151515; padding: 1px 0 44px 0; border-top: 1px solid #333;}
-.form-group { margin-bottom: 20px; }
-.form-group label { color: var(--primary); display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; }
-.form-control { width: 100%; box-sizing: border-box; padding: 12px; background: #202020; border: 1px solid #444; color: #fff; font-size: 1rem; border-radius: 4px;}
+.estimate-section { background-color: #151515; padding: 1px 0 44px 0; border-top: 1px solid #333; }
+.form-group { margin-bottom: 20px; position: relative; }
+.form-group > label { color: var(--primary); display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; }
+.form-control { width: 100%; box-sizing: border-box; padding: 12px; background: #202020; border: 1px solid #444; color: #fff; font-size: 1rem; border-radius: 4px; }
 .form-control:focus { outline: none; border-color: var(--primary); }
 textarea.form-control { height: 120px; resize: vertical; }
 
@@ -471,62 +471,83 @@ textarea.form-control { height: 120px; resize: vertical; }
 .service-pills-grid {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 10px;
+    position: relative;
+    margin: 0;
+    padding: 0;
 }
+.form-group label.service-pill,
 .service-pill {
     position: relative;
     display: inline-flex;
     align-items: center;
-    margin: 0 !important;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-}
-.service-pill input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    width: 1px;
-    height: 1px;
-    pointer-events: none;
-}
-.service-pill-face {
-    display: inline-flex;
-    align-items: center;
+    justify-content: center;
     gap: 7px;
-    padding: 10px 15px;
+    min-height: 44px;
+    padding: 10px 16px;
+    margin: 0;
+    box-sizing: border-box;
     border-radius: 999px;
     background: #202020;
     border: 1px solid #444;
     color: #e5e7eb;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     font-weight: 700;
+    line-height: 1.2;
     text-transform: none;
-    transition: all 0.16s ease;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
 }
-.service-pill:hover .service-pill-face {
+.form-group label.service-pill:hover,
+.service-pill:hover {
     border-color: var(--primary);
 }
-.service-pill input[type="checkbox"]:focus-visible + .service-pill-face {
+.service-pill input[type="checkbox"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+.service-pill:focus-within {
     outline: 2px solid var(--accent-blue);
     outline-offset: 2px;
 }
-.service-pill input[type="checkbox"]:checked + .service-pill-face {
+.form-group label.service-pill.is-selected,
+.form-group label.service-pill:has(input[type="checkbox"]:checked),
+.service-pill.is-selected,
+.service-pill:has(input[type="checkbox"]:checked) {
     background: var(--primary);
     border-color: var(--primary);
     color: #000000;
     font-weight: 900;
-    box-shadow: 0 2px 10px rgba(255, 204, 0, 0.25);
+    box-shadow: 0 2px 10px rgba(255, 204, 0, 0.28);
 }
 .service-pill-check {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 900;
+    line-height: 1;
+    pointer-events: none;
 }
-.service-pill input[type="checkbox"]:checked + .service-pill-face .service-pill-check::before {
-    content: "✓";
+.service-pill-text {
+    pointer-events: none;
 }
-.service-pill input[type="checkbox"]:not(:checked) + .service-pill-face .service-pill-check::before {
+.service-pill-check::before {
     content: "+";
     color: var(--primary);
+}
+.service-pill.is-selected .service-pill-check::before,
+.service-pill:has(input[type="checkbox"]:checked) .service-pill-check::before {
+    content: "✓";
+    color: #000000;
 }
 
 /* FOOTER */
@@ -835,31 +856,23 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                     <div class="service-pills-grid">
                         <label class="service-pill">
                             <input type="checkbox" name="services" value="Interior Painting">
-                            <span class="service-pill-face">
-                                <span class="service-pill-check" aria-hidden="true"></span>
-                                <span>Interior Painting</span>
-                            </span>
+                            <span class="service-pill-check" aria-hidden="true"></span>
+                            <span class="service-pill-text">Interior Painting</span>
                         </label>
                         <label class="service-pill">
                             <input type="checkbox" name="services" value="Exterior / Deck">
-                            <span class="service-pill-face">
-                                <span class="service-pill-check" aria-hidden="true"></span>
-                                <span>Exterior / Deck</span>
-                            </span>
+                            <span class="service-pill-check" aria-hidden="true"></span>
+                            <span class="service-pill-text">Exterior / Deck</span>
                         </label>
                         <label class="service-pill">
                             <input type="checkbox" name="services" value="Drywall Repair">
-                            <span class="service-pill-face">
-                                <span class="service-pill-check" aria-hidden="true"></span>
-                                <span>Drywall Repair</span>
-                            </span>
+                            <span class="service-pill-check" aria-hidden="true"></span>
+                            <span class="service-pill-text">Drywall Repair</span>
                         </label>
                         <label class="service-pill">
                             <input type="checkbox" name="services" value="Pressure Washing">
-                            <span class="service-pill-face">
-                                <span class="service-pill-check" aria-hidden="true"></span>
-                                <span>Pressure Washing</span>
-                            </span>
+                            <span class="service-pill-check" aria-hidden="true"></span>
+                            <span class="service-pill-text">Pressure Washing</span>
                         </label>
                     </div>
                 </div>
@@ -1616,6 +1629,16 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('year-copy').textContent = new Date().getFullYear();
             setupHiddenAdminTriggers();
+
+            // Keep .is-selected synced on service pill checkboxes for universal browser support
+            document.querySelectorAll('.service-pill input[type="checkbox"]').forEach((cb) => {
+                const syncPillState = () => {
+                    cb.closest('.service-pill')?.classList.toggle('is-selected', cb.checked);
+                };
+                cb.addEventListener('change', syncPillState);
+                syncPillState();
+            });
+
             fetchSiteData();
         });
     </script>
