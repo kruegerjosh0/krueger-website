@@ -1,6 +1,6 @@
 // Krueger Painting OS Service Worker (scoped to /estimator-app/)
 const CACHE_PREFIX = 'krueger-os-estimator-cache-';
-const CACHE_NAME = `${CACHE_PREFIX}v4`;
+const CACHE_NAME = `${CACHE_PREFIX}v5`;
 const PRECACHE_ASSETS = [
   '/estimator-app/',
   '/estimator-app/index.html',
@@ -45,10 +45,34 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  const isHtmlRequest =
+    event.request.mode === 'navigate' ||
+    event.request.headers.get('accept')?.includes('text/html') ||
+    url.pathname === '/estimator-app/' ||
+    url.pathname.endsWith('/index.html');
+
+  // Network-first for HTML so deployed updates load immediately (with offline cache fallback)
+  if (isHtmlRequest) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const copy = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return networkResponse;
+        })
+        .catch(() =>
+          caches.match(event.request).then((cached) => cached || caches.match('/estimator-app/index.html'))
+        )
+    );
+    return;
+  }
+
+  // Cache-first with background refresh for static icons/manifest assets
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
-        // Return cached, but refresh in background
         fetch(event.request).then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));
@@ -57,12 +81,7 @@ self.addEventListener('fetch', (event) => {
         return cachedResponse;
       }
 
-      return fetch(event.request).catch(() => {
-        // Offline fallback scoped to /estimator-app/
-        if (event.request.headers.get('accept')?.includes('text/html')) {
-          return caches.match('/estimator-app/index.html');
-        }
-      });
+      return fetch(event.request);
     })
   );
 });
