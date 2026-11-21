@@ -466,7 +466,7 @@ header {
     padding: 28px 20px 30px 20px;
 }
 .reviews-inner {
-    max-width: 900px;
+    max-width: 1040px;
     margin: 0 auto;
 }
 .reviews-header {
@@ -503,13 +503,13 @@ header {
 }
 .review-card {
     flex: 0 0 100%;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     box-sizing: border-box;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-top: 2px solid var(--primary);
     border-radius: 8px;
-    padding: 16px 18px;
+    padding: 15px 16px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -517,21 +517,32 @@ header {
 }
 .review-stars {
     color: var(--primary);
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     letter-spacing: 2px;
     line-height: 1;
 }
 .review-quote {
     margin: 0;
     color: #d1d5db;
-    font-size: 0.86rem;
-    line-height: 1.48;
+    font-size: 0.84rem;
+    line-height: 1.46;
 }
 .review-author {
     font-size: 0.78rem;
     font-weight: 800;
     color: var(--primary);
     letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.review-source {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 .reviews-carousel-controls {
     display: flex;
@@ -581,9 +592,7 @@ header {
 .reviews-cta-row {
     margin-top: 18px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    justify-content: center;
 }
 .reviews-google-btn {
     display: inline-flex;
@@ -592,7 +601,7 @@ header {
     gap: 6px;
     background: var(--primary);
     color: #000000;
-    padding: 10px 20px;
+    padding: 10px 22px;
     border-radius: 5px;
     text-decoration: none;
     font-weight: 900;
@@ -606,26 +615,16 @@ header {
     background: var(--accent-blue);
     transform: translateY(-1px);
 }
-.reviews-direct-link {
-    background: none;
-    border: none;
-    padding: 4px 8px;
-    color: #9ca3af;
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-    transition: color 0.15s;
+@media (min-width: 720px) and (max-width: 959px) {
+    .review-card {
+        flex: 0 0 calc(50% - 6px);
+    }
 }
-.reviews-direct-link:hover {
-    color: var(--primary);
-}
-@media (min-width: 720px) {
+@media (min-width: 960px) {
     .reviews-track {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
         overflow: visible;
         scroll-snap-type: none;
     }
@@ -635,71 +634,6 @@ header {
     .reviews-carousel-controls {
         display: none;
     }
-    .reviews-cta-row {
-        flex-direction: row;
-        justify-content: center;
-        gap: 16px;
-    }
-}
-
-/* DIRECT FEEDBACK POPUP MODAL */
-.feedback-modal-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 10020;
-    background: rgba(8, 10, 14, 0.88);
-    backdrop-filter: blur(6px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-}
-.feedback-modal-backdrop[hidden] {
-    display: none;
-}
-.feedback-modal-card {
-    width: 100%;
-    max-width: 440px;
-    background: #181c20;
-    border: 1px solid rgba(255, 204, 0, 0.4);
-    border-radius: 10px;
-    padding: 22px 20px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
-    box-sizing: border-box;
-}
-.feedback-modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #2a313a;
-}
-.feedback-modal-header h4 {
-    margin: 0;
-    color: var(--primary);
-    font-size: 1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-}
-.feedback-modal-close {
-    background: #262c34;
-    color: #e5e7eb;
-    border: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-.feedback-modal-close:hover {
-    background: #343c47;
-    color: #ffffff;
 }
 
 /* ESTIMATE FORM */
@@ -1090,7 +1024,7 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <section id="reviews" class="reviews-section" aria-label="Customer Reviews">
         <div class="reviews-inner">
             <div class="reviews-header">
-                <h3>Top Rated by Local Homeowners</h3>
+                <h3>What Homeowners Say</h3>
                 <div class="underline"></div>
             </div>
 
@@ -1104,7 +1038,6 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
             <div class="reviews-cta-row">
                 <a href="https://reviews.birdeye.com/krueger-painting-156232068973275" target="_blank" rel="noopener" class="reviews-google-btn">⭐ Leave a Review on Google</a>
-                <button type="button" class="reviews-direct-link" onclick="window.openFeedbackModal()">Or send feedback directly</button>
             </div>
         </div>
     </section>
@@ -1166,47 +1099,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
     <!-- FOOTER -->
     <footer>
         <p class="footer-phone"><strong>Phone:</strong> <a href="tel:262-443-1199" id="footer-phone-text">262-443-1199</a></p>
-        <p style="margin: 0 0 10px 0;">
-            <a href="https://reviews.birdeye.com/krueger-painting-156232068973275" target="_blank" rel="noopener" class="footer-review-btn" style="margin-bottom: 6px;">⭐ Leave a Review on Google</a>
-        </p>
         <p style="margin: 0 0 12px 0;">
-            <button type="button" class="reviews-direct-link" onclick="window.openFeedbackModal()">Or send feedback directly</button>
+            <a href="https://reviews.birdeye.com/krueger-painting-156232068973275" target="_blank" rel="noopener" class="footer-review-btn">⭐ Leave a Review on Google</a>
         </p>
         <p id="footer-copyright" class="footer-copyright">&copy; <span id="year-copy"></span> Krueger Painting. All rights reserved.</p>
     </footer>
-
-    <!-- DIRECT FEEDBACK MODAL (Formspree-compatible) -->
-    <div id="feedback-modal" class="feedback-modal-backdrop" hidden onclick="if(event.target===this)window.closeFeedbackModal()">
-        <div class="feedback-modal-card" role="dialog" aria-modal="true" aria-labelledby="feedback-modal-title">
-            <div class="feedback-modal-header">
-                <h4 id="feedback-modal-title">Send Feedback Directly</h4>
-                <button type="button" class="feedback-modal-close" aria-label="Close" onclick="window.closeFeedbackModal()">&times;</button>
-            </div>
-            <form action="https://formspree.io/f/xvzyorqq" method="POST">
-                <input type="hidden" name="_subject" value="Website Customer Review">
-                <input type="hidden" name="Subject" value="Website Customer Review">
-                <div class="form-group" style="margin-bottom: 14px;">
-                    <label for="fb-rating">Rating</label>
-                    <select id="fb-rating" name="rating" class="form-control">
-                        <option value="5 Stars" selected>★★★★★ — 5 Stars</option>
-                        <option value="4 Stars">★★★★☆ — 4 Stars</option>
-                        <option value="3 Stars">★★★☆☆ — 3 Stars</option>
-                        <option value="2 Stars">★★☆☆☆ — 2 Stars</option>
-                        <option value="1 Star">★☆☆☆☆ — 1 Star</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 14px;">
-                    <label for="fb-name">Your Name &amp; Town</label>
-                    <input type="text" id="fb-name" name="name" class="form-control" placeholder="e.g. Sarah M. — West Bend, WI" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 16px;">
-                    <label for="fb-message">Your Review or Feedback</label>
-                    <textarea id="fb-message" name="review" class="form-control" style="height: 96px;" placeholder="Tell us how your project went..." required></textarea>
-                </div>
-                <button type="submit" class="btn-primary" style="max-width: 100%; border: none; cursor: pointer;">Send Feedback</button>
-            </form>
-        </div>
-    </div>
 
     <!-- LIGHTBOX MODAL -->
     <div id="lightbox" class="lightbox" hidden onclick="if(event.target===this)this.hidden=true">
@@ -1876,39 +1773,30 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
         });
 
         // ============================================================
-        // EDITABLE TOP 3 CUSTOMER REVIEWS
-        // Update quotes, names, or towns here anytime.
+        // 5-STAR GOOGLE CUSTOMER REVIEWS
         // ============================================================
         const CUSTOMER_REVIEWS = [
             {
                 rating: 5,
-                quote: "Josh and his crew transformed our living room and kitchen cabinets. Crisp lines, spotless cleanup, and finished right on schedule.",
-                author: "Sarah M. — West Bend, WI"
+                quote: "They did a fantastic job and our neighbors keep talking about how great the house looks with the new paint job. It’s really enhanced the look of our masonry work on both the house and barn. We highly recommend them!",
+                author: "Daniel Johnson"
             },
             {
                 rating: 5,
-                quote: "Our deck and exterior trim look brand new. Fair pricing, great communication from estimate to final walkthrough, and zero mess left behind.",
-                author: "Mike & Suzy W. — Kewaskum, WI"
+                quote: "Professional and incredibly kind. Honest and hardworking. They have done a fantastic job for us. Excellent attention to detail and I am quite picky about the little things.",
+                author: "Kim Lutzow"
             },
             {
                 rating: 5,
-                quote: "Patched our damaged drywall and repainted two bedrooms—you can't even tell where the repairs were. Easily the best painter we've hired.",
-                author: "Jim G. — Grafton, WI"
+                quote: "Excellent work! The plan to complete the project was well thought out and communicated daily. Workmanship was amazing and I will definitely use Krueger Painting for future painting projects.",
+                author: "Annette Mueller"
+            },
+            {
+                rating: 5,
+                quote: "Great work at good prices.",
+                author: "David Lamp"
             }
         ];
-
-        window.openFeedbackModal = function() {
-            const modal = document.getElementById('feedback-modal');
-            if (!modal) return;
-            modal.hidden = false;
-            const nameInput = document.getElementById('fb-name');
-            if (nameInput) setTimeout(() => nameInput.focus(), 40);
-        };
-
-        window.closeFeedbackModal = function() {
-            const modal = document.getElementById('feedback-modal');
-            if (modal) modal.hidden = true;
-        };
 
         function initReviewsShowcase() {
             const track = document.getElementById('reviews-track');
@@ -1960,7 +1848,13 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
 
                 const author = document.createElement('div');
                 author.className = 'review-author';
-                author.textContent = rev.author;
+                const authorName = document.createElement('span');
+                authorName.textContent = rev.author;
+                const sourceTag = document.createElement('span');
+                sourceTag.className = 'review-source';
+                sourceTag.textContent = 'Google';
+                author.appendChild(authorName);
+                author.appendChild(sourceTag);
 
                 card.appendChild(stars);
                 card.appendChild(quote);
@@ -2045,13 +1939,11 @@ footer { text-align: center; padding: 36px 20px; font-size: 0.85rem; color: #888
                 copyrightEl.addEventListener('touchmove', cancelPress);
             }
 
-            // Close lightbox and feedback modal cleanly on Escape key
+            // Close lightbox cleanly on Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     const lb = document.getElementById('lightbox');
                     if (lb && !lb.hidden) lb.hidden = true;
-                    const fbModal = document.getElementById('feedback-modal');
-                    if (fbModal && !fbModal.hidden) fbModal.hidden = true;
                 }
             });
         }
