@@ -1,6 +1,6 @@
 // Krueger Painting OS Service Worker (scoped to /estimator-app/)
 const CACHE_PREFIX = 'krueger-os-estimator-cache-';
-const CACHE_NAME = `${CACHE_PREFIX}v26`;
+const CACHE_NAME = `${CACHE_PREFIX}v27`;
 const PRECACHE_ASSETS = [
   '/estimator-app/',
   '/estimator-app/index.html',
